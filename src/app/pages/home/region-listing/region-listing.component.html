@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar [(ngModel)]="keyword" searchIcon="undefined" (search)="search()" placeholder="Search for ..."
+    class="ion-no-padding ion-margin-bottom">
+    <ion-icon name="search-outline" slot="end" class="search-icon" (click)="search()"></ion-icon>
+  </ion-searchbar>
+
+  <ion-list *ngIf="country && country.cities" class="ion-margin-bottom">
+    <ion-item *ngFor="let c of country.cities | regionSort" (click)="openRegion(c)">
+      <ion-icon size="small" slot="end" name="chevron-forward-outline"></ion-icon>
+      <ion-label color="primary">
+        <small> {{ c.name }} </small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-main-categories [region]="{ region: this.region, regionName: this.pageTitle }"></app-main-categories>
+</ion-content>

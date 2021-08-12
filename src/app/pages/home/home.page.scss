@@ -1,0 +1,16 @@
+ion-searchbar {
+    .search-icon {
+        position: absolute;
+        right: 20px !important;
+        font-size: 20px;
+        z-index: 2;
+    }
+}
+
+ion-item {
+    &.dropdown-list {
+        ion-label {
+            margin-left: 1rem;
+        }
+    }
+}

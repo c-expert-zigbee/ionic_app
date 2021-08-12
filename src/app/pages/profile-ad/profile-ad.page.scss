@@ -1,0 +1,74 @@
+ion-title {
+  padding: 0 45px;
+}
+
+.profile-ad-page {
+  --background: white;
+
+  .swiper-slide img {
+    width: 100%;
+  }
+
+  .profile-info {
+    border-bottom: 1px solid var(--ion-color-light);
+
+    ion-datetime,
+    ion-text {
+      color: var(--ion-color-medium);
+    }
+  }
+
+  .send-button {
+    text-decoration: none;
+  }
+
+  .small {
+    font-size: 14px;
+  }
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.footer_gradient {
+  background: #3498db;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #3498db 0%, #348edb 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #3498db 0%, #348edb 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #3498db 0%, #348edb 100%);
+}
+
+.bar-footer .item {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .contact-phone {
+    font-family: 'Roboto-Medium';
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 22px;
+    color: white;
+  }
+}
+
+.bar-footer .exp-icon-phone {
+  font-size: 20px;
+  padding: 12px;
+}
+
+.item-icon-left .icon,
+.item-icon-right .icon {
+  font-size: 22px !important;
+  text-decoration: none;
+  font-weight: normal;
+  color: white;
+}
+
+.exp-icon-phone:before {
+  content: "\e90d";
+}

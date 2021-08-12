@@ -1,0 +1,66 @@
+.myads-edit-page {
+    --background: white;
+    ion-list {
+        margin-top: 16px;
+        .activate-btn-slide {
+            --border-radius: 4px;
+            width: 20%;
+            font-size: 14px;
+            position: absolute;
+            top: 10px;
+            right: 0;
+        }
+        .header {
+            color: #000000;
+            font-weight: bold;
+            .activate-btn {
+                --border-radius: 4px;
+                width: 20%;
+                font-size: 14px;
+            }
+        }
+        .grey-color {
+            color: #a7a7a7;
+            font-size: 14px;
+        }
+        .box-date {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            ion-icon {
+                margin: 5px;
+            }
+            p {
+                font-size: 16px;
+                color: var(--ion-color-dark);
+            }
+            span {
+                font-size: 14px;
+                color: #1e0fcc;
+            }
+        }
+    }
+}
+
+.modify-btn {
+    --border-radius: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    ion-label {
+        color: #1e0fcc;
+    }
+}
+
+.active-ads-btn {
+    display: flex;
+    padding: 8px 16px 32px;
+    justify-content: space-between;
+    ion-button {
+        width: 48%;
+        --border-radius: 4px;
+        color: #1e0fcc;
+        ion-label {
+            color: #1e0fcc;
+        }
+    }
+}

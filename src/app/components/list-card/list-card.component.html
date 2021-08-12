@@ -1,0 +1,32 @@
+<ion-card *ngIf="subject" button="true" (click)="openProfile(subject)">
+  <img *ngIf="subject.profile_image" [src]="subject.profile_image" />
+  <ion-card-header>
+    <ion-card-subtitle color="primary">{{ subject.display_title }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{ subject.preview_desc }}
+  </ion-card-content>
+
+  <ion-card-header>
+    <ion-card-subtitle class="ion-card-location ion-display-flex ion-align-items-center">
+      <ion-icon name="navigate-outline"></ion-icon>
+      <ion-text>{{ subject.region_name }}</ion-text>
+    </ion-card-subtitle>
+    <ion-card-subtitle class="ion-card-location ion-card-location-bottom ion-align-items-center">
+      <div class="ion-align-items-center">
+        <ion-icon name="folder-outline"></ion-icon>
+        <ion-text>{{ subject.category_name }}</ion-text>
+      </div>
+      <ion-text class="post-date">
+        <i class="icon exp-icon-watch"></i>
+        <ng-container *ngIf="subject.commercial=='0'; else postTime">
+          {{subject.published_date_epoch | amFromUnix}}
+        </ng-container>
+        <ng-template #postTime>
+          seconds ago
+        </ng-template>
+      </ion-text>
+    </ion-card-subtitle>
+  </ion-card-header>
+</ion-card>

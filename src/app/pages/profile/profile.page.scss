@@ -1,0 +1,50 @@
+.profile-bg-content {
+    --backgraund: #ffffff;
+
+    .header-list {
+        background-color: #006699;
+        padding: 0;
+
+        .header-group {
+            width: 100%;
+
+            .avatar-user {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 16px;
+            }
+
+            .btn-edit {
+                position: absolute;
+                top: 16px;
+                right: 10px;
+                padding: 5px;
+                color: #ffffff;
+                font-size: 12px;
+                border: 1px solid #ffffff;
+                border-radius: 4px;
+            }
+
+            .fullname-user {
+                color: #ffffff;
+                font-size: 16px;
+                text-align: center;
+            }
+        }
+    }
+
+    ion-item {
+        ion-icon {
+            margin-top: 0;
+        }
+
+        ion-label {
+            min-height: 40px;
+        }
+    }
+
+    .text-item {
+        font-size: 16px;
+    }
+}

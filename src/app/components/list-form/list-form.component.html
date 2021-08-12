@@ -1,0 +1,35 @@
+<form [formGroup]="form" (ngSubmit)="reset()">
+  <section class="search">
+    <ion-searchbar formControlName="q" placeholder="Search for ..." class="ion-no-padding ion-margin-bottom">
+    </ion-searchbar>
+  </section>
+
+  <section class="sorting ion-margin-bottom">
+    <ion-select placeholder="Select Sort" formControlName="sort">
+      <ion-select-option value="asc">Price Asc</ion-select-option>
+      <ion-select-option value="desc">Price Desc</ion-select-option>
+      <ion-select-option value="pd_asc">Published Date Asc</ion-select-option>
+      <ion-select-option value="
+      pd_desc">Published Date Desc</ion-select-option>
+    </ion-select>
+  </section>
+
+  <section class="price-holder ion-margin-bottom">
+    <ion-input placeholder="Min Price" formControlName="itempricemin"></ion-input>
+    <ion-input placeholder="Min Price" formControlName="itempricemax"></ion-input>
+  </section>
+
+  <section class="picture-holder ion-margin-bottom">
+    <ion-checkbox slot="start" formControlName="has_pic"></ion-checkbox>
+    <ion-label color="dark">Has Pic</ion-label>
+  </section>
+
+  <section class="buttons">
+    <ion-button expand="full" class="ion-margin-bottom" (click)="submit()">
+      <ion-text>
+        <b>Search</b>
+      </ion-text>
+    </ion-button>
+    <ion-button type="button" expand="full" color="light" (click)="reset()">Reset Filters</ion-button>
+  </section>
+</form>

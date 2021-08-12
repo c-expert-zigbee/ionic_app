@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="post-progressbar">
+    <ion-col size="4">
+      <div class="single-bar active"></div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="single-bar"></div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="single-bar"></div>
+    </ion-col>
+  </ion-row>
+
+  <p class="post-header">1. Please select one of the following categories:</p>
+
+  <ion-list class="ion-margin-bottom item-group-list">
+    <ion-item-group *ngFor="let cat of categories">
+      <ion-item-divider>
+        <ion-label>{{ cat.title}}</ion-label>
+      </ion-item-divider>
+      <ion-item lines="none" detail (click)="goNextStep(cat)">
+        <div [innerHTML]="cat.posting_description || cat.title"></div>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

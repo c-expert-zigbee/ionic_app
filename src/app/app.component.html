@@ -1,0 +1,129 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu side="start" menuId="mainMenu" contentId="main-content" type="overlay">
+      <ion-content class="ion-padding menu-content">
+        <ion-list>
+          <ion-list-header class="ion-padding-bottom">
+            <ion-img src="assets/icon/logo-icon.svg"></ion-img>
+            <ion-label>expatriates.com</ion-label>
+          </ion-list-header>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/home" lines="none" detail="false">
+              <ion-icon slot="start" name="home-outline"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle *ngIf="isAuth" auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/my-ads" lines="none" detail="false">
+              <ion-icon slot="start" name="list-outline"></ion-icon>
+              <ion-label>My Ads</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle *ngIf="isAuth" auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/profile" lines="none" detail="false">
+              <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-label>My Profile</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item (click)="openContact()" lines="none" detail="false">
+              <ion-icon slot="start" name="mail-open-outline"></ion-icon>
+              <ion-label>Contact Us</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/home" lines="none" detail="false">
+              <ion-icon slot="start" name="sync-outline"></ion-icon>
+              <ion-label>Sync</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle *ngIf="isAuth" auto-hide="false">
+            <ion-item (click)="logout()" lines="none" detail="false">
+              <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>
+              <ion-label>Sign Out</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-button expand="full" class="place-ad-btn" routerDirection="forward" routerLink="/post-ad">
+              <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+              Place An Ad
+            </ion-button>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle *ngIf="!isAuth" auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/login" lines="none" detail="false" class="gold-item">
+              <ion-label>Sign In</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item-divider *ngIf="!isAuth"></ion-item-divider>
+
+          <ion-menu-toggle *ngIf="!isAuth" auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/register" lines="none" detail="false" class="gold-item">
+              <ion-label class="gold-text">Create Account</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item lines="none" detail="false" class="version-item">
+            <ion-label>Version : {{ versionNumber }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-menu side="end" menuId="catMenu" contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons>
+            <ion-button slot="start">
+              <ion-icon name="globe-outline"></ion-icon>
+              <ion-label>International</ion-label>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list *ngIf="categories && categories.length > 0">
+          <ng-container *ngFor="let c of categories">
+            <ion-menu-toggle *ngIf="c.subcategories.length == 0" menu="catMenu" auto-hide="false">
+              <ion-item (click)="openCategory(c)" lines="none">
+                <ion-icon class="slide-menu-right-icon" slot="start" name="folder-open-outline"></ion-icon>
+                <ion-label class="side-menu-text-color">
+                  <small> {{ c.title }} </small>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-item *ngIf="c.subcategories.length > 0" (click)="toogleCategory(c.category_id)" lines="none">
+              <ion-icon class="slide-menu-right-icon" slot="start" name="folder-open-outline"></ion-icon>
+              <ion-icon class="slide-menu-right-icon-right" slot="end"
+                [name]="c.show ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+              <ion-label class="side-menu-text-color">
+                <small> {{ c.title }} </small>
+              </ion-label>
+            </ion-item>
+
+            <ng-container *ngIf="c.show">
+              <ion-menu-toggle menu="catMenu" auto-hide="false">
+                <ion-item class="dropdown-list" *ngFor="let s of c.subcategories" (click)="openCategory(s)"
+                  lines="none">
+                  <ion-icon color="primary" class="slide-menu-right-icon" slot="end" name="chevron-forward-outline">
+                  </ion-icon>
+                  <ion-label class="subcategorie-font">
+                    <small class="padding-left"> {{ s.title }} </small>
+                  </ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            </ng-container>
+          </ng-container>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

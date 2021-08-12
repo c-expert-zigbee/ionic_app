@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar [(ngModel)]="keyword" searchIcon="undefined" (search)="search()" placeholder="Search for ..."
+    class="ion-no-padding ion-margin-bottom">
+    <ion-icon name="search-outline" slot="end" class="search-icon" (click)="search()"></ion-icon>
+  </ion-searchbar>
+
+  <ion-list *ngIf="highlightRegionList && highlightRegionList.length > 0" class="ion-margin-top">
+    <ion-item *ngFor="let r of highlightRegionList" (click)="openRegion(r)">
+      <ion-icon size="small" slot="end" name="chevron-forward-outline"></ion-icon>
+      <ion-label color="primary"> <small> {{r.name}} </small> </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="continents && continents.length > 0" class="ion-margin-top">
+    <ng-container *ngFor="let c of continents">
+      <ion-item (click)="showCountries(c.name)">
+        <ion-icon size="small" slot="end" [name]="(c.show) ? 'chevron-down-outline' : 'chevron-forward-outline' ">
+        </ion-icon>
+        <ion-label>
+          <small>{{c.name}}</small>
+        </ion-label>
+      </ion-item>
+
+      <ng-container *ngIf="c.show">
+        <ion-item class="dropdown-list" *ngFor="let country of c.countries | regionSort"
+          (click)="openCountry(c.id, country)">
+          <ion-label color="primary">
+            <small> {{ country.name }} </small>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ng-container>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="goPostAd()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content *ngIf="profileForm">
+  <ion-item lines="none">
+    <ion-icon slot="end" name="close-outline" [routerLink]="['/profile']"></ion-icon>
+  </ion-item>
+
+  <form [formGroup]="profileForm">
+    <ion-item lines="none">
+      <ion-label position="stacked">First Name</ion-label>
+      <ion-input formControlName="first_name"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Last Name</ion-label>
+      <ion-input formControlName="last_name"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Contact Number</ion-label>
+      <ion-input formControlName="phone"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input formControlName="email" [attr.disabled]="true"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">City</ion-label>
+      <ion-input formControlName="region_name"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Company Name</ion-label>
+      <ion-input formControlName="company_name"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Preferred Language</ion-label>
+      <ion-input formControlName="language"></ion-input>
+    </ion-item>
+    <ion-radio-group formControlName="type" mode="md">
+      <ion-item lines="none">
+        <ion-label>Profile Private</ion-label>
+      </ion-item>
+      <div class="profile-type">
+        <ion-item lines="none">
+          <ion-label>Private</ion-label>
+          <ion-radio slot="start" value="Private"></ion-radio>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Professional</ion-label>
+          <ion-radio slot="start" value="Professional"></ion-radio>
+        </ion-item>
+      </div>
+    </ion-radio-group>
+
+    <div class="edit-buttons">
+      <ion-button expand="block" color="light" [routerLink]="['/profile']">Cancel</ion-button>
+      <ion-button expand="block" color="primary" (click)="onSave()">Save</ion-button>
+    </div>
+  </form>
+</ion-content>

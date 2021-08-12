@@ -1,0 +1,14 @@
+ion-content {
+  --background: #ebebeb;
+
+  p {
+    margin: 0 0 10px;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+
+    a {
+      color: #1e0fcc !important;
+      text-decoration: none;
+    }
+  }
+}

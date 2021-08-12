@@ -1,0 +1,52 @@
+<div class="modal">
+  <ion-content>
+    <ion-row class="ion-padding">
+      <div class="modify_ad">
+        <div class="padding">
+
+          <h3 class="ion-text-center ion-no-margin ion-margin-bottom">Thank you!</h3>
+          <hr>
+          <p class="profile padding-top">
+            <font color=000099><b>WAIT!</b></font> You must first activate your ad by clicking on the Activate button
+            on
+            following screen or using the link in the confirmation email we have just sent you.
+          </p>
+          <p class="profile">Once activated, your ad will appear here:
+            <a href="" ng-click="openBrowser(subjectId)">https://www.expatriates.com/cls/{{subjectId}}.html</a>
+            <a href="https://www.expatriates.com/html/scams.html">
+              <ion-icon color="medium" name="exit-outline"></ion-icon>
+            </a>
+            <i class="icon exp-icon-noun_428398_cc"></i> and will remain on expatriates.com for 60 days after which it
+            will expire automatically.</p>
+          <p class="profile">
+            <font color='red'>
+              <b>BEWARE OF WESTERN UNION SCAMS!</b>
+            </font>
+            Please read our
+            <b>
+              <a href="https://www.expatriates.com/html/scams.html">scam alert
+                <ion-icon color="medium" name="exit-outline"></ion-icon>
+              </a>
+            </b>
+            <i class="icon exp-icon-noun_428398_cc"></i>
+            page.Finally, please <b>check your spam or junk folder
+            </b>for
+            replies to your ad especially if you chose to hide your email address.
+          </p>
+          <p class="profile">
+            
+            <font color=000099><b>PREMIUM ADS NOW AVAILABLE</b></font>
+            <br />
+            We can arrange for your ad to be automatically placed at the top of the list every day for as little as
+            $1.00 per day. Please click on the Premium button on the following screen for more details.
+          </p>
+
+          <ion-button type="button" expand="full" (click)="sendToModifiedAdPage()" class="ion-no-margin ion-no-padding">
+            Ok
+          </ion-button>
+
+        </div>
+      </div>
+    </ion-row>
+  </ion-content>
+</div>

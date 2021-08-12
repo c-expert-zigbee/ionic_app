@@ -1,0 +1,32 @@
+ion-content.auth-content {
+  .header-text {
+    display: block;
+    font-size: 17px;
+    font-family: 'Roboto-Light';
+    line-height: 20px;
+  }
+
+  form {
+    padding-bottom: 0;
+  }
+
+  .create-btn {
+    margin: 15px 0;
+  }
+
+  .terms-text {
+    display: block;
+    margin-top: 145px;
+    padding: 10px;
+    font-size: 12px;
+    font-family: 'Roboto-Light';
+
+    a {
+      color: #ffd1a2;
+    }
+  }
+
+  .input-box {
+    margin-bottom: 0;
+  }
+}

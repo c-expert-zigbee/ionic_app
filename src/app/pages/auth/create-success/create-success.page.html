@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <div class="welcome-icon">
+    <i class="icon exp-icon-noun_232512_cc"></i>
+  </div>
+  <h4 class="ion-no-margin welcome-text">Welcome to expatriates.com!</h4>
+  <div class="ion-padding-vertical welcome-content">
+    <p>We invite you to place a free classified ad and browse community classifieds ads in your city or country.</p>
+    <p>We have sent you an email regarding your registration confirmation.</p>
+    <p>You may need to check your email account's
+      <span class="ion-block">spam or junk </span>
+      mail folder for this message.
+    </p>
+  </div>
+  <ion-button expand="full" shape="round" (click)="goLogin()" class="return-btn">
+    <i class="icon exp-icon-arrow-left"></i>
+    Return to Sign in page
+  </ion-button>
+</ion-content>

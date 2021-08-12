@@ -1,0 +1,20 @@
+ion-header ion-toolbar {
+    height: 55px;
+}
+
+ion-content {
+    --background: white;
+
+    .heading {
+        font-size: 15px;
+        color: black;
+    }
+
+    .success-icon {
+        font-size: 90px;
+    }
+
+    ion-button {
+        --border-radius: 4px;
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "expatriates.com",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [{
+    "path": "/eapi",
+    "proxyUrl": "https://www.expatriates.com"
+  }],
+  "type": "angular"
+}

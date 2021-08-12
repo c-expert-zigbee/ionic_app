@@ -1,0 +1,33 @@
+.close-btn {
+  width: 100%;
+  text-align: right;
+  margin-top: env(safe-area-inset-top);
+
+  .icon-btn {
+    --padding-end: 6px;
+    --padding-top: 6px;
+
+    ion-icon {
+      font-size: 38px;
+    }
+  }
+}
+
+.page-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 25px;
+  padding-bottom: 78px;
+
+  ion-img {
+    width: 34px;
+    height: 34px;
+  }
+
+  ion-label {
+    margin-left: 8px;
+    font-size: 30px;
+    font-family: 'Roboto-Medium';
+  }
+}

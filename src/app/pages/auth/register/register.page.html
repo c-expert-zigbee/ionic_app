@@ -1,0 +1,32 @@
+<ion-content class="auth-content">
+  <app-auth-header></app-auth-header>
+
+  <ion-label class="ion-text-center header-text">
+    Your e-mail address is required <br /> to create an account.
+  </ion-label>
+
+  <form [formGroup]="regForm" (ngSubmit)="register()" class="ion-padding">
+    <ion-item lines="none" class="input-box ion-no-padding">
+      <ion-label>
+        <ion-icon name="mail-outline"></ion-icon>
+      </ion-label>
+      <ion-input type="email" placeholder="Enter your e-mail..." formControlName="email" (keyup.enter)="register()"
+        autocomplete="doNotAutoComplete">
+      </ion-input>
+    </ion-item>
+    <div *ngFor="let validation of validationMessages">
+      <div class="field-error" *ngIf="formControlHasError('email', validation)">
+        {{validation.message}}
+      </div>
+    </div>
+
+    <ion-button type="submit" expand="full" shape="round" color="secondary" class="create-btn"
+      [disabled]="!regForm.valid">
+      Create Account
+    </ion-button>
+  </form>
+
+  <ion-label class="ion-text-center terms-text">
+    By clicking Create Account you accept our <a (click)="openTerms()">Terms of Use.</a>
+  </ion-label>
+</ion-content>

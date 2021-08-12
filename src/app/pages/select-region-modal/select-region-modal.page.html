@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-label>Select Region</ion-label>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        Done
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="search" (ionChange)="searchTerm($event)" debounce="500" placeholder="Search for ..." class="ion-margin ion-no-padding"></ion-searchbar>
+
+  <ion-list class="ion-margin">
+    <ion-radio-group [(ngModel)]="countryOrCity.name">
+      <ion-item *ngFor="let region of filteredData">
+        <ion-label><small>{{region.showName}}</small></ion-label>
+        <ion-radio [value]="region.name"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

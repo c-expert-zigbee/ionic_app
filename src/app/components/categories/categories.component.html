@@ -1,0 +1,17 @@
+<ion-list *ngIf="categories && categories.length > 0">
+  <ng-container *ngFor="let c of categories">
+    <ion-item (click)="toogleCategory(c.category_id)">
+      <ion-icon size="small" slot="end" [name]="(c.show) ? 'chevron-down-outline' : 'chevron-forward-outline'">
+      </ion-icon>
+      <ion-label> <small> {{ c.title }} </small> </ion-label>
+    </ion-item>
+
+    <ng-container *ngIf="c.show">
+      <ion-item class="dropdown-list" *ngFor="let s of c.subcategories" (click)="openCategory(s)">
+        <ion-label color="primary">
+          <small> {{ s.title }} </small>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ng-container>
+</ion-list>

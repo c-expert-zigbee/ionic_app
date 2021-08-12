@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="post-ad"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>{{pageTitle}}</ion-label>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-toggle menu="catMenu">
+        <ion-button>
+          <ion-icon icon-only name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="post-progressbar">
+    <ion-col size="4">
+      <div class="single-bar active"></div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="single-bar"></div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="single-bar"></div>
+    </ion-col>
+  </ion-row>
+
+  <p class="post-header">1. Please select one of the following sub-categories:</p>
+
+  <ion-list class="ion-margin-bottom item-group-list">
+    <ion-item-group *ngIf="selCategories">
+      <ion-item-divider>
+        <ion-label>{{ selCategories.title}}</ion-label>
+      </ion-item-divider>
+      <ion-item *ngFor="let subcat of selCategories.subcategories" detail (click)="goNextStep(subcat)">
+        <div [innerHTML]="subcat.posting_description || subcat.title"></div>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

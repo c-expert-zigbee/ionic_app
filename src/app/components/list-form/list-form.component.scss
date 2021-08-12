@@ -1,0 +1,27 @@
+ion-select, ion-input {
+    padding-left: .7em !important;
+    font-size: 14px;
+    border: 1px solid #dedede;
+    background: #fff;
+    color: #131313;
+}
+.price-holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    > ion-input {
+        &:first-child {
+            margin-right: .3rem !important;
+        }
+        &:last-child {
+            margin-left: .3rem !important;
+        }
+    }
+}
+.picture-holder {
+    display: flex;
+    align-items: center;
+    ion-label {
+        padding-left: .7em;
+    }
+}

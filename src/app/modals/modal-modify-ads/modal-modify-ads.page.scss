@@ -1,0 +1,99 @@
+.modal-updateAds {
+    --background: white;
+
+    .form-ads {
+        padding-top: 35px;
+    }
+
+    .close-icon {
+        position: fixed;
+        top: 35px;
+        right: 0;
+    }
+
+    .title-text {
+        color: var(--ion-color-dark);
+        font-size: 16px;
+    }
+
+    .small-text {
+        font-size: 12px;
+    }
+
+    ion-input,
+    ion-textarea {
+        --padding-start: 8px;
+        border: 1px solid var(--ion-color-border);
+    }
+
+    .disabled-input {
+        background: lightgrey;
+    }
+
+    ion-item-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        ion-item {
+            width: 48%;
+        }
+    }
+
+    .box-btn-pucture {
+        display: flex;
+        margin-top: 16px;
+        margin-left: auto;
+        margin-right: auto;
+
+        div {
+            text-align: center;
+            margin-right: 25px;
+
+            ion-icon {
+                font-size: 1.5em;
+            }
+        }
+    }
+
+    .edit-buttons {
+        display: flex;
+        padding: 8px 16px 32px;
+        justify-content: space-between;
+
+        ion-button {
+            width: 48%;
+            --border-radius: 4px;
+        }
+    }
+
+    .error-message {
+        width: 100%;
+        color: red;
+        text-align: end;
+    }
+
+    .error-input {
+        border: 1px solid var(--ion-color-danger);
+    }
+}
+
+ion-content {
+    ion-item {
+        .box-holder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            ion-icon {
+                height: 20px;
+            }
+
+            .camera-image {
+                height: 41px;
+            }
+        }
+
+    }
+}

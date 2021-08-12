@@ -1,0 +1,48 @@
+ion-card {
+    margin-left: 0;
+    margin-right: 0;
+
+    img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    ion-card-header {
+        ion-card-subtitle {
+            &.ion-card-location {
+                margin-bottom: .5rem;
+                text-transform: initial;
+                display: flex;
+
+                &.ion-card-location-bottom {
+                    justify-content: space-between;
+
+                    >div {
+                        display: flex;
+                    }
+                }
+
+                ion-text {
+                    margin-left: .5em;
+                }
+            }
+
+            .post-date {
+                display: flex;
+                align-items: center;
+                font-size: 13px;
+                font-weight: 400;
+
+                .icon {
+                    margin-right: 4px;
+                }
+            }
+        }
+    }
+
+    ion-card-content {
+        padding-bottom: 0;
+    }
+}

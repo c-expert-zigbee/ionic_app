@@ -1,0 +1,157 @@
+<ion-content class="modal-updateAds">
+
+    <form [formGroup]="adsForm" class="form-ads">
+        <ion-item lines="none">
+            <ion-icon class="close-icon" slot="end" name="close-outline" (click)="onClose()"></ion-icon>
+            <ion-label position="stacked" class="ion-text-wrap">
+                <p class="title-text">Posting Title <sup>*</sup></p>
+                <p class="small-text">(Please briefly describe the ad. Please do not use all capital letters.)</p>
+            </ion-label>
+            <ion-input formControlName="title" [ngClass]="formControlHasError('title') ? '' : 'error-input'">
+            </ion-input>
+            <p class="error-message" *ngIf="!formControlHasError('title')">
+                This field is required
+            </p>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">
+                <p class="title-text">Description <sup>*</sup></p>
+            </ion-label>
+            <ion-textarea rows="5" formControlName="description"
+                [ngClass]="formControlHasError('description') ? '' : 'error-input'"></ion-textarea>
+            <p class="error-message" *ngIf="!formControlHasError('description')">
+                This field is required
+            </p>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">
+                <p class="title-text">Category</p>
+            </ion-label>
+            <ion-input class="disabled-input" formControlName="category_title" [attr.disabled]="true"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">
+                <p class="title-text">Region</p>
+            </ion-label>
+            <ion-input class="disabled-input" formControlName="region_name" [attr.disabled]="true"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">
+                <p class="title-text">New Region</p>
+            </ion-label>
+            <ion-input formControlName="new_region"></ion-input>
+        </ion-item>
+        <ion-item-group lines="none">
+            <ion-item lines="none">
+                <ion-label position="stacked">
+                    <p class="title-text">Currency</p>
+                </ion-label>
+                <ion-input formControlName="currency"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label position="stacked">
+                    <p class="title-text">Price</p>
+                </ion-label>
+                <ion-input formControlName="item_price" type="number"></ion-input>
+            </ion-item>
+        </ion-item-group>
+        <ion-item>
+            <ion-label position="stacked" class="ion-text-wrap">
+                <p class="title-text">Contact Number</p>
+                <p class="small-text">(if you wish to provide more specific information about the location, please enter
+                    it here.)</p>
+            </ion-label>
+            <ion-input type="number" formControlName="contact_number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked" class="ion-text-wrap">
+                <p class="title-text">Pictures (up to 8 pictures)</p>
+                <p class="small-text">(Please limit image files to a maximize size of 100K bytes each.)</p>
+            </ion-label>
+
+            <div class="images-box" *ngIf="pictures.length > 0">
+                <div class="pictures-holder ion-padding" *ngFor="let item of pictures; let i = index">
+                    <ion-row class="">
+                        <ion-col size="6">
+                            <img [src]="item?.picture">
+                        </ion-col>
+                        <ion-col size="6">
+
+                            <ion-item lines="none" class="ion-no-padding ion-padding-top ion-padding-bottom">
+                                <ion-col size="6" (click)="onTakePfoto(1, i)" class="box-holder">
+                                    <img class="camera-image" src="assets/images/rest-icons/noun_752662_cc.png">
+                                    <p class="ion-padding-top post-header">
+                                        Take Picture
+                                    </p>
+                                </ion-col>
+                                <ion-col size="6" (click)="onTakePfoto(0, i)" class="box-holder">
+                                    <img class="camera-image" src="assets/images/rest-icons/noun_752662_cc.png">
+                                    <p class="ion-padding-top post-header">
+                                        Open gallery
+                                    </p>
+                                </ion-col>
+                            </ion-item>
+
+                        </ion-col>
+                    </ion-row>
+                    <ion-button class="" *ngIf="item?.picture" color="danger" expand="full"
+                        (click)="onDeletePicture(this.item)">Remove</ion-button>
+                </div>
+            </div>
+        </ion-item>
+
+        <ion-item lines="none" class="ion-no-padding ion-padding-top ion-padding-bottom" *ngIf="pictures.length < 8">
+            <ion-col size="6" (click)="onTakePfoto(1)" class="box-holder">
+                <img class="camera-image" src="assets/images/rest-icons/noun_752662_cc.png">
+                <p class="ion-padding-top post-header">
+                    Take Picture
+                </p>
+            </ion-col>
+            <ion-col size="6" (click)="onTakePfoto(0)" class="box-holder">
+                <img class="camera-image" src="assets/images/rest-icons/noun_752662_cc.png">
+                <p class="ion-padding-top post-header">
+                    Open gallery
+                </p>
+            </ion-col>
+        </ion-item>
+
+        <ion-radio-group formControlName="hide_email" mode="md">
+            <ion-item lines="none">
+                <ion-label class="ion-text-wrap">
+                    <p class="title-text">E-mail Privacy</p>
+                    <p class="small-text">(Please indicate whether the email specified above should be displayed in your
+                        published ad.)</p>
+                </ion-label>
+            </ion-item>
+            <div class="profile-type">
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="title-text">Use E-mail Contact Form.</p>
+                        <p class="small-text">(Only your e-mail domain name is displayed.)</p>
+                    </ion-label>
+                    <ion-radio slot="start" value="2"></ion-radio>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="title-text">Do <u>not</u> display my e-mail address.</p>
+                        <p class="small-text">(Be sure to provide a phone number or other
+                            <br />contact information in the description.)</p>
+                    </ion-label>
+                    <ion-radio slot="start" value="1"></ion-radio>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="title-text">Display my e-mail address.</p>
+                    </ion-label>
+                    <ion-radio slot="start" value="0"></ion-radio>
+                </ion-item>
+            </div>
+        </ion-radio-group>
+        <div class="edit-buttons">
+            <ion-button expand="block" color="light" (click)="onClose()">Cancel</ion-button>
+            <ion-button expand="block" color="primary" [disabled]="!adsForm.valid" (click)="onSave()">Save</ion-button>
+        </div>
+    </form>
+
+</ion-content>

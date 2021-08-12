@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button menu="mainMenu" slot="start" autoHide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <ion-label>{{pageTitle}}</ion-label>
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="openFilter()">
+                <ion-icon *ngIf="!showFilter" icon-only name="search-outline" class="search-icon"></ion-icon>
+                <ion-icon *ngIf="showFilter" icon-only name="close" class="close-icon"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding">
+    <ion-list [ngClass]="showFilter ? 'search-filter' : 'search-filter search-filter-close'">
+        <ion-item lines="none" class="select-item">
+            <ion-select placeholder="Select Sort" [(ngModel)]="searchFilter.sort">
+                <ion-select-option value="c_asc">CREATION DATE ASC</ion-select-option>
+                <ion-select-option value="c_desc">CREATION DATE DESC</ion-select-option>
+                <ion-select-option value="p_asc">PUBLISHED DATE ASC</ion-select-option>
+                <ion-select-option value="p_desc">PUBLISHED DATE DESC</ion-select-option>
+                <ion-select-option value="e_asc">EXPIRATION DATE ASC</ion-select-option>
+                <ion-select-option value="e_desc">EXPIRATION DATE DESC</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item lines="none" class="select-item">
+            <ion-select placeholder="Select Filter" [(ngModel)]="searchFilter.filter">
+                <ion-select-option value="active">Active</ion-select-option>
+                <ion-select-option value="inactive">Inactive</ion-select-option>
+                <ion-select-option value="expired">Expired</ion-select-option>
+                <ion-select-option value="premium">Premium</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-searchbar #searchInput [(ngModel)]="searchFilter.q" placeholder="Search in your Ads"
+            class="ion-margin ion-no-padding modal-searchbar">
+        </ion-searchbar>
+        <ion-button expand="full" shape="round" color="light" (click)="resetMyAdsFilters()" class="ion-margin">
+            Reset Filters
+        </ion-button>
+        <ion-button expand="full" shape="round" (click)="searchAds()" class="ion-margin">
+            Search
+        </ion-button>
+    </ion-list>
+
+    <div *ngIf="showMsg" class="ion-padding empty-message">
+        <div class="ion-padding empty-message-icon">
+            <i class="icon exp-icon-noun_89024"></i>
+        </div>
+        <p>You have no Ads posted yet</p>
+        <ion-button expand="full" shape="round" (click)="goPostAd()">
+            <ion-icon slot="start" name="add-outline" class="icon-left"></ion-icon>
+            Post your first Ad
+        </ion-button>
+    </div>
+
+    <ion-list *ngIf="!showMsg" lines="none" class="ion-margin-bottom">
+        <ion-card *ngFor="let ads of myAds" class="ads-card" (click)="editmyAds(ads.posting_id)">
+            <h4>{{ads.display_title}}</h4>
+            <ion-item>
+                <ion-label>
+                    Status :
+                    <span [class.danger]="ads.ad_status == 'Inactive'">{{ads.ad_status}}</span>
+                </ion-label>
+                <ion-text slot="end">
+                    <i class="icon exp-icon-watch"></i> {{ads.published_date_epoch | amFromUnix}}
+                </ion-text>
+            </ion-item>
+        </ion-card>
+    </ion-list>
+
+    <div *ngIf="messageFlag" class="ion-padding ion-text-center try-search">
+        <ion-icon name="search"></ion-icon>
+        <p>Sorry, we couldn't find any results.</p>
+        <ion-button shape="round" color="bright" class="ion-padding" (click)="showKeyBoard()">
+            Try a new Search
+        </ion-button>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="goPostAd()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

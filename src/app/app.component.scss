@@ -1,0 +1,108 @@
+ion-menu {
+  .menu-content {
+    --padding-top: calc(env(safe-area-inset-top) + 16px);
+    --background: var(--ion-color-background) !important;
+
+    ion-list {
+      background: var(--ion-color-background);
+
+      ion-list-header {
+        margin-bottom: 16px;
+
+        ion-img {
+          width: 20px;
+          height: 20px;
+        }
+
+        ion-label {
+          margin: 0 0 0 4px;
+          font-size: 18px;
+          font-family: 'Roboto-Medium';
+        }
+      }
+
+      ion-item.item {
+        min-height: 52px;
+        --background: var(--ion-color-background);
+
+        ion-label {
+          color: #ffffff;
+          font-size: 14px;
+        }
+
+        ion-icon {
+          margin-inline-end: 32px;
+          color: #ffffff;
+          font-size: 20px;
+        }
+
+        &.gold-item {
+          --padding-start: 16px;
+
+          ion-label {
+            color: var(--ion-color-gold);
+          }
+        }
+
+        &.version-item {
+          --padding-start: 16px;
+
+          ion-label {
+            color: var(--ion-color-gold);
+            font-style: italic;
+          }
+        }
+      }
+
+      .place-ad-btn {
+        height: 39px;
+        margin: 32px 16px;
+        font-size: 14px;
+
+        ion-icon {
+          position: absolute;
+          left: 16px;
+        }
+      }
+
+      ion-item-divider {
+        width: 80%;
+        min-height: 1px;
+        height: 1px;
+        margin-left: 16px;
+        background: var(--ion-color-gold);
+      }
+    }
+  }
+
+  &[menuid='catMenu'] {
+    ion-header ion-toolbar {
+      --background: #348edb;
+
+      ion-button ion-icon {
+        margin: 0 8px;
+      }
+    }
+
+    .slide-menu-right-icon {
+      font-size: 140% !important;
+      color: #3c2fd3 !important;
+    }
+
+    .side-menu-text-color {
+      color: #444444 !important;
+    }
+
+    .slide-menu-right-icon-right {
+      font-size: 140% !important;
+      color: grey !important;
+    }
+    .padding-left {
+      padding-left: 15px;
+    }
+    .subcategorie-font {
+      font-size: 83%;
+      color: dodgerblue !important;
+    }
+  }
+}

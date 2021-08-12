@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Thank You!
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-label class="heading">
+    <strong>Remove:</strong> {{ad_title}}
+  </ion-label>
+
+  <div class="ion-text-center ion-margin-top">
+    <ion-icon class="success-icon" color="secondary" name="checkmark-circle-outline"></ion-icon>
+  </div>
+
+  <p class="ion-text-center">
+    Your ad has been sheduled to be deleted and will be removed from the site shortly.
+    Thankyou for using <strong>expatriates.com</strong>
+  </p>
+
+  <ion-button expand="block" (click)="close()" class="ion-margin-top">OK</ion-button>
+</ion-content>

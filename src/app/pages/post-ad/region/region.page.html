@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="data.href"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>{{pageTitle}}</ion-label>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-toggle menu="catMenu">
+        <ion-button>
+          <ion-icon icon-only name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="post-progressbar">
+    <ion-col size="4">
+      <div class="single-bar active"></div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="single-bar active"></div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="single-bar"></div>
+    </ion-col>
+  </ion-row>
+
+  <p class="post-header">2. Posting Category <a> - {{ data.postAd.category_title }}</a></p>
+
+  <ion-list class="ion-margin-bottom item-group-list">
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Please select the city or (country) where you are located:</ion-label>
+      </ion-item-divider>
+      <ion-item lines="none" class="ion-margin-top">
+        <ion-label class="ion-text-wrap desc-label">
+          <ion-text>
+            Posting City*
+          </ion-text>
+          <p class="ion-padding-top">
+            (For maximum exposure, we recommend you place your ad in the city nearest you as the ad will also
+            automatically appear in the corresponding country and the International section.)
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none" detail="false" class="ion-margin-horizontal input-border" (click)="selectRegion()">
+        <ion-input [value]="countryOrCity?.name" readonly placeholder="Select city or country"></ion-input>
+        <ion-icon slot="end" name="caret-down" class="arrow-down-icon"></ion-icon>
+      </ion-item>
+
+      <hr class="ion-margin" />
+
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap desc-label ion-no-margin">
+          <ion-text>
+            Other Locations:
+          </ion-text>
+          <p class="ion-padding-top">
+            (if you wish to provide more specific information about the location, please enter it here.)
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item lines="none" detail="false" class="ion-margin input-border">
+        <ion-input [(ngModel)]="data.postAd.regionTyped"></ion-input>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-button (click)="goNextStep()" [disabled]="!countryOrCity?.name" expand="full" class="next-full-btn">
+    Next
+    <ion-icon name="chevron-forward-outline"></ion-icon>
+  </ion-button>
+</ion-footer>

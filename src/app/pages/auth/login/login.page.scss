@@ -1,0 +1,32 @@
+ion-content.auth-content {
+  .login-btn {
+    margin: 25px auto 0;
+  }
+
+  .remember-forgot {
+    margin: 32px 0;
+    display: flex;
+
+    ion-item {
+      width: 50%;
+      --background: transparent;
+
+      ion-checkbox {
+        margin-right: 16px;
+      }
+
+      ion-label {
+        color: white;
+        font-size: 14px;
+
+        &.forgot-text {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .create-btn {
+    margin: 8px 16px;
+  }
+}

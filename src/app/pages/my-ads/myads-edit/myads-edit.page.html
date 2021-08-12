@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start" color="primary" (click)="onBack()">
+            <ion-button color="primary">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            <ion-label>{{pageTitle}}</ion-label>
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-menu-toggle menu="catMenu">
+                <ion-button>
+                    <ion-icon icon-only name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+            </ion-menu-toggle>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="myads-edit-page ion-margin">
+
+    <ion-list>
+        <ion-item class="header" lines="none" *ngIf="ads_item.picture1 !== '1'">
+            <ion-label> {{ads_item.display_title}} </ion-label>
+            <ion-button class="activate-btn" slot="end" (click)="activateAd()">Activate</ion-button>
+        </ion-item>
+        <ion-item *ngIf="pictures.length > 0 ">
+            <ion-button class="activate-btn-slide" slot="end" (click)="activateAd()">Activate</ion-button>
+            <ion-slides pager="true" [options]="slideOpts">
+                <ion-slide *ngFor="let url of pictures">
+                    <img [src]="url" alt="ad-pic" />
+                </ion-slide>
+            </ion-slides>
+        </ion-item>
+        <ion-item lines="none" class="grey-color">
+            <ion-label>
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ ads_item.published_date | date:'EEEE, MMMM dd, yyyy' }}
+            </ion-label>
+            <ion-text slot="end">
+                <i class="icon exp-icon-watch"></i> {{ ads_item.published_date_epoch | amFromUnix }}
+            </ion-text>
+        </ion-item>
+        <ion-item class="grey-color ">
+            <ion-label>
+                <ion-icon name="location-outline"></ion-icon>
+                {{ ads_item.region_name }} - {{ ads_item.category_title}}
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-text>
+                <div>
+                    {{ ads_item.display_description }}
+                </div>
+            </ion-text>
+        </ion-item>
+        <ion-item lines="none">
+            <div class="box-date">
+                <ion-icon name="open-outline"></ion-icon>
+                <ion-text>
+                    <p>Position ID: <span>{{ ads_item.posting_id | date:'EEEE, MMMM dd, yyyy' }}</span></p>
+                    <p>Create Date: <span>{{ ads_item.creation_date | date:'EEEE, MMMM dd, yyyy' }}</span></p>
+                    <p>Published Date: <span>{{ ads_item.published_date | date:'EEEE, MMMM dd, yyyy' }}</span></p>
+                    <p>Expiration Date: <span>{{ ads_item.expiration_date | date:'EEEE, MMMM dd, yyyy' }}</span></p>
+                    <p>Status: <span>{{ ads_item.ad_status }}</span></p>
+                </ion-text>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-button *ngIf="shown_block_btn === false" class="modify-btn" expand="block" color="medium" fill="outline"
+        (click)="onModify()">
+        <ion-label>Modify</ion-label>
+    </ion-button>
+
+    <div class="active-ads-btn" *ngIf="shown_block_btn === true">
+        <ion-button expand="block" color="medium" fill="outline" (click)="onRemove()">
+            <ion-label>Remove</ion-label>
+        </ion-button>
+        <ion-button expand="block" color="medium" fill="outline" (click)="onModify()">
+            <ion-label>Modify</ion-label>
+        </ion-button>
+        <ion-button expand="block" color="medium" fill="outline" (click)="onPremium()">
+            <ion-label>Premium</ion-label>
+            <ion-icon slote="end" name="open-outline"></ion-icon>
+        </ion-button>
+    </div>
+
+</ion-content>

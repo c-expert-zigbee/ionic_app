@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="subject">{{ subject.data.posting.category_title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="share()">
+        <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-ad-page">
+  <ion-row class="profile-ad-page">
+    <ion-col *ngIf="subject">
+      <ion-slides [pager]="true" *ngIf="images">
+        <ion-slide *ngFor="let image of images">
+          <img src="https://www.expatriates.com/img/{{subject.data.posting.posting_id}}.{{image}}.jpg">
+        </ion-slide>
+      </ion-slides>
+
+      <ion-row class="profile-info ion-margin-bottom ion-padding-bottom ion-padding-top">
+        <ion-col size="7" class="ion-no-padding">
+          <ion-list>
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-icon color="medium" name="calendar-outline"></ion-icon>
+              <ion-datetime color="light" class="small ion-padding-start" displayFormat="DDDD, MMMM DD, YYYY"
+                value="{{ subject.data.posting.creation_date}}"></ion-datetime>
+            </ion-item>
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-icon color="medium" class="ion-padding-end" name="folder-outline"></ion-icon>
+              <ion-text class="ion-text-sm small">
+                {{ subject.data.posting.category_title }}
+              </ion-text>
+            </ion-item>
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-icon color="medium" class="ion-padding-end" name="location-outline"></ion-icon>
+              <ion-text class="small">
+                {{ subject.data.posting.region_name }} <span *ngIf="subject.data.posting.new_region">(
+                  {{ subject.data.posting.new_region }} )</span>
+              </ion-text>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="5" class="ion-no-padding">
+          <ion-list>
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-icon color="medium" class="ion-padding-end" name="time-outline"></ion-icon>
+              <ion-text class="small">
+                {{ subject.data.posting.published_date_epoch | amFromUnix }}
+              </ion-text>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-text class="small ion-margin-top" innerHTML=" {{ subject.data.posting.description }}"></ion-text>
+
+      <ion-row class="ion-margin-top" *ngIf="subject.data.posting.email">
+        <ion-col class="ion-no-padding" size="10">
+          <a class="send-button" href="mailto:{{ subject.data.posting.email }}">
+            <ion-button expand="full" color="secondary" size="large">
+              <ion-icon class="ion-padding-end" name="mail-outline"></ion-icon>
+              <ion-text class="small">reply to {{ subject.data.posting.email }}</ion-text>
+            </ion-button>
+          </a>
+        </ion-col>
+
+        <ion-col class="ion-no-padding" size="2">
+          <ion-button (click)="copyText(subject.data.posting.email)" class="ion-border" expand="full" size="large"
+            color="medium" fill="outline-medium">
+            <ion-icon name="clipboard-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-list>
+        <ion-item class="ion-no-padding">
+          <ion-icon color="medium" class="ion-padding-end" name="exit-outline"></ion-icon>
+          <ion-text class="small">
+            Posting ID :
+          </ion-text>
+          <ion-text color="tertiary" class="small" (click)="openPost(subject.data.posting.posting_id)">
+            {{ subject.data.posting.posting_id }}
+          </ion-text>
+        </ion-item>
+        <ion-item class="ion-no-padding" lines="none">
+          <ion-icon color="medium" class="ion-padding-end" name="alert-circle-outline"></ion-icon>
+          <ion-text class="small">
+            Problem with this Ad? :
+          </ion-text>
+          <ion-text color="tertiary" class="small" slot="end">
+            Report Abuse
+          </ion-text>
+        </ion-item>
+      </ion-list>
+
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<div class="bar bar-footer footer_gradient" *ngIf="contact_number">
+  <a class="item item-icon-left item-icon-right button-full" href="tel:{{contact_number}}">
+    <i class="icon exp-icon-phone"></i>
+    <div class="contact-phone">{{contact_number}}</div>
+  </a>
+</div>

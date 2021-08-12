@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon icon="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label *ngIf="pageTitle">{{pageTitle}}</ion-label>
+      <ion-label *ngIf="!pageTitle">
+        <img src="assets/icon/logo-icon.svg" />
+        <span>expatriates.com</span>
+      </ion-label>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFilter()">
+        <ion-icon *ngIf="!showFilter" icon-only name="search-outline" class="search-icon"></ion-icon>
+        <ion-icon *ngIf="showFilter" icon-only name="close" class="close-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="search-form ion-padding-top ion-padding-horizontal" *ngIf="showFilter">
+    <app-list-form (searchValues)="submit($event)" (toogleForm)="openFilter($event)" [keyword]="keyword">
+    </app-list-form>
+  </div>
+
+  <div *ngIf="items && items.length > 0" class="ion-padding">
+    <ng-container *ngFor="let i of items">
+      <app-list-card [subject]="i"></app-list-card>
+    </ng-container>
+  </div>
+
+</ion-content>

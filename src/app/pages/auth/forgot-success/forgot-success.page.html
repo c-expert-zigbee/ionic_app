@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <div class="ion-margin-vertical lock-icon">
+    <ion-icon name="lock-open-outline"></ion-icon>
+  </div>
+
+  <div class="ion-padding messages">
+    <p>A message has been sent to your email address!</p>
+    <p>Please click on the link in the message to reset your password.</p>
+    <p>
+      You may need to check your email account's <b>spam or junk mail folder</b> for this message.
+    </p>
+  </div>
+
+  <ion-button expand="full" shape="round" (click)="goLogin()" class="return-btn">
+    <i class="icon exp-icon-arrow-left"></i>
+    Return to Sign in page
+  </ion-button>
+</ion-content>

@@ -1,0 +1,13 @@
+ion-content {
+  --padding-top: 79px;
+  --background: white;
+
+  img {
+    height: 100px;
+    margin-bottom: 18px;
+  }
+
+  p {
+    color: var(--ion-color-text-title);
+  }
+}

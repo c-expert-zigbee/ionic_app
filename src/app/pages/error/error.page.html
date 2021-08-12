@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>{{pageTitle}}</ion-label>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-toggle menu="catMenu">
+        <ion-button>
+          <ion-icon icon-only name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <img src="assets/images/rest-icons/noun_919604_cc.png" />
+  <p class="ion-padding">
+    Unable to connect to expatriates.com<br />
+    Please, check your internet connection.
+  </p>
+
+  <div class="ion-padding">
+    <ion-button expand="full" (click)="goHome()" class="ion-margin-vertical">
+      Home
+    </ion-button>
+    <ion-button expand="full" color="medium" (click)="goPrevPage()">
+      Try Again
+    </ion-button>
+  </div>
+</ion-content>

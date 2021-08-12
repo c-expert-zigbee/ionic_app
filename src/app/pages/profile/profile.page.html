@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <app-main-toolbar [title]="pageTitle"></app-main-toolbar>
+</ion-header>
+
+<ion-content class="profile-bg-content">
+
+  <ion-list lines="none">
+    <ion-list-header class="header-list">
+      <ion-item-group class="header-group">
+        <ion-avatar class="avatar-user">
+          <img src="assets/images/profile/noun_919803_cc.png" alt="">
+        </ion-avatar>
+        <ion-button class="btn-edit" [routerLink]="['/profile/profile-edit']">
+          Edit Profile
+        </ion-button>
+        <ion-text>
+          <p class="fullname-user">{{ profile.first_name }} {{ profile.last_name }}</p>
+        </ion-text>
+      </ion-item-group>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon slot="start" color="tertiary" src="assets/images/profile/icon-profile-email.svg"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="tertiary">
+          <h3>Email</h3>
+        </ion-text>
+        <ion-text>
+          <p class="text-item">{{ profile.email }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" color="tertiary" name="phone-portrait-outline"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="tertiary">
+          <h3>Contact Number</h3>
+        </ion-text>
+        <ion-text>
+          <p class="text-item">{{ profile.phone }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="location-outline" color="tertiary" slot="start"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="tertiary">
+          <h3>City</h3>
+        </ion-text>
+        <ion-text>
+          <p class="text-item">{{ profile.region_name }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" color="tertiary" src="assets/images/profile/icon-profile-briefcase.svg"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="tertiary">
+          <h3>Company Name</h3>
+        </ion-text>
+        <ion-text>
+          <p class="text-item">{{ profile.company_name }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" color="tertiary" src="assets/images/profile/icon-profile-chatbox.svg"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="tertiary">
+          <h3>Preffered Language</h3>
+        </ion-text>
+        <ion-text>
+          <p class="text-item">{{ profile.language }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="reader-outline" color="tertiary" slot="start"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="tertiary">
+          <h3>Profile Type</h3>
+        </ion-text>
+        <ion-text>
+          <p class="text-item">{{ profile.type }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
