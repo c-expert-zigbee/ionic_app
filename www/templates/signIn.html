@@ -1,0 +1,69 @@
+<ion-view ng-controller="SignInCtrl" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')"
+  view-title="Sign In" hide-nav-bar="true" class="ion-view-background-account-page">
+  <ion-content class="ion-view-background-account-page">
+    <div class="account-page sign_in_page text-center">
+      <a class="padding pull-right button-icon ion-close" style="color:white !important;font-size:200%;font:bold;position:relative;z-index:999;"
+        on-touch="goBack()"></a>
+      <div class="account-page-logo">
+        <div>
+          <img src="img/logo-icon_svg.svg" />
+          <span class="logo-text"><strong>expatriates.com</strong></span>
+        </div>
+      </div>
+      <div class="account-page-bottom">
+        <form class="padding" name="loginpage" id="loginpage" novalidate ng-submit="login(loginpage)">
+          <div ng-show="showErr" class="list">
+            <center class="alert-box-border-for-bg-blue">
+              <div ng-if="onlineStatus && errorCode != ''">
+                <span ng-bind="('Please, correct the following error.')"></span>
+                <br />
+                <b ng-bind="errorCode"></b> - <span ng-bind="errorMessage"></span>
+              </div>
+              <div ng-if="onlineStatus && errorCode === ''">
+                <span ng-bind="'Please, check your internet connection.'"></span>
+              </div>
+              <div ng-if="!onlineStatus">
+                <span ng-bind="'Please, check your internet connection.'"></span>
+              </div>
+            </center>
+          </div>
+          <div class="form-group">
+            <div class="input-icon-left">
+              <span class="icon-on-left"><i class="input_icon exp-icon-noun_28529_cc"></i></span>
+              <input class="form-control" type="email" placeholder="Email" name="Email" id="Email" ng-model="loginData.email"
+                ng-pattern='/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
+                required />
+            </div>
+          </div>
+          <div ng-show="(submitted || loginpage.Email.$touched) && (loginpage.Email.$error.pattern || loginpage.Email.$error.required)"
+            ng-messages="loginpage.Email.$error">
+            <div class="form-error-sign-in" ng-message="pattern">Email is not valid&nbsp;</div>
+            <div class="form-error-sign-in" ng-message="required">This field is required&nbsp;</div>
+          </div>
+          <div class="form-group">
+            <div class="input-icon-left">
+              <span class="icon-on-left"><i class="input_icon pass_icon exp-icon-noun_138762_cc2"></i></span>
+              <input class="form-control" name='Password' id='Password' type='password' placeholder="Password" ng-model="loginData.password"
+                required />
+            </div>
+          </div>
+          <div ng-show="(submitted || loginpage.Password.$touched) && (loginpage.Password.$error.required)" ng-messages="loginpage.Password.$error">
+            <div class="form-error-sign-in" ng-message="required">This field is required&nbsp;</div>
+          </div>
+          <div class="form-group">
+            <button class="button button-full login-button-color blue_gradient" type="submit">Login</button>
+          </div>
+          <div class="row list">
+            <div class="col col-60">
+              <ion-checkbox class="rememer-text-color" ng-model="remember" ng-click="checkRemember(remember)">Remember me</ion-checkbox>
+            </div>
+            <div class="forgot-text-color col col-40">
+              <a class="forgot-text-color" href="#/forgotPassword">Forgot Password?</a>
+            </div>
+          </div>
+          <button class="btn btn_dark-blue" type="button" ng-click="goToCreatePage()">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

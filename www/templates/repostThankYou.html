@@ -1,0 +1,24 @@
+
+<ion-view ng-controller="Activated" view-title="Thank You!">
+	<ion-content class="ion-view-background-posting-ad padding">
+	
+		<!-- Start - Posting Title  with hr line--> 
+
+		<div class="padding-bottom">Repost: 
+			<span class="profile" ng-bind-html="classifiedData.posting.title"></span>
+		</div>
+
+
+		<center class="padding checked-icon">
+			<i class="icon ion-checkmark"></i>
+		</center>
+		<center class="padding-top">
+			<h4 class="profile">Your ad has been reposted.<br/>Thank you!</h4> 
+		</center>
+
+		<div class="padding-top"></div>
+		<button type="button" class="icon-right ion-edit button button-full create-button-color"  ng-click="goToModify()">
+			Modify
+		</button>		
+	</ion-content>
+</ion-view>

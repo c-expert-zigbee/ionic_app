@@ -1,0 +1,26 @@
+<ion-view ng-controller="GetModifyLink">
+	<ion-content class="">
+		<div class="container">
+			<div class="main-content cgi-content">
+				<form name="modifyAdVerify" id="modifyAdVerify" novalidate ng-submit="getModifyLink(modifyAdVerify)" class='steps-form'>
+					<p>Please enter the email address you used to place your ad(s).</p>
+					<p>
+						<strong>Your Email Address:</strong>
+						<input type="email" name="email"  id="email"  ng-model="modifyLinkObj.email"
+						 ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+						 required />
+						 <div ng-show="submitted || modifyAdVerify.email.$touched" ng-messages="modifyAdVerify.email.$error">
+		                  <div class="required" ng-message="pattern">Email is not valid.</div>
+		                  <div class="required" ng-message="required">This field is required.</div>
+		                </div>
+					</p>
+					<p>
+						<div class="btn-mobile center-column post-info">
+							<button class='btn secondary big' id="submit" type='submit'>Send Hyperlinks</button>
+						</div>
+					</p>
+				</form>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

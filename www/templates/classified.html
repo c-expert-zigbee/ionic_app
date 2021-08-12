@@ -1,0 +1,203 @@
+<ion-view ng-controller="ClassifiedCtrl">
+    <ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear header-item" on-touch="goBack()">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button back-button buttons button-clear header-item" ng-click="share()">
+            <i class="icon ion-ios-upload-outline"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-title>{{classifiedData.posting.category_title}}</ion-nav-title>
+    <ion-content class="ion-content-background" ng-class="{'has-footer': classifiedData.posting.contact_number != undefined && classifiedData.posting.contact_number != '' }">
+        <!-- POSTING TOP -->
+        <div class="posting_top">
+            <div ng-if="firstImageUrl">
+                <div>
+                    <ion-slide-box does-continue="true" active-slide="0" pager-click="slide(index)" ng-click="openModal()">
+                        <ion-slide ng-repeat="oImage in items">
+                            <div ng-if="oImage.src" class="one_slide_image" style="background-image: url({{oImage.src}})"></div>
+                        </ion-slide>
+                    </ion-slide-box>
+                    <h4 class="posting_title" ng-bind-html="classifiedData.posting.display_title">
+                    </h4>
+                </div>
+            </div>
+
+            <div ng-if="!firstImageUrl" class="no_image">
+                <div class="no_image_box">
+                    <h4 class="posting_title" style="max-width: none;" ng-bind-html="classifiedData.posting.display_title">
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <!-- POSTING TOP ends -->
+        <div ng-if="!hideStaticData" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')">
+            <div ng-if="showMsg" class="list">
+                <div class="text-center alert-box notice alert-box-border">
+                    <span ng-bind="message"></span>
+                </div>
+            </div>
+            <div class="list">
+                <div class="posting_header">
+                    <div class="row">
+                        <div class="col">
+                            <i class="icon exp-icon-noun_545375_cc"></i>
+                            <span ng-bind-html="convertDate(classifiedData.posting.published_date)"></span>
+                        </div>
+                        <div class="col col-auto time_col">
+                            <i class="icon exp-icon-noun_927405_cc"></i>
+                            <span am-time-ago="classifiedData.posting.published_date_epoch | amFromUnix"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <i class="posting-detail-category-icon-size icon ion-android-folder-open"></i>
+                            <span ng-bind-html="classifiedData.posting.category_title">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <i class="icon exp-icon-noun_962895_cc"></i>
+                            <span ng-bind-html="classifiedData.posting.region_name">
+                            </span>
+                            <span ng-if="classifiedData.posting.new_region && classifiedData.posting.new_region != ''">
+                                (<span ng-bind-html="classifiedData.posting.new_region"></span>)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-hr-line"></div>
+                <div class="padding-left padding-right" ng-bind-html="classifiedData.posting.display_description"></div>
+                <div class="row padding-left padding-right posting_email_row" ng-if="(classifiedData.posting.hide_email == 2 || classifiedData.posting.hide_email == 0)">
+                    <div class="col bar-assertive item item-icon-left" ng-class="{'col-85': classifiedData.posting.hide_email == 0}">
+                        <div ng-if="(classifiedData.posting.hide_email == 2 || classifiedData.posting.hide_email == '2')">
+                            <div class="bar-assertive item item-icon-left" ng-click="goToReply(postingId)">
+                                <a style="color:#ffffff !important;font-size:85%">
+                                    <strong>reply to <span ng-bind-html="classifiedData.posting.email"></span></strong>
+                                </a>
+                                <i class="icon ion-ios-email-outline"></i>
+                            </div>
+                        </div>
+                        <div ng-if="(classifiedData.posting.hide_email == 0 || classifiedData.posting.hide_email == '0')">
+                            <div class="bar-assertive item item-icon-left" ng-click="emailContactDetails()">
+                                <a style="color:#ffffff !important;font-size:85%">
+                                    <strong>reply to <span ng-bind-html="classifiedData.posting.email"></span></strong>
+                                </a>
+                                <i class="icon ion-ios-email-outline"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="(classifiedData.posting.hide_email == 0 || classifiedData.posting.hide_email == '0')"
+                        class="col col_copy">
+                        <button class="copy_clipboard_btn" ng-click="copyToClipBoard(classifiedData.posting.email)">
+                            <i style="font-size:150%" class="ion-clipboard"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="posting_footer">
+                    <div class="item item-icon-left" ng-click="sentToPostingPageExt(classifiedData.posting.posting_id);">Posting
+                        ID :
+                        <a href=""><span ng-bind-html="classifiedData.posting.posting_id">
+                            </span></a>
+                        <i class="icon exp-icon-noun_428398_cc"></i>
+                    </div>
+                    <div class="list-hr-line"></div>
+                    <div class="item item-icon-left">Problem with this Ad?
+                        <div class="pull-right" ng-click="postingFlag('S')"><a>Report Abuse</a></div>
+                        <i class="icon exp-icon-noun_543419_cc"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/ng-template" id="thankyou-report-abuse-modal.html">
+            <div class="modal remove_ad_modal">
+                <ion-content>
+                    <div class="remove_ad_content padding">
+                        <div class="text-center">
+                            <h3>Thank You!</h3>
+                        </div>
+                        <div class="hr-line"></div>
+                        <center class="padding report-flag-icon">
+                            <i class="icon ion-ios-flag-outline"></i>
+                        </center>
+                        <div class="text-center padding-top">
+                            <div class="profile">Thank you for reporting this problem.<br/> If enough people (more than one) report the same problem,
+                                the ad will be automatically removed.
+                            </div>
+                        </div>
+                        <div class="hr-line"></div>
+                        <div class="row padding">
+                            <div class="col">
+                                <button class="button button-full button-positive" type="button" ng-click="closeThankyouReportAbuseModal()">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </ion-content>
+            </div>
+        </script>
+        <script id="report-abuse-modal.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-content>
+                    <div class="card">
+                        <div class="item-divider">
+                            <center><strong>Problem with this ad ?</strong></center>
+                        </div>
+                        <div>
+                            <div class="col" ng-click="setReportFlag('M')">
+                                <center class="report-abuse-button">Miscategorized
+                                    <i ng-show="'M' == currentFlag" class="pull-right icon icon ion-checkmark-circled"></i>
+                                </center>
+                            </div>
+                            <div class="col" ng-click="setReportFlag('P')">
+                                <center class="report-abuse-button">Prohibited
+                                    <i ng-show="'P' == currentFlag" class="pull-right icon ion-checkmark-circled"></i>
+                                </center>
+                            </div>
+                            <div class="col" ng-click="setReportFlag('S')">
+                                <center class="report-abuse-button">Spam
+                                    <i ng-show="'S' == currentFlag" class="pull-right icon ion-checkmark-circled"></i>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" ng-click="closeReportModel()">
+                                <button class="report-abuse-cancel-button button button-small button-full">Cancel
+                                </button>
+                            </div>
+                            <div class="col" ng-click="postingFlag(currentFlag)">
+                                <button ng-disabled="!currentFlag" class="report-abuse-ok-button button button-small button-full">Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
+        <script id="image-modal.html" type="text/ng-template">
+            <a class="pull-right button-icon ion-close" style="color:white !important;font-size:200%;font:bold;position:relative;z-index:999"
+                ng-click="closeModal()"></a>
+            <div class="modal image-modal transparent" ng-click="closeModal()">
+                <ion-slide-box does-continue="true" on-slide-changed="slideChanged(index)" show-pager="true">
+                    <ion-slide ng-repeat="oImage in items">
+                        <img ng-src="{{oImage.src}}" class="fullscreen-image" />
+                        <p class="info">{{oImage.msg}}</p>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </script>
+    </ion-content>
+    <div class="bar bar-footer footer_gradient" ng-if="classifiedData.posting.contact_number != undefined && classifiedData.posting.contact_number != '' ">
+        <a class="item item-icon-left item-icon-right button-full" ng-href="tel:{{classifiedData.posting.contact_number}}"
+            style="color:#ffffff !important">
+            <i class="icon exp-icon-phone"></i>
+            <center>
+                <strong>
+                    <div ng-bind-html="classifiedData.posting.contact_number" style="font-size: 125%;"></div>
+                </strong>
+            </center>
+        </a>
+    </div>
+</ion-view>

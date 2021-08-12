@@ -1,0 +1,34 @@
+
+<ion-view ng-controller="RepostCtrl" view-title="Repost">
+
+	<ion-content class="ion-view-background-posting-ad padding">
+		
+		<!-- Start - Posting Title  with hr line--> 
+
+		<div class="padding-bottom">Repost: 
+			<span class="profile" ng-bind-html="classifiedData.posting.title"></span>
+		</div>
+
+		<!-- End -->
+
+
+		<button type="button" class="icon-right ion-android-sync button button-full login-button-color"  ng-click="repost()">
+			Repost
+		</button>
+
+		<p>Reposting the Ad to move it on top of the list</p>
+
+		<div class="padding-top"></div>
+		
+		<div class="hr-line"></div>
+
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+		
+
+		<button type="button" class="icon-right ion-edit button button-full create-button-color"  ng-click="goToModify()">
+			Modify
+		</button>
+	
+	</ion-content>
+</ion-view>

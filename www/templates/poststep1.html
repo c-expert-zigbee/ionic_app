@@ -1,0 +1,62 @@
+<ion-view view-title="Place a free Ad" ng-controller="PostingStep1Ctrl">
+
+	<ion-content class="ion-view-background-posting-ad">
+		
+		<!-- Start error message -->
+		<div ng-show="showError" class="list padding">
+            <div class="alert-box notice alert-box-border">
+            	<center>
+	                <div ng-if="errorMessage != ''">
+	                	<span ng-bind="errorMessage"></span><br/>
+	                 
+	                    <b ng-if="errorCode != ''" ng-bind="errorCode + ( ' - ' )"></b><span ng-bind="error"></span>
+	                </div>
+	                <div ng-show="onlineStatus && errorCode === ''">
+	                    <span ng-bind="'Please, check your internet connection.'"></span>
+	                </div>
+	                <div ng-if="!onlineStatus">
+	                    <span ng-bind="'Please, check your internet connection.'"></span>
+	                </div>
+	            </center>
+            </div>
+        </div>
+		<!-- End error message -->
+		
+		<div ng-if="!showError">
+            <div class="row" style="margin-top:2%">
+                <div class="col">
+                	<div class="posting-ad-steps-selected-bar"></div>
+                 </div>
+                <div class="col"> 
+                	<div class="posting-ad-steps-bar"></div>
+                </div>
+                <div class="col"> 
+                	<div class="posting-ad-steps-bar"></div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="profile col"> 
+					1. Please select one of the following categories:
+				</div>
+            </div>
+
+    		<div class="list">
+    			<div ng-repeat="cat in categoryList.categories | orderBy : cat.category_id">
+				  	<div class="head-item-divider">
+				    	<div class="padding-left" ng-bind="cat.title"></div>
+				  	</div>
+
+				  	<a class="item item-text-wrap item-icon-right" ng-click="subCategoryStep(cat.category_id, cat.title, cat)">
+				    	<span ng-bind-html="cat.posting_description || cat.title"></span>
+				    	<i class="region-icon-right icon ion-chevron-right"></i>
+				  	</a>
+				</div>
+			</div>
+    	</div>
+    	<div class="padding-top"></div>
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+	</ion-content>
+</ion-view>
+	

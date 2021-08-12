@@ -1,0 +1,587 @@
+<ion-view class="ion-view-background" ng-controller="ModifyAnAdCtrl" view-title="My Ads">
+
+  <!-- Start - Back navigation button-->
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" on-touch="goToMyAds()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>
+  <!-- End -->
+  <ion-content class="ion-content-background">
+    <!-- POSTING TOP -->
+    <div class="posting_top">
+      <!-- Start - Block if at least one image in Ad-->
+      <div ng-if="firstImageUrl && items.length">
+        <button ng-if="isForActivate()" class="pull-right activate-button" ng-click="activateAd()">Activate</button>
+        <button ng-if="isForRepost()" class="pull-right activate-button" ng-click="repost()">Repost</button>
+        <ion-slide-box does-continue="true" active-slide="0" pager-click="slide(index)">
+          <ion-slide ng-repeat="oImage in items">
+            <div ng-if="oImage.src" class="one_slide_image" style="background-image: url({{oImage.src}})"></div>
+          </ion-slide>
+        </ion-slide-box>
+        <h4 class="posting_title" ng-bind-html="classifiedData.posting.display_title">
+        </h4>
+      </div>
+      <!-- End -->
+      <div ng-if="!firstImageUrl" class="no_image">
+        <button ng-if="isForActivate()" class="pull-right activate-button" ng-click="activateAd()">Activate</button>
+        <button ng-if="isForRepost()" class="pull-right activate-button" ng-click="repost()">Repost</button>
+        <div class="no_image_box">
+          <h4 class="posting_title" ng-bind-html="classifiedData.posting.display_title">
+          </h4>
+        </div>
+      </div>
+    </div>
+    <!-- POSTING TOP ends -->
+
+    <div class="list">
+      <!-- POSTING HEADER -->
+      <div class="posting_header">
+        <div class="row">
+          <div class="col">
+            <i class="icon exp-icon-noun_545375_cc"></i>
+            <span ng-bind-html="convertDate(classifiedData.posting.published_date)"></span>
+          </div>
+          <div class="col col-auto time_col">
+            <i class="icon exp-icon-noun_927405_cc"></i>
+            <span am-time-ago="classifiedData.posting.published_date_epoch | amFromUnix"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <i class="icon exp-icon-noun_962895_cc"></i>
+            <span ng-bind-html="classifiedData.posting.region_name"></span> -
+            <span ng-bind-html="classifiedData.posting.category_title"></span>
+          </div>
+        </div>
+      </div>
+      <div class="list-hr-line"></div>
+      <div class="padding posting_description" ng-bind-html="classifiedData.posting.display_description"></div>
+      <div class="list-hr-line"></div>
+
+      <!-- Start - PostingId , Email, Creation-Date, Publish-Date, Expiration-Date  -->
+      <div class="list">
+        <div class="posting_details">
+          <div class="row">
+            <div class="col icon_col">
+              <i class="icon exp-icon-noun_428398_cc"></i>
+            </div>
+            <div class="col">
+              <div class="item" ng-click="sendToActivatedAdPage()">
+                <span>Posting ID : </span>
+                <a>{{classifiedData.posting.posting_id}}</a>
+              </div>
+              <div class="item"
+                ng-if="classifiedData.posting.hide_email == 2 || classifiedData.posting.hide_email == 0">
+                <span>Email :</span>
+                <a ng-bind="classifiedData.posting.email"></a>
+              </div>
+              <div class="item">
+                <span>Creation Date :</span>
+                <a ng-bind="convertDate(classifiedData.posting.creation_date)"></a>
+              </div>
+              <div class="item">
+                <span>Published Date :</span>
+                <a ng-if='classifiedData.posting.ad_status != "Active (Pending)" && classifiedData.posting.ad_status != "Inactive"'
+                  ng-bind="convertDate(classifiedData.posting.published_date)"></a>
+                <a
+                  ng-if='classifiedData.posting.ad_status == "Active (Pending)" || classifiedData.posting.ad_status == "Inactive"'>(Pending)</a>
+              </div>
+              <div class="item">
+                <span>Expiration Date :</span>
+                <a ng-if='classifiedData.posting.ad_status != "Active (Pending)" && classifiedData.posting.ad_status != "Inactive"'
+                  ng-bind="convertDate(classifiedData.posting.expiration_date)"></a>
+                <a
+                  ng-if='classifiedData.posting.ad_status == "Active (Pending)" || classifiedData.posting.ad_status == "Inactive"'>(Pending)</a>
+              </div>
+              <div class="item">
+                <span>Status :</span>
+                <a ng-class="{'red-text' : classifiedData.posting.ad_status == 'Inactive'}"
+                  ng-bind="classifiedData.posting.ad_status"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End -->
+
+      <!-- Start - Action buttons, Remove, Modify, Premium -->
+
+      <div class="row padding-left padding-right posting_actions">
+        <!-- <button class="col modify-action-button" ng-click="goToRepost()">
+                    <center class="button-border">Repost</center>
+                </button> -->
+        <button class="col modify-action-button" ng-if="isForRemove()" ng-click="openRemoveAdModal()">
+          Remove
+        </button>
+        <button class="col modify-action-button" ng-click="openModifyModal()">
+          Modify
+        </button>
+        <button class="col modify-action-button" ng-if="isForPremium()" ng-click="premium()">
+          Premium
+          <i class="icon exp-icon-noun_428398_cc"></i>
+        </button>
+      </div>
+
+      <!-- End -->
+
+    </div>
+
+    <!-- Start dim transparent image model -->
+    <script id="image-modal-modify.html" type="text/ng-template">
+      <a class="pull-right modifyAnAds-image-model button-icon ion-close" ng-click="closeModal()"></a>
+            <div class="modal image-modal transparent" ng-click="closeModal()">
+                <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true">
+                    <ion-slide ng-repeat="oImage in items">
+                        <img ng-src="{{oImage.src}}" class="fullscreen-image" /> //
+                        <p class="info">{{oImage.msg}}</p>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </script>
+    <!-- End -->
+
+    <!-- Start Modify Modal  -->
+    <script id="modifyAdModal.html" type="text/ng-template">
+      <div class="modal modify_ad_modal">
+            <button class="pull-right modal-close-btn button-icon exp-icon-close" ng-click="closeModifyModal()"></button>
+            <ion-content has-bouncing="false">
+                <div class="modify_ad">
+                    <div ng-show="showErr" class="list">
+                        <center class="alert-box notice alert-box-border">
+                            <div ng-if="onlineStatus && errorCode != ''">
+                                <span ng-bind="('Please, correct the following error.')"></span>
+                                <br/>
+                                <b ng-bind="errorCode"></b> - <span ng-bind="errorMessage"></span>
+                            </div>
+                            <div ng-if="!onlineStatus">
+                                <span ng-bind="'Please, check your internet connection.'"></span>
+                            </div>
+                        </center>
+                    </div>
+                    <form name="modifyAd" id="modifyAd" ng-submit="saveChanges(modifyAd)" novalidate>
+                        <div class="modify_ad_top">
+                            <label class="padding-right padding-top item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                            <p class="profile">Posting Title<span ng-if="classifiedData.posting.category_id != '300'"> *</span></p>
+                            <small class="profile" ng-if="classifiedData.posting.category_id != '300'">(Please briefly describe the ad. Please do not use all capital letters.)
+                            </small>
+                            <small class="profile" ng-if="classifiedData.posting.category_id == '300'">(Optionally, add more details to the title. Please do not use all capital letters.)
+                            </small>
+                            <div class="item">
+                                <div contenteditable  name='title' id='title' type='text' ng-model="classifiedData.posting.title" ng-required="classifiedData.posting.category_id != '300'"></div>
+                            </div>
+                            <div ng-show="submitted && modifyAd.title.$error.required" ng-messages="modifyAd.title.$error">
+                                <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+                            </div>
+                        </label>
+                            <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                            <p class="profile">Description *</p>
+                            <div class="item">
+                                <textarea type="text" name="description" id="description" rows="6" ng-model="classifiedData.posting.description" required></textarea>
+                            </div>
+                            <div ng-show="submitted && modifyAd.description.$error.required" ng-messages="modifyAd.description.$error">
+                                <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+                            </div>                             
+                        </label>
+
+                            <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">Category</p>
+                            <div class="item item-background">
+                                <span ng-bind="classifiedData.posting.category_title"></span>
+                            </div>
+                        </label>
+                            <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">Region</p>
+                            <div class="item item-background">
+                                <span ng-bind="classifiedData.posting.region_name"></span>
+                            </div>
+                        </label>
+                            <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">New Region</p>
+                            <small class="profile">
+                                (if you wish to provide more specific information about the location, please enter it here.)
+                            </small>
+                            <div class="item item-divider">
+                                <input type="text" name="new_region" id="new_region" ng-model="classifiedData.posting.new_region">
+                            </div>
+                        </label>
+                            <div ng-if="parent_category_id == '3018' || category_id == '3021' || category_id == '3022' || category_id == '3023' || category_id == '3024' || category_id == '3025' || parent_category_id == '3026' || category_id == '3027' || category_id == '3028' || category_id == '3029' || category_id == '3030'">
+                                <div>
+                                    <div class="col col-50 pull-right">
+                                        <label class="padding-right item-input item-stacked-label">
+                                        <p>Currency</p>
+                                        <div class="item item-divider">
+                                            <input class="" type="text" placeholder=""  name="currency_field" id="currency_field" ng-model="classifiedData.posting.currency" />
+                                        </div>
+                                    </label>
+                                    </div>
+                                    <div class="col col-50">
+                                        <label class="padding-right item-input item-stacked-label">
+                                        <p>Commercial Price</p>
+                                        <div class="item item-divider">
+                                            <input type="text" name="commercial_price"  id="commercial_price" ng-model="classifiedData.posting.commercial_price">
+                                        </div>
+                                    </label>
+                                    </div>
+                                </div>
+                                <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Area :</p>
+                                <div class="item item-divider">
+                                    <input type="text" name="area"  id="area" ng-model="classifiedData.posting.area">
+                                </div>
+                            </label>
+                                <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Area Type :</p>
+                                <div class="item item-select item-divider">
+                                    <SELECT name='area_type' id='area_type' ng-model="classifiedData.posting.area_type" class='select-wrap'>
+                                        <OPTION value=''>-Select-</OPTION>
+                                        <OPTION value='Sq. Feet'>Sq. Feet</OPTION>
+                                        <OPTION value='Sq. Yard'>Sq. Yard</OPTION>
+                                        <OPTION value='Sq. Meter'>Sq. Meter</OPTION>
+                                        <OPTION ng-if="parent_category_id == '3026'" value='Acre'>Acre</OPTION>
+                                    </SELECT>
+                                </div>
+                            </label>
+                            </div>
+                            <div ng-if="classifiedData.posting.category_id == '300'">
+                                <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                                <p class="profile">Make and Model*</p>
+                                <div class="item item-divider">
+                                    <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" ng-model="classifiedData.posting.make_model" items-method="callbackMethod(query)" max-selected-items="1" cancel-label="Add item" ng-required="classifiedData.posting.category_id == '300'" />
+                                    <!-- <i class="icon ion-information-circled"></i> -->
+                                </div>
+                                <div ng-show="submitted && modifyAd.make_model.$error.required" ng-messages="modifyAd.make_model.$error">
+                                    <div class="required" ng-message="required">
+                                        <small class="required">This field is required&nbsp;</small>
+                                    </div>
+                                </div>
+                            </label>
+                                <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                                <p class="profile">Year*</p>
+                                <div class="item item-divider">
+                                    <input type="number" number-converter name="year" id="year" ng-model="classifiedData.posting.year" ng-minlength="4" size="4" ng-required="classifiedData.posting.category_id == '300'" />
+                                </div>
+                                <div ng-show="modifyAd.year.$error && errorMessageFlag" ng-messages="modifyAd.year.$error">
+                                    <div class="required" ng-message="required">This field is required&nbsp;</div>
+                                    <div class="required" ng-message="minlength">Provide year in format YYYY&nbsp;</div>
+                                </div>
+                            </label>
+                                <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                                <p class="profile">Transmission</p>
+                                <div class="item item-select item-divider">
+                                    <SELECT name='transmission' id='transmission' ng-model="classifiedData.posting.transmission" class='select-wrap'>
+                                        <OPTION value=''>-Select-</OPTION>
+                                        <OPTION value='automatic'>Automatic</OPTION>
+                                        <OPTION value='manual'>Manual</OPTION>
+                                    </SELECT>
+                                </div>
+                            </label>
+                                <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                                <p class="profile">Odometer* (KM)</p>
+                                <div class="item item-divider">
+                                    <input type="number" number-converter name="odometer" id="odometer" ng-model="classifiedData.posting.odometer" ng-required="classifiedData.posting.category_id == '300'" />
+                                </div>
+                                <div ng-show="modifyAd.odometer.$error.required && errorMessageFlag" ng-messages="modifyAd.odometer.$error">
+                                    <div class="required" ng-message="required">This field is required.</div>
+                                </div>
+                            </label>
+                            </div>
+                            <div ng-if="parent_category_id == '136' || parent_category_id == '153'">
+                                <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Posters Age :</p>
+                                <div class="item item-divider">
+                                    <input type="number" name="personals_age" id="personals_age" ng-model="classifiedData.posting.personals_age">
+                                </div>
+                            </label>
+                            </div>
+
+                            <div class="row" style="padding: 0;">
+                                <div class="col col-50" ng-if="parent_category_id == '1000' || parent_category_id == '1006' || parent_category_id == '8' || category_id == '9'">
+                                    <label class="padding-right item-input item-stacked-label">
+                                    <p class="profile">Currency</p>
+                                    <div class="item item-divider">
+                                        <input type="text" name="currency_field" id="currency_field" ng-model="classifiedData.posting.currency" />
+                                    </div>
+                                </label>
+                                </div>
+                                <div class="col col-50" ng-if="parent_category_id == '1000' || parent_category_id == '1006'">
+                                    <label class="padding-right item-input item-stacked-label">
+                                    <p class="profile">Housing Price :</p>
+                                    <div class="item item-divider">
+                                        <input type="number" name="housing_price" id="housing_price" ng-model="classifiedData.posting.housing_available_price" ng-pattern="/^(([1-9]\d*(\.\d+)?)|0)$/">
+                                    </div>
+                                    <div ng-show="modifyAd.housing_price.$error && modifyAd.housing_price.$error.pattern" ng-messages="modifyAd.housing_price.$error">
+                                        <div class="required" ng-message="pattern">Decimal values less than one are not allowed.&nbsp;
+                                        </div>
+                                    </div>
+                                </label>
+                                </div>
+                                <div class="col col-50" ng-if="parent_category_id == '8' || category_id == '9'">
+                                    <label class="padding-right item-input item-stacked-label">
+                                    <p class="profile">Price</p>
+                                    <div class="item item-divider">
+                                        <input type="number" name="item_price" id="item_price" ng-model="classifiedData.posting.item_price" ng-pattern="/^(([1-9]\d*(\.\d+)?)|0)$/"/>
+                                    </div>
+                                    <div ng-show="submitted && modifyAd.item_price.$error.pattern" ng-messages="modifyAd.item_price.$error">
+                                        <div class="form-error" ng-message="pattern">Decimal values less than one are not allowed.&nbsp;</div>
+                                    </div>                                        
+                                </label>
+                                </div>
+                            </div>
+                            <div ng-if="category_id == '7' || category_id == '3' || category_id == '5' || category_id == '2' || category_id == '4' || category_id == '143' || category_id == '144' || category_id == '3007' || category_id == '3008'" class="col">
+                                <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Period :</p>
+                                <div class="item item-select item-divider">
+                                    <SELECT name='housing_available_period' id='housing_available_period' ng-model="classifiedData.posting.housing_available_period">
+                                        <OPTION value=''>-- Select periods --</OPTION>
+                                        <OPTION value='month'>Month</OPTION>
+                                        <OPTION value='week'>Week</OPTION>
+                                        <OPTION value='day'>Day</OPTION>
+                                        <OPTION value='year'>Year</OPTION>
+                                    </SELECT>
+                                </div>
+                            </label>
+                            </div>
+                            <div ng-if="category_id == '7' || category_id == '3' || category_id == '5' || category_id == '2' || category_id == '4' || category_id == '6' || category_id == '16'">
+                                <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Number Of Bedrooms :</p>
+                                <div class="item item-select item-divider">
+                                    <SELECT name='housing_available_bedrooms' id='housing_available_bedrooms' ng-model="classifiedData.posting.housing_available_bedrooms">
+                                        <OPTION value=''>Studio Apt. / Bedsit</OPTION>
+                                        <OPTION value='1'>1</OPTION>
+                                        <OPTION value='2'>2</OPTION>
+                                        <OPTION value='3'>3</OPTION>
+                                        <OPTION value='4'>4</OPTION>
+                                        <OPTION value='5'>5</OPTION>
+                                        <OPTION value='6'>6 or more</OPTION>
+                                    </SELECT>
+                                </div>
+                                <span class="distinct_errormessage"></span>
+                            </label>
+                            </div>
+                            <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+                            <p class="profile">Contact Number</p>
+                            <small class="profile">(Please provide a contact phone number to be displayed in your published ad.)
+                            </small>
+                            <div class="item item-divider">
+                                <input type="tel" name="contact_number" id="contact_number" ng-model="classifiedData.posting.contact_number" ng-pattern="/^[0-9]+$/" />
+                            </div>
+                            <div ng-show="submitted && modifyAd.contact_number.$error.pattern" ng-messages="modifyAd.contact_number.$error">
+                                <div class="form-error" ng-message="pattern">This field is required&nbsp;</div>
+                            </div>                             
+                        </label>
+                        </div>
+                        <div class="padding separator">
+                            <hr />
+                        </div>
+
+                        <div class="modify_ad_images">
+                            <div class="padding">
+                                <div>Pictures (up to 8 pictures)</div>
+                                <small class="profile">(Please limit image files to a maximize size of 100K bytes each.)
+                            </small>
+                                <div ng-if="items.length > 0">
+                                    <ul class="row">
+                                        <li ng-repeat="item in items">
+                                            <div class="modify_ad_imgwrap">
+                                                <div ng-class="{'overlay': checkForDelete(item)}" class="img_self" style="background-image: url({{item.src}});"></div>
+                                            </div>
+                                            <div ng-if="checkForDelete(item)" class="text-on-overlay">
+                                                <span><b>Delete</b></span>
+                                            </div>
+                                            <button type="button" class="remove_image" ng-click="removeSelectedImage(item, $index)"><i class="exp-icon-noun_40408_cc"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="pictureLeft.length > 0">
+                            <div class="padding">
+                                <div data-ng-repeat="i in imageList">
+                                    <div class="row">
+                                        <div class="col col-50" ng-if="isEmpty(i) && image[$index]">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <img class="full-image" ng-src="{{image[$index]}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col" ng-click="takePicture($index, i)">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <center>
+                                                        <img src="img/camera1.png" />
+                                                        <br/><span class="fontsize2">Take Picture</span>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col" ng-click="getPicture($index, i)">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <center>
+                                                        <img src="img/camera1.png" />
+                                                        <br/><span class="fontsize2">Open gallery</span>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="isEmpty(i) && image[$index]">
+                                        <button type="button" class="button  button-block button-small button-assertive" ng-click="removeImage($index, i)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="padding separator">
+                            <hr />
+                        </div>
+                        <div class="padding email_privacy">
+                            <div class="email_privacy_title">E-mail Privacy</div>
+                            <div class="email-small">(Please indicate whether the email specified above should be displayed in your published ad.)</div>
+                            <br/>
+                        </div>
+                        <div class="email_privacy_form">
+                            <ion-list>
+                                <ion-checkbox id="2" name="hide_email" ng-model="classifiedData.posting.hide_email" ng-checked="classifiedData.posting.hide_email == 2" ng-true-value="2" ng-click="currrentCheckboxSelection(2)">
+                                    <div class="email_privacy_title">Use E-mail Contact Form.</div>
+                                    <div class="email-small">(Only your e-mail domain name is displayed.)</div>
+                                </ion-checkbox>
+                                <ion-checkbox id="0" name="hide_email" ng-model="classifiedData.posting.hide_email" ng-checked="classifiedData.posting.hide_email == 1" ng-true-value="1" ng-click="currrentCheckboxSelection(1)">
+                                    <div class="email_privacy_title">Do <u>not</u> display my e-mail address.</div>
+                                    <div class="email-small">(Be sure to provide a phone number or other
+                                        <br/>contact information in the description.)</div>
+                                </ion-checkbox>
+                                <ion-checkbox id="1" name="hide_email" ng-model="classifiedData.posting.hide_email" ng-checked="classifiedData.posting.hide_email == 0" ng-true-value="0" ng-click="currrentCheckboxSelection(0)">
+                                    <div class="email_privacy_title">Display my e-mail address.</div>
+                                </ion-checkbox>
+                            </ion-list>
+                        </div>
+                        <div class="padding separator">
+                            <hr />
+                        </div>
+                        <div class="row modify_ad_actions">
+                            <div class="col col-50">
+                                <button class="button button-full" type="button" ng-click="closeModifyModal()">Cancel</button>
+                            </div>
+                            <div class="col col-50">
+                                <button class="button button-full button-positive" type="submit">Save Details</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ion-content>
+        </div>
+    </script>
+
+    <!--  End Modify Modal  -->
+
+    <!-- Remove Ad Modal starts -->
+    <script type="text/ng-template" id="removeAdModal.html">
+      <div class="modal remove_ad_modal">
+                <ion-content>
+                    <div class="remove_ad_content">
+                        <p class="remove_msg">Are you sure you want to remove this Ad?</p>
+                        <div class="row">
+                            <div class="col col-50">
+                                <button class="button button-full" type="button" ng-click="closeRemoveAdModal()">Cancel</button>
+                            </div>
+                            <div class="col col-50">
+                                <button ng-click="removeAd()" class="button button-full button-positive" type="submit">Remove Ad</button>
+                            </div>
+                        </div>
+                    </div>
+                </ion-content>
+            </div>
+        </script>
+
+    <!-- Repost Ad Modal starts -->
+    <script type="text/ng-template" id="thank-you-repost-modal.html">
+      <div class="modal remove_ad_modal">
+            <ion-content>
+                <div class="remove_ad_content padding">
+                    <div class="text-center">
+                        <h3>Thank You!</h3>
+                    </div>
+                    <div class="hr-line"></div>
+                    <div class="padding"><b>Repost : </b>
+                        <span class="profile" ng-bind-html="classifiedData.posting.display_title"></span>
+                    </div>
+                    <div class="text-center checked-icon">
+                        <span class="rounded_checkmark"><i class="icon exp-icon-noun_221757_cc"></i></span>
+                    </div>
+                    <div class="text-center padding">
+                        <h4 class="padding-top profile" ng-bind-html="repostMessage"></h4>
+                    </div>
+                    <div class="hr-line"></div>
+                    <div class="row padding">
+                        <div class="col">
+                            <button class="button button-full button-positive" type="button" ng-click="closeThankyouRepostModal()">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </div>
+    </script>
+
+    <!-- Activate Ad Modal starts -->
+    <script type="text/ng-template" id="thank-you-activate-modal.html">
+      <div class="modal remove_ad_modal">
+            <ion-content>
+                <div class="remove_ad_content padding">
+                    <div class="text-center">
+                        <h3>Thank You!</h3>
+                    </div>
+                    <div class="hr-line"></div>
+                    <div class="padding"><b>Activate : </b>
+                        <span class="profile" ng-bind-html="classifiedData.posting.display_title"></span>
+                    </div>
+                    <div class="text-center checked-icon" ng-if="showCheckedLogo">
+                        <span class="rounded_checkmark"><i class="icon exp-icon-noun_221757_cc"></i></span>
+                    </div>
+                    <div class="text-center padding">
+                        <h4 class="padding-top profile" ng-bind-html="activationMessage"></h4>
+                    </div>
+                    <div class="hr-line"></div>
+                    <div class="row padding">
+                        <div class="col">
+                            <button class="button button-full button-positive" type="button" ng-click="closeThankyouActivateModal()">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </div>
+    </script>
+
+    <!-- Remove Ad Modal starts -->
+    <script type="text/ng-template" id="thank-you-remove-modal.html">
+      <div class="modal remove_ad_modal">
+            <ion-content>
+                <div class="remove_ad_content padding">
+                    <div class="text-center">
+                        <h3>Thank You!</h3>
+                    </div>
+                    <div class="hr-line"></div>
+                    <div class="padding"><b>Remove : </b>
+                        <span class="profile" ng-bind-html="classifiedData.posting.display_title"></span>
+                    </div>
+                    <div class="text-center checked-icon">
+                        <span class="rounded_checkmark"><i class="icon exp-icon-noun_221757_cc"></i></span>
+
+                    </div>
+                    <div class="text-center padding">
+                        <h4 class="padding-top profile">Your ad has been scheduled to be deleted and will be removed from the site shortly.Thank you for using expatriates.com.
+                        </h4>
+                    </div>
+                    <div class="hr-line"></div>
+                    <div class="row padding">
+                        <div class="col">
+                            <button class="button button-full button-positive" type="button" ng-click="closeThankyouRemoveModal()">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </div>
+    </script>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,275 @@
+<ion-view class="ion-view-background" ng-controller="ModifyAnAdCtrl" view-title="Modify">
+    <ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear header-item" on-touch="backToModify()">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="ion-content-background">
+        <style>
+        .bar .button {
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .imageView .close-btn {
+            font-weight: 900;
+            border: 1px solid;
+            position: absolute;
+            right: 5px;
+            border-radius: 5px;
+        }
+        
+        .imageView .headerView {
+            background-image: none;
+            background-color: transparent;
+            margin-top: 146.5%
+        }
+        </style>
+        <div class="modify_ad">
+            <div ng-show="showErr" class="list">
+                <center class="alert-box notice alert-box-border">
+                    <div ng-if="onlineStatus && errorCode != ''">
+                        <span ng-bind="('Please, correct the following error.')"></span>
+                        <br/>
+                        <b ng-bind="errorCode"></b> - <span ng-bind="errorMessage"></span>
+                    </div>
+                    <div ng-if="!onlineStatus">
+                        <span ng-bind="'Please, check your internet connection.'"></span>
+                    </div>
+                </center>
+            </div>
+            <form name="modifyAd" id="modifyAd" ng-submit="saveChanges(modifyAd)" novalidate>
+                <div class="modify_ad_top">
+                    <label class="padding-right padding-top item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                        <p class="profile">Posting Title<span ng-if="classifiedData.posting.category_id != '300'"> *</span></p>
+                        <div class="item">
+                            <div contenteditable rows="1" name='title' id='title' type='text' ng-model="classifiedData.posting.title" ng-required="classifiedData.posting.category_id != '300'"></div>
+                        </div>
+                        <div ng-show="submitted || modifyAd.title.$touched" ng-messages="modifyAd.title.$error">
+                            <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+                        </div>
+                    </label>
+                    <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                        <p class="profile">Description *</p>
+                        <div class="item">
+                            <div type="text" name="description" rows="10" contenteditable id="description" ng-model="classifiedData.posting.description" required></div>
+                        </div>
+                        <div ng-show="submitted || modifyAd.description.$touched" ng-messages="modifyAd.description.$error">
+                            <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+                        </div>
+                    </label>
+
+                    <label class="padding-right item-input item-stacked-label">
+                        <p class="profile">Category</p>
+                        <div class="item item-select item-divider">
+                            <!-- <span ng-bind="classifiedData.posting.category_title"></span> -->
+                            <select name="category" id="category" ng-model="">
+                                <option>Vehicules</option>
+                                <option>Computers</option>
+                                <option>Computers</option>
+                                <option>Computers</option>
+                                <option>Computers</option>
+                                <option>Computers</option>
+                            </select>
+                        </div>
+                    </label>
+                    <label class="padding-right item-input item-stacked-label">
+                        <p class="profile">New Region</p>
+                        <div class="item item-divider">
+                            <input type="text" name="new_region" id="new_region" ng-model="classifiedData.posting.new_region">
+                        </div>
+                    </label>
+                    <label class="padding-right item-input item-stacked-label">
+                        <p class="profile">City</p>
+                        <div class="item item-divider">
+                            <input type="text" name="city" id="city" ng-model="classifiedData.posting.city">
+                        </div>
+                    </label>
+                    <div ng-if="classifiedData.posting.category_id == '300'">
+                        <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                            <p class="profile">Make and Model*</p>
+                            <div class="item item-divider">
+                                <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" ng-model="classifiedData.posting.make_model" items-method="callbackMethod(query)" max-selected-items="1" cancel-label="Add item" ng-required="classifiedData.posting.category_id == '300'" />
+                            </div>
+                            <div ng-show="submitted || modifyAd.make_model.$touched" ng-messages="modifyAd.make_model.$error">
+                                <div class="required" ng-message="required">
+                                    <small class="required">This field is required&nbsp;</small>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                            <p class="profile">Year*</p>
+                            <div class="item item-divider">
+                                <input type="number" number-converter name="year" id="year" ng-model="classifiedData.posting.year" ng-minlength="4" size="4" ng-required="classifiedData.posting.category_id == '300'" />
+                            </div>
+                            <div ng-show="modifyAd.year.$error && errorMessageFlag" ng-messages="modifyAd.year.$error">
+                                <div class="required" ng-message="required">This field is required&nbsp;</div>
+                                <div class="required" ng-message="minlength">Provide year in format YYYY&nbsp;</div>
+                            </div>
+                        </label>
+                        <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                            <p class="profile">Transmission</p>
+                            <div class="item item-select item-divider">
+                                <SELECT name='transmission' id='transmission' ng-model="classifiedData.posting.transmission" class='select-wrap'>
+                                    <OPTION value=''>-Select-</OPTION>
+                                    <OPTION value='automatic'>Automatic</OPTION>
+                                    <OPTION value='manual'>Manual</OPTION>
+                                </SELECT>
+                            </div>
+                        </label>
+                        <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                            <p class="profile">Odometer* (KM)</p>
+                            <div class="item item-divider">
+                                <input type="number" number-converter name="odometer" id="odometer" ng-model="classifiedData.posting.odometer" ng-required="classifiedData.posting.category_id == '300'" />
+                            </div>
+                            <div ng-show="modifyAd.odometer.$error && errorMessageFlag" ng-messages="modifyAd.odometer.$error">
+                                <div class="required" ng-message="required">This field is required.</div>
+                            </div>
+                        </label>
+                    </div>
+                    <div ng-if="parent_category_id == '136' || parent_category_id == '153'">
+                        <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">Poster's Age :</p>
+                            <div class="item item-divider">
+                                <input type="number" name="personals_age" id="personals_age" ng-model="classifiedData.posting.personals_age">
+                            </div>
+                        </label>
+                    </div>
+                    <div ng-if="parent_category_id == '1000' || parent_category_id == '1006'">
+                        <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">Housing Price :</p>
+                            <div class="item item-divider">
+                                <input type="number" name="housing_price" id="housing_price" ng-maxlength="15" ng-model="classifiedData.posting.housing_price">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="row" style="padding: 0;">
+                        <div class="col col-50" ng-if="parent_category_id == '1000' || parent_category_id == '1006' || parent_category_id == '8' || category_id == '9'">
+                            <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Currency</p>
+                                <div class="item item-divider">
+                                    <input type="text" name="currency_field" id="currency_field" ng-model="classifiedData.posting.currency" />
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col col-50" ng-if="parent_category_id == '8' || category_id == '9'">
+                            <label class="padding-right item-input item-stacked-label">
+                                <p class="profile">Price</p>
+                                <div class="item item-divider">
+                                    <input type="number" number-converter name="item_price" id="item_price" ng-model="classifiedData.posting.item_price" />
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div ng-if="category_id == '7' || category_id == '3' || category_id == '5' || category_id == '2' || category_id == '4' || category_id == '143' || category_id == '144' || category_id == '3007' || category_id == '3008'" class="col">
+                        <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">Period :</p>
+                            <div class="item item-select item-divider">
+                                <SELECT name='housing_available_period' id='housing_available_period' ng-model="classifiedData.posting.housing_available_period">
+                                    <OPTION value=''>-- Select periods --</OPTION>
+                                    <OPTION value='month'>Month</OPTION>
+                                    <OPTION value='week'>Week</OPTION>
+                                    <OPTION value='day'>Day</OPTION>
+                                    <OPTION value='year'>Year</OPTION>
+                                </SELECT>
+                            </div>
+                        </label>
+                    </div>
+                    <div ng-if="category_id == '7' || category_id == '3' || category_id == '5' || category_id == '2' || category_id == '4' || category_id == '6' || category_id == '16'">
+                        <label class="padding-right item-input item-stacked-label">
+                            <p class="profile">Number Of Bedrooms :</p>
+                            <div class="item item-select item-divider">
+                                <SELECT name='housing_available_bedrooms' id='housing_available_bedrooms' ng-model="classifiedData.posting.housing_available_bedrooms">
+                                    <OPTION value=''>Studio Apt. / Bedsit</OPTION>
+                                    <OPTION value='1'>1</OPTION>
+                                    <OPTION value='2'>2</OPTION>
+                                    <OPTION value='3'>3</OPTION>
+                                    <OPTION value='4'>4</OPTION>
+                                    <OPTION value='5'>5</OPTION>
+                                    <OPTION value='6'>6 or more</OPTION>
+                                </SELECT>
+                            </div>
+                            <span class="distinct_errormessage"></span>
+                        </label>
+                    </div>
+                   
+                    <label class="padding-right item-input item-stacked-label" ng-class="{'has-form-error' : modifyAd.title.$invalid && modifyAd.title.$touched}">
+                        <p class="profile">Contact Number</p>
+                        <div class="item item-divider">
+                            <input type="tel" name="contact_number" id="contact_number" ng-model="classifiedData.posting.contact_number" ng-pattern="/^[0-9]+$/" />
+                        </div>
+                        <div ng-show="submitted || modifyAd.contact_number.$touched" ng-messages="modifyAd.contact_number.$error">
+                            <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+                        </div>
+                    </label>
+                </div>
+                <div class="padding separator">
+                    <hr />
+                </div>
+               
+                <div class="modify_ad_images" ng-if="items.length > 0">
+                    <div class="padding">
+                        <div>Pictures (up to 8 pictures)</div>
+                        <div>
+                            <ul class="row">
+                                <li>
+                                    <img src="https://www.dropbox.com/s/3ptxskmr97ppyu9/car.jpg?dl=0&raw=1">
+                                    <button class="remove_image"><i class="exp-icon-noun_40408_cc"></i></button>
+                                </li>
+                                <li>
+                                    <img src="https://www.dropbox.com/s/3ptxskmr97ppyu9/car.jpg?dl=0&raw=1">
+                                    <button class="remove_image"><i class="exp-icon-noun_40408_cc"></i></button>
+                                </li>
+                                <li>
+                                    <img src="https://www.dropbox.com/s/3ptxskmr97ppyu9/car.jpg?dl=0&raw=1">
+                                    <button class="remove_image"><i class="exp-icon-noun_40408_cc"></i></button>
+                                </li>
+                                <li class="add_image_li">
+                                    <button class="add_new_picture">
+                                        <i class="exp-icon-noun_752662_cc"></i>
+                                        <span>Add a new Picture</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="padding separator">
+                    <hr />
+                </div>
+                <div class="padding email_privacy">
+                    <div class="email_privacy_title">E-mail Privacy</div>
+                    <div class="email-small">(Please indicate whether the email specified above should be displayed in your published ad.)</div>
+                    <br/>
+                </div>
+                <div class="email_privacy_form">
+                    <ion-list>
+                        <ion-checkbox id="2" name="email" ng-model="classifiedData.posting.hide_email" ng-checked="classifiedData.posting.hide_email == 2" ng-true-value="2" ng-click="currrentCheckboxSelection(2)">
+                            <div class="email_privacy_title">Use E-mail Contact Form.</div>
+                            <div class="email-small">(Only your e-mail domain name is displayed.)</div>
+                        </ion-checkbox>
+                        <ion-checkbox id="0" name="email" ng-model="classifiedData.posting.hide_email" ng-checked="classifiedData.posting.hide_email == 1" ng-true-value="1" ng-click="currrentCheckboxSelection(1)">
+                            <div class="email_privacy_title">Do <u>not</u> display my e-mail address.</div>
+                            <div class="email-small">(Be sure to provide a phone number or other
+                                <br/>contact information in the description.)</div>
+                        </ion-checkbox>
+                        <ion-checkbox id="1" name="email" ng-model="classifiedData.posting.hide_email" ng-checked="classifiedData.posting.hide_email == 0" ng-true-value="0" ng-click="currrentCheckboxSelection(0)">
+                            <div class="email_privacy_title">Display my e-mail address.</div>
+                        </ion-checkbox>
+                    </ion-list>
+                </div>
+                <div class="padding separator">
+                    <hr />
+                </div>
+                <div class="row modify_ad_actions">
+                    <div class="col col-50">
+                        <button class="button button-full" type="button" ng-click="backToModify()">Cancel</button>
+                    </div>
+                    <div class="col col-50">
+                        <button class="button button-full button-positive" type="submit">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

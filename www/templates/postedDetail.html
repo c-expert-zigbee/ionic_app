@@ -1,0 +1,78 @@
+<ion-view ng-controller="postedDetailCtrl" view-title="Thank you!" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')">
+	<!-- <ion-nav-buttons side="left">
+		<button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+			<i class="icon ion-android-arrow-back"></i> 
+		</button>
+	</ion-nav-buttons> -->
+
+	<ion-content class="ion-view-background-posting-ad padding">
+		
+		<!-- Start - Action buttons My-Ads, My-profile --> 
+
+		<div class="">
+			<div class="pull-right  col col-50">
+				<button type="button" class="icon-left ion-navicon button button-full login-button-color  button-text-font" on-touch="goToMyAds()">My Ads
+				</button>
+			</div>
+			<div class="col col-50">
+				<button type="button" class="icon-left ion-ios-person-outline button button-full create-button-color  button-text-font" ng-click="goToProfile()"> My Profile
+				</button>
+			</div>
+		</div>
+
+		<!-- End -->
+		<div class="padding-top"></div>
+
+		<div class="hr-line"></div>
+
+		<div class="padding-top"></div>
+		
+		<!-- Start - Action buttons Remove, Modify, Premium -->
+
+		<div class="row">
+			<button class="col modify-action-button" ng-click="activateAd()">
+				Activate
+			</button>
+			
+			<button class="col modify-action-button" ng-click="sendToModifiedAdPage()">
+				Modify
+			</button>
+		</div>
+
+		<!-- End -->
+			
+		<div class="padding-top">
+			<p class="profile">WAIT! You must first activate your ad by clicking on the <a href="" ng-click="activateAd()">Activate</a> link above or in the confirmation message we have just sent you.</p>
+
+			<p class="profile padding-top">Once activated, your ad will appear here: <a href="" ng-click="openBrowser(pId)">http://www.expatriates.com/cls/{{pId}}.html</a> and will remain on expatriates.com for 60 days after which it will expire automatically.
+			</p>
+			
+			<p class="profile padding-top">In the confirmation message, you will also find a hyperlink that will allow you to edit or remove your ad at anytime. If you lose this link, you may request a new one by going to the home page and clicking <a href=""ng-click="sendToModifiedAdPage()">Modify an Ad</a></p>
+
+
+			<p class="padding-top">
+				<h5 class="profile">BEWARE OF WESTERN UNION SCAMS!</h5>
+				<span class="profile">please read out scam alert page.</span> 
+			</p>
+
+			<div class="padding-top"></div>
+			<div class="padding-top"></div>
+			<div class="padding-top"></div>
+
+
+			<p ng-if="false">
+			Finally, please <b>check your spam or junk folder</b> for replies to your ad especially if you chose to hide your email address.
+			</p>
+			
+			<p ng-if="false">
+			<font color=000099><b>PREMIUM ADS NOW AVAILABLE</b></font>
+			</p>
+
+			<p ng-if="false">
+			We can arrange for your ad to be automatically placed at the top of the list every day for as little as &#36;1.00 per day.
+			</p>
+
+			<p ng-if="false">Please check your confirmation email to try our new integrated payment script.</p>
+		</div>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,22 @@
+<ion-view view-title="Create Account" ng-controller="SignUpCtrl">
+    <ion-content class="ion-content-background">
+        <div ng-if="onlineStatus">
+            <div class="account_welcome text-center">
+                <div class="account_welcome_icon">
+                    <i class="icon exp-icon-noun_232512_cc"></i>
+                </div>
+                <div class="account_welcome_text">Welcome to expatriates.com!</div>
+                <div class="padding account_welcome_content">
+                    <p>We invite you to place a free classified ad and browse community classifieds ads in your city or country.</p>
+                    <p>We have sent you an email regarding your registration confirmation.</p>
+                    <p>You may need to check your email account's <span class="block">spam or junk </span>mail folder for this message.</p>
+                </div>
+                <div class="padding bot_action">
+                    <button ng-click="goToSignin()" class="btn icon-left btn_dark-gray">
+                        <i class="icon exp-icon-noun_756312_cc"></i> Return to Sign in page
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

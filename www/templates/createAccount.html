@@ -1,0 +1,56 @@
+<ion-view ng-controller="SignUpCtrl" view-title="Create Account" hide-nav-bar="true" class="ion-view-background-account-page">
+    <ion-content class="ion-view-background-account-page">
+        <div class="account-page create_account text-center">
+            <a class="padding pull-right button-icon ion-close" style="color:white !important;font-size:200%;font:bold;position:relative;z-index:999;" on-touch="goBack()"></a>
+            <div class="account-page-logo">
+                <div>
+                    <img src="img/logo-icon_svg.svg" />
+                    <span class="logo-text"><strong>expatriates.com</strong></span>
+                </div>
+            </div>
+            <div class="account-page-bottom">
+                <div class="top-text">
+                    <p>Your e-mail address is required <br /> to create an account.</p>
+                </div>
+                <form name="registerpage" id="registerpage" class="padding" novalidate ng-submit="register(registerpage)">
+                    <div ng-show="showErr" class="list padding">
+                        <div class="item item-input item-stacked-label">
+                            <div class="alert-box notice alert-box-border-for-bg-blue">
+                                <div ng-if="onlineStatus && errorCode != ''">
+                                    <span ng-bind="('Please, correct the following error.')"></span>
+                                    <br/>
+                                    <b ng-bind="errorCode"></b> - <span ng-bind="errorMessage"></span>
+                                </div>
+                                <div ng-show="onlineStatus && errorCode === ''">
+                                    <span ng-bind="'Please, check your internet connection.'"></span>
+                                </div>
+                                <div ng-if="!onlineStatus">
+                                    <span ng-bind="'Please, check your internet connection.'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                    	<div ng-show="submitted || registerpage.Email.$touched" ng-messages="registerpage.email.$error">
+                            <div class="form-error-sign-in" ng-message="pattern">Email is not valid.</div>
+                            <div class="form-error-sign-in" ng-message="required">This field is required.</div>
+                        </div>
+                    	<div class="input-icon-left">
+                            <span class="icon-on-left"><i class="input_icon exp-icon-noun_28529_cc"></i></span>
+                            <input class="form-control" type="email" name="Email" id="Email" placeholder="Enter your e-mail..." ng-model="registerData.email" ng-pattern='/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i' required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                    	 <button class="btn icon-left btn_dark-blue" type="submit">Create Account</button>
+                    </div>
+                </form>
+                
+                <div class="terms-of-use">
+                    By clicking Create Account you accept our <a class="terms-of-use-color" href='#/termsAndCondition'>Terms of Use.</a>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,109 @@
+<ion-view class="ion-view-background" ng-controller="ProfileCtrl" view-title="Edit Profile">
+	<ion-content class="ion-view-background-posting-ad">
+		<form name="profilepage" id="profilepage" novalidate ng-submit="profileUpdate(profilepage,profile)" >
+			<div class="padding pull-right button-icon ion-close" on-touch="backToProfile()">
+			</div>
+			<br />
+			<div ng-show="showMsg" class="padding">
+				<center class="meaasge-box-border">
+					<div ng-if="onlineStatus && msg != ''">
+						<span ng-bind="msg"></span>
+					</div>
+					<div ng-if="!onlineStatus">
+						<span ng-bind="'Please, check your internet connection.'"></span>
+					</div>
+				</center>
+			</div>
+			<div class="padding">
+				<div class="">
+					<p class="profile">First Name</p>
+					<div class="item item-divider">
+						<input class="" type="text" placeholder=""name="firstname" id="firstname" ng-model="profile.first_name">
+					</div>
+				</div>
+				<div class="padding-top">
+					<p class="profile">Last Name</p>
+					<div class="item item-divider">
+						<input type="text" placeholder="" name="lastname" id="lastname" ng-model="profile.last_name">
+					</div>
+				</div>
+				<div  class="padding-top">
+					<p class="profile">Contact Number</p>
+					<div class="item item-divider">
+					<input type="number" number-converter placeholder="" name="phone" id="phone" ng-model="profile.phone">
+				</div>
+				<div  class="padding-top">
+					<p class="profile">Email</p>
+					<div class="item item-background">
+						<span name="region" ng-bind="profile.email"></span>
+					</div>
+				</div>
+				<div  class="padding-top">
+					<p class="profile">City</p>
+					<div class="item" ng-click="openModal()">
+						<span name="region" ng-bind="profile.region_name"></span>
+					</div>
+				</div>
+				<div  class="padding-top">
+					<p class="profile">Company Name</p>
+					<div class="item item-divider">
+						<input type="text" placeholder="" name="company_name" id="company_name" ng-model="profile.company_name">
+					</div>
+				</div>
+				<div  class="padding-top">
+					<p class="profile">Preferred Language</p>
+					<div class="item item-divider">
+						<input type="text" placeholder="" name="language" id="language" value="" ng-model="profile.language">
+					</div>
+				</div>
+				<div  class="padding-top">
+					<p class="profile">Profile Privacy</p>
+					<div class="profile-privacy-border">
+						<ion-list>
+							<ion-checkbox name="privacyType" ng-model="profile.type" ng-checked="profile.type == 'Private'" ng-click="currrentCheckboxSelection('Private',$event)">Private</ion-checkbox>
+							<ion-checkbox name="privacyType" ng-model="profile.type" ng-checked="profile.type == 'Professional'" ng-click="currrentCheckboxSelection('Professional', $event)">Professional</ion-checkbox>
+						</ion-list>
+					</div>
+				</div>
+				<button class='col col-50 button button-full button-small button-positive pull-right' type='submit'>Save</button>
+				<button class='col col-50 button button-full button-small' type='button' ng-click="backToProfile()">Cancel</button>
+			</div>
+		</form>
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+	</ion-content>
+	<script id="my-modal.html" type="text/ng-template">
+	<ion-modal-view class="ion-view-background">
+		<ion-header-bar class="bar-assertive">
+			<h1 class="title">Select Region</h1>
+			<div class="buttons">
+				<button class="white-title" ng-click="closeModal()">Done</button>
+			</div>
+		</ion-header-bar>
+		<ion-content class="padding">
+			<div class="ads_search home_search">
+				<div class="row">
+					<div class="col">
+						<label class="input-icon-right">
+							<input ng-model="searchText" class="form-control myAds-serch-box" type="text" placeholder="Search for ..."/>
+						</label>
+						<span class="icon-on-right">
+							<i class="input_icon exp-icon-noun_860088_cc2 grey-color"></i>
+						</span>						
+					</div>					
+				</div>
+			</div>
+			<div class="list region-list">
+				<div ng-repeat="country in countryListArray | filter:searchText | orderBy : 'name'">
+					<ion-radio ng-model="profile.region_name" id="{{country.region_id}}" ng-click="selectRegion(country,country.currency)" ng-value="country.name">{{ country.name }}</ion-radio>
+					<ion-radio ng-model="profile.region_name" id="{{city.region_id}}" ng-repeat="city in country.cities | filter:searchText | orderBy : 'name'" ng-click="selectRegion(city,country.currency)" ng-value="city.name"> . . . {{ city.name }}</ion-radio>
+					<div ng-if="city.subcities && city.subcities.length > 0">
+						<ion-radio ng-model="profile.region_name" id="{{subcity.region_id}}" ng-repeat="subcity in city.subcities | filter:searchText | orderBy : 'name'" ng-click="selectRegion(subcity,country.currency)" ng-value="subcity.name"> . . . . . . {{ subcity.name }}</ion-radio>
+					</div>
+				</div>
+			</div>			
+		</ion-content>
+	</ion-modal-view>
+	</script>
+</ion-view>

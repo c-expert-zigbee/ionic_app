@@ -1,0 +1,100 @@
+<ion-view view-title="Place a free Ad" ng-controller="PostRegionCtrl">
+    <ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear header-item" on-touch="backToSubCategory()">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="ion-view-background-posting-ad">
+
+        <div class="row" style="margin-top:2%">
+            <div class="col">
+                <div class="posting-ad-steps-selected-bar"></div>
+            </div>
+            <div class="col">
+                <div class="posting-ad-steps-selected-bar"></div>
+            </div>
+            <div class="col">
+                <div class="posting-ad-steps-bar"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="profile col">
+                2. Posting Category <a ng-bind="' - ' + postingCategory"></a>
+            </div>
+        </div>
+
+        <div class="head-item-divider">
+            <div class="padding-left">Please select the city or (country) where you are located:</div>
+        </div>
+        <div class='padding'>
+            <form id='postAnAdStep2'>
+                <p>
+                    <p>Posting City*</p>
+                    <small class="profile">(For maximum exposure, we recommend you place your ad in the city nearest
+                        you as the ad will also automatically appear in the corresponding country and the International
+                        section.)</small>
+                    <div class='padding-top'>
+                        <div class="region item item-icon-right item-divider" ng-click="openModal()">
+                            <input type="text" class="input-disabled" name="region" ng-model="countryOrCity.name"
+                                ng-readonly="true" placeholder="Select city or country">
+                            <i class="slide-menu-right-icon icon ion-arrow-down-b"></i>
+                        </div>
+                    </div>
+                </p>
+                <div class="padding-top"></div>
+                <div class="hr-line"></div>
+                <div class="padding-bottom"></div>
+                <div>
+                    <p>Other Locations:</p>
+                    <small class="profile">(if you wish to provide more specific information about the location, please
+                        enter it here.)</small>
+                </div>
+                <div class="padding-top">
+                    <label class="item item-input">
+                        <textarea type='text' name='new_region' ng-model="countryOrCity.typedRegion"></textarea>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+    </ion-content>
+
+    <div class="bar bar-footer footer-backgroung-color" ng-click="selectRegion(countryOrCity.typedRegion, countryOrCity.name)">
+        <div class="title">Next</div>
+        <button class="padding-bottom button button-clear ion-chevron-right"></button>
+    </div>
+
+    <script id="my-modal.html" type="text/ng-template">
+	  	<ion-modal-view class="ion-view-background">
+			<ion-header-bar class="bar-assertive">
+				<h1 class="title">Select Region</h1>
+				<div class="buttons">
+					<button class="white-title" ng-click="closeModal()">Done</button>
+				</div>
+			</ion-header-bar>
+			<ion-content class="padding">
+				<div class="ads_search home_search">
+					<div class="row">
+						<div class="col">
+							<label class="input-icon-right">
+								<input ng-model="searchText" class="form-control myAds-serch-box" type="text" placeholder="Search for ..."/>
+							</label>
+							<span class="icon-on-right">
+								<i class="input_icon exp-icon-noun_860088_cc2 grey-color"></i>
+							</span>						
+						</div>					
+					</div>
+				</div>				
+				<div class="list region-list">
+					<div collection-repeat="region in regionList | filter:searchText" collection-item-height="48" collection-item-width="'100%'" class="collect-repeat">
+						<ion-radio ng-model="countryOrCity.name" id="{{region.region_id}}" ng-click="selectCountry(region,region.currency)" ng-value="region.name">{{ region.showName }}</ion-radio>
+					</div>
+				</div>
+			</ion-content>
+		</ion-modal-view>
+	</script>
+</ion-view>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1068504006154",
+    "firebase_url": "https://expatriates-d60c1.firebaseio.com",
+    "project_id": "expatriates-d60c1",
+    "storage_bucket": "expatriates-d60c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068504006154:android:85cee2149df579ac",
+        "android_client_info": {
+          "package_name": "com.expatriates.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068504006154-e5rvcurh9m0gcrsqgta9vhgvru700ksh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSsw98CQdyz0R47wkPQo4772qiPmYefk8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

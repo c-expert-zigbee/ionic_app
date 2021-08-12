@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <meta http-equiv="Content-Security-Policy"
+    content="img-src * 'self' data:; default-src * 'self' gap: wss: ws: ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval';">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <title>expatriates.com</title>
+  <link href="img/favicon.png" rel="shortcut icon" type="image/png">
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="lib/ionic-material/dist/ionic.material.min.css" rel="stylesheet">
+
+  <link href="lib/ion-gallery/dist/ion-gallery.css" rel="stylesheet">
+  <link href="lib/ion-autocomplete/dist/ion-autocomplete.css" rel="stylesheet">
+  <link href="css/mobile.0.1.css" rel="stylesheet">
+
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script src="lib/moment/moment.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="lib/ion-gallery/dist/ion-gallery.min.js"></script>
+  <script src="lib/ng-file-upload/ng-file-upload.js"></script>
+  <script src="lib/angular-filter/dist/angular-filter.min.js"></script>
+  <script src="lib/angular-messages/angular-messages.js"></script>
+  <script src="lib/ion-autocomplete/dist/ion-autocomplete.js"></script>
+  <script src="lib/ng-slide-down/dist/ng-slide-down.min.js"></script>
+  <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+  <script src="lib/moment/moment.js"></script>
+  <script src="lib/angular-moment/angular-moment.js"></script>
+  <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+  <script src="cordova.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/controllers/index.js"></script>
+  <script src="js/controllers/home.js"></script>
+  <script src="js/controllers/region.js"></script>
+  <script src="js/controllers/directory.js"></script>
+  <script src="js/controllers/classified.js"></script>
+  <script src="js/controllers/reply.js"></script>
+  <script src="js/controllers/subRegionLevel1.js"></script>
+  <script src="js/controllers/posting.js"></script>
+  <script src="js/controllers/errorPage.js"></script>
+  <script src="js/controllers/signIn.js"></script>
+  <script src="js/controllers/signUp.js"></script>
+  <script src="js/controllers/profile.js"></script>
+  <script src="js/controllers/getModifyLink.js"></script>
+  <script src="js/controllers/modifyAnAd.js"></script>
+  <script src="js/controllers/createAccount.js"></script>
+  <script src="js/controllers/forgotPassword.js"></script>
+  <script src="js/controllers/myAds.js"></script>
+  <script src="js/controllers/sendToFriend.js"></script>
+  <script src="js/controllers/removeAd.js"></script>
+  <script src="js/controllers/adRemoved.js"></script>
+  <script src="js/controllers/activated.js"></script>
+  <script src="js/controllers/repost.js"></script>
+  <script src="js/controllers/subRegionLevel2.js"></script>
+  <script src="js/controllers/postingAdFlagMessage.js"></script>
+  <script src="js/controllers/activateSmsOrPhone.js"></script>
+  <script src="js/controllers/report.js"></script>
+
+  <script src="js/services/authService.js"></script>
+  <script src="js/services/home.js"></script>
+  <script src="js/services/region.js"></script>
+  <script src="js/services/directory.js"></script>
+  <script src="js/services/classified.js"></script>
+  <script src="js/services/reply.js"></script>
+  <script src="js/services/regionList.js"></script>
+  <script src="js/services/checkConnectivity.js"></script>
+  <script src="js/services/getModifyLink.js"></script>
+  <script src="js/services/createAccount.js"></script>
+  <script src="js/services/signIn.js"></script>
+  <script src="js/services/forgotPassword.js"></script>
+  <script src="js/services/myAds.js"></script>
+  <script src="js/services/profile.js"></script>
+  <script src="js/services/sendToFriend.js"></script>
+  <script src="js/services/responseValidation.js"></script>
+  <script src="js/services/breadCrumb.js"></script>
+  <script src="js/services/pluginService.js"></script>
+  <script src="js/services/errorService.js"></script>
+  <script src="js/services/config.js"></script>
+
+  <script src="js/cache/services/sqlService.js"></script>
+  <script src="js/cache/services/storage.js"></script>
+  <script src="js/cache/services/listingStorage.js"></script>
+
+  <script src="js/models/storageModel.js"></script>
+  <script src="js/cache/db/sql/sqlStorageModel.js"></script>
+  <script src="js/cache/db/websql.js"></script>
+</head>
+
+<body ng-app="starter" class="platform-android platform-cordova platform-webview">
+  <ion-side-menus enable-menu-with-back-views="true" ng-controller="IndexCtrl">
+    <ion-side-menu-content drag-content="false">
+      <ion-nav-bar class="bar-assertive">
+        <ion-nav-buttons side="right">
+          <button class="button button-icon button-clear ion-android-more-vertical" menu-toggle="right">
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+          </button>
+        </ion-nav-buttons>
+      </ion-nav-bar>
+      <ion-nav-view>
+      </ion-nav-view>
+      <ion-footer-bar ng-hide="onlineStatus" class="padding-bottom footer-background">
+        <div class="col col-80 footer-text">cannot reach expatriates.com</div>
+      </ion-footer-bar>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+      <ion-content class="slide-menu-background">
+        <ion-list>
+          <ion-item>
+            <div class="row side-menu-left_logo">
+              <img class="side-menu-left-header-image" src="img/logo-icon_svg.svg">
+              <strong class="side-menu-left-header-text">expatriates.com</strong>
+            </div>
+            <a class="item item-icon-left" href="#/home" ng-click="showMenuItem('home')" menu-close>
+              <i class="slide-menu-icon icon exp-icon-icon-home"></i>
+              <div class="slide-menu-font">Home</div>
+            </a>
+            <div ng-repeat="link in breadCrumb track by $index">
+              <div class="slide-menu-font item item-icon-left">
+                <i ng-if="$first" class="slide-menu-icon icon exp-icon-noun_595083_cc"></i>
+                <i ng-if="!$first" class="slide-menu-icon icon exp-icon-noun_962895_cc"></i>
+                <div class="slide-menu-font" ng-bind-html="link" menu-close></div>
+              </div>
+            </div>
+            <a class="item item-icon-left" ng-if="isAuthenticated()" ng-click="goToMyAds();showMenuItem('myAds')"
+              menu-close>
+              <i class="slide-menu-icon icon exp-icon-noun_938591_cc"></i>
+              <div class="slide-menu-font"> My Ads</div>
+            </a>
+            <a class="item item-icon-left" ng-if="isAuthenticated()" href="#/profile" ng-click="showMenuItem('profile')"
+              menu-close>
+              <i class="slide-menu-icon icon exp-icon-noun_938955_cc"></i>
+              <div class="slide-menu-font" ng-click="goToProfile()"> My Profile</div>
+            </a>
+            <div ng-if="false && allCategories" ng-repeat="rc in allCategories">
+              <span class="item item-icon-left item-icon-right"
+                ng-class="{'currentActivatedLink':activatedLink == rc.title}">
+                <a class="slide-menu-font "
+                  href="#/directory?region={{regionCode}}&directory={{rc.directory}}&directoryName={{rc.title}}"
+                  ng-click="subRegionLevelCategory(rc,'null'); showMenuItem(rc.title)" menu-close>
+                  <i class="slide-menu-icon icon ion-android-folder"></i>
+                  <div ng-bind="rc.title"></div>
+                </a>
+                <span ng-show="rc.subcategories.length > 0"
+                  ng-click="showToggleDropDownList  = !showToggleDropDownList">
+                  <i></i>
+                  <i class="slide-menu-icon icon"
+                    ng-class="{'ion-arrow-down-b':showToggleDropDownList, 'ion-arrow-right-b':!showToggleDropDownList}">
+                  </i>
+                </span>
+              </span>
+              <a ng-if="showToggleDropDownList && rc.subcategories.length > 0"
+                class="subcategorie-font item item-icon-left"
+                ng-class="{'currentActivatedLink':activatedLink == r.title}" ng-repeat="r in rc.subcategories"
+                href="#/directory?region={{regionCode}}&directory={{r.directory}}&directoryName={{r.title}}"
+                ng-click="subRegionLevelCategory(rc,r); showMenuItem(r.title);" menu-close>
+                <i class="slide-menu-icon padding-left icon ion-arrow-right-c"></i>
+                <span class="padding-left" ng-bind="r.title"></span>
+              </a>
+            </div>
+            <a class="item item-icon-left" href="#" ng-click="contactus();showMenuItem('contact')" menu-close>
+              <i class="slide-menu-icon icon exp-icon-icon-letter"></i>
+              <div class="slide-menu-font"> Contact Us</div>
+            </a>
+            <a class="item item-icon-left" ng-click="syncListingData()" menu-close>
+              <i class="slide-menu-icon icon exp-icon-noun_61788"></i>
+              <div class="slide-menu-font"> Sync</div>
+            </a>
+            <a class="item item-icon-left" ng-show="isAuthenticated()" ng-click="showMenuItem('signOut');logOut()"
+              menu-close>
+              <i class="slide-menu-icon icon exp-icon-noun_729215_cc"></i>
+              <div class="slide-menu-font"> Sign Out</div>
+            </a>
+            <a ng-if="isAndroid" class="item item-icon-left" ng-click="exitApp()" menu-close>
+              <i class="slide-menu-icon icon ion-power"></i>
+              <div class="slide-menu-font">Exit</div>
+            </a>
+            <div class="padding">
+              <a class="item item-icon-left place-an-ad-button" ng-click="goToPostAnAd()" menu-close>
+                <i class="slide-menu-icon icon exp-icon-plus_rounded"></i>
+                <div class="slide-menu-font" style="margin-top:0.35%;"> Place an Ad</div>
+              </a>
+            </div>
+            <div class="padding-top">
+              <a class="item side-menu-left-text-color" ng-if="!isAuthenticated()" href="#/signIn"
+                ng-click="toggleMenu()">
+                <div class="side-menu-left-text-color"> Sign In</div>
+              </a>
+              <div ng-if="!isAuthenticated()" class="side-menu-left-hr-line"></div>
+              <a class="item" ng-if="!isAuthenticated()" href="#/createAccount" ng-click="toggleMenu()">
+                <div class="side-menu-left-text-color"> Create Account</div>
+              </a>
+            </div>
+          </ion-item>
+          <ion-item>
+            <div ng-class="{'versionRelative':isAuthenticated(),'versionFixed':!isAuthenticated()}" class="item">Version
+              : 0.1.392</div>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-side-menu>
+    <ion-side-menu side="right">
+      <ion-header-bar class="side-menu-right-header-color">
+        <span class="item item-icon-left">
+          <i class="slide-menu-icon icon exp-icon-noun_595083_cc"></i>
+          <div class="slide-menu-font" ng-bind-html="regionObj.regionName"></div>
+        </span>
+      </ion-header-bar>
+      <ion-content class="has-header ion-content-background">
+        <ion-list>
+          <ion-item>
+            <div ng-if="allCategories" ng-repeat="rc in allCategories">
+              <span ng-hide="rc.subcategories.length > 0" class="item item-icon-left">
+                <a class="side-menu-text-color"
+                  href="#/directory?region={{regionObj.regionCode}}&regionName={{regionObj.regionName}}&directory={{rc.directory}}&directoryName={{rc.title}}"
+                  ng-click="getRegionData(c); showMenuItem(rc.title);" menu-close ng-bind="rc.title">
+                </a>
+                <i class="slide-menu-right-icon icon ion-android-folder-open"></i>
+              </span>
+              <span ng-show="rc.subcategories.length > 0" class="item item-icon-left item-icon-right"
+                ng-click="subRegionLevel1Category(rc,'null'); showMenuItem(rc.title);showToggleDropDownList  = !showToggleDropDownList">
+                <div ng-bind="rc.title"></div>
+                <i class="slide-menu-right-icon icon ion-android-folder-open"></i>
+                <i class="slide-menu-right-icon-right icon"
+                  ng-class="{'ion-arrow-down-b':showToggleDropDownList, 'ion-arrow-right-b':!showToggleDropDownList}">
+                </i>
+              </span>
+              <a ng-if="showToggleDropDownList && rc.subcategories.length > 0"
+                class="subcategorie-font item item-icon-right"
+                href="#/directory?region={{regionObj.regionCode}}&regionName={{regionObj.regionName}}&directory={{rc.directory}}&directoryName={{rc.title}}"
+                ng-click="getRegionData(c); showMenuItem(rc.title);" menu-close>
+                <i class="slide-menu-right-icon icon ion-chevron-right"></i>
+                <span class="padding-left side-menu-right-text-color" ng-bind="'All ' + rc.title"></span>
+              </a>
+              <a ng-if="showToggleDropDownList && rc.subcategories.length > 0"
+                class="subcategorie-font item item-icon-right"
+                ng-class="{'currentActivatedLink':activatedLink == r.title}" ng-repeat="r in rc.subcategories"
+                href="#/directory?region={{regionObj.regionCode}}&regionName={{regionObj.regionName}}&directory={{r.directory}}&directoryName={{r.title}}"
+                ng-click="getRegionData(c); showMenuItem(r.title);" menu-close>
+                <i class="slide-menu-right-icon icon ion-chevron-right"></i>
+                <span class="padding-left side-menu-right-text-color" ng-bind="r.title"></span>
+              </a>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-side-menu>
+  </ion-side-menus>
+</body>
+
+</html>

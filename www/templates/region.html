@@ -1,0 +1,78 @@
+<ion-view ng-controller="RegionCtrl" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')" view-title={{regionName}}>
+	
+	<ion-content class="padding" ng-class="{'has-footer' : !onlineStatus}">
+		<div ng-if="serverError" class="padding">
+            <div class="padding-top"></div>
+            <div class="padding-top"></div>
+            <div class="padding-top"></div>
+            <center class="padding report-flag-icon">
+                <i class="icon ion-speakerphone"></i>
+            </center>
+            <center class="padding-top">
+                <span style="font-size:120%;" ng-bind="message"></span>
+            </center>
+		</div>
+		<div ng-if="stop" class="ads_search home_search region_search">
+				<div class="row">
+					<div class="col">
+						<label class="input-icon-right">
+							<input class="form-control myAds-serch-box" type="text" placeholder="Search for ..." name="search" id="search" ng-model="searchQuery" />
+						</label>
+						<span class="icon-on-right" ng-click="gotoDirectory(searchQuery)">
+							<i class="input_icon exp-icon-noun_860088_cc2"></i>
+						</span>
+					</div>
+				</div>
+			</div>		
+		<ion-list ng-if="stop">
+			<div ng-if="regions.subregions.length > 0" class="list-background-color">
+				<div ng-repeat="s in regions.subregions">
+					<a  class="item item-icon-right" 
+						href="#/subRegionLevel1?region={{s.region_code}}&regionName={{s.name}}" 
+						ng-click="subRegionLevel1(s);setRegionScrollPosition(s.region_code)">
+						<i class="region-icon-right icon ion-chevron-right"></i>
+						<span ng-bind="s.name"></span>
+					</a>
+					<div ng-hide="$last" class="list-hr-line"></div>
+				</div>
+			</div>
+			<br ng-if="regions.subregions.length > 0" /> 
+			<div ng-if="regions.categories.length > 0" class="list-background-color">
+		        <div ng-repeat="rc in regions.categories">
+			        <ion-item class="item item-icon-right"
+			            ng-click="toggleGroup(rc);setRegionScrollPosition(rc.category_id)">
+			            <strong ng-bind="rc.title"></strong>
+			            <i class="region-icon-right-collapsible icon" ng-class="isGroupShown(rc) ? 'ion-arrow-down-b' : 'ion-arrow-right-b'"></i>
+			        </ion-item>
+			        <div ng-hide="$last" class="list-hr-line"></div>
+			        <div class="padding-left">
+				        <a class="item item-icon-right" 
+							href="#/directory?region={{regionCode}}&regionName={{regionName}}&directory={{rc.directory}}&directoryName={{rc.title}}"  
+							ng-show="isGroupShown(rc)"
+							ng-click="subRegionLevel1Category(rc,'null');setRegionScrollPosition(rc.category_id)">
+							<i class="region-icon-right icon ion-chevron-right"></i>
+							<span ng-bind="'All ' + rc.title"></span>
+						</a>
+					</div>
+					<div class="padding-left">
+						<a  ng-if="rc.subcategories.length > 0"
+							class="item item-icon-right"  
+							ng-repeat="r in rc.subcategories" 
+							href="#/directory?region={{regionCode}}&regionName={{regionName}}&directory={{r.directory}}&directoryName={{r.title}}"
+							ng-show="isGroupShown(rc)"
+						    ng-click="subRegionLevel1Category(rc, r);setRegionScrollPosition(rc.category_id)"> 
+							<i class="region-icon-right icon ion-chevron-right"></i>
+							<span ng-bind="r.title"></span>
+						</a>
+					</div>
+		        </div>
+		    </div>
+		</ion-list>
+		<div class="padding-top"></div>
+    	<div class="padding-top"></div>
+    	<div class="padding-top"></div>
+	</ion-content>
+	<div class="padding float-button">
+        <button id="fab-profile" class="button button-fab button-fab-bottom-right fab-button-background" ng-click="goToPostAnAd()"><i class="icon ion-plus"></i></button>
+    </div>
+</ion-view>

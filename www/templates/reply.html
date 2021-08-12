@@ -1,0 +1,57 @@
+<ion-view ng-controller="ReplyCtrl" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')"
+  view-title="Reply to Ad">
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" on-touch="goBack()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="ion-view-background-posting-ad padding" ng-class="{'has-footer' : !onlineStatus}">
+    <div ng-if="showMessage" class="list">
+      <center class="alert-box notice alert-box-border">
+        <span ng-bind="errorMessage"></span>
+      </center>
+    </div>
+    <form ng-if="!showForm" name="replyToAd" id="replyToAd" novalidate ng-submit="reply(replyToAd)">
+      <div class="">
+        <label ng-show="!(classified.hide_email == 1 || classified.hide_email == '1')" class="padding-right item-input item-stacked-label">
+          <p class="profile">To</p>
+          <div class="item item-background">
+            <span ng-bind="classified.email"></span>
+          </div>
+        </label>
+        <label class="padding-right item-input item-stacked-label">
+          <p class="profile">From</p>
+          <div class="item item-background">
+            <span ng-bind="replyObj.fromEmail"></span>
+          </div>
+        </label>
+        <div ng-show="(submitted || replyToAd.from_email.$touched) && (replyToAd.from_email.$error.pattern || replyToAd.from_email.$error.required)" ng-messages="replyToAd.from_email.$error">
+          <div class="form-error" ng-message="pattern">Email is not valid.</div>
+          <div class="form-error" ng-message="required">This field is required.</div>
+        </div>
+        <label class="padding-right item-input item-stacked-label">
+          <p class="profile">Subject*</p>
+          <div class="item item-divider">
+            <input type="text" name="subject" id="subject" ng-model="replyObj.subject" required />
+          </div>
+		  <div ng-show="submitted && replyToAd.subject.$error.required" ng-messages="replyToAd.subject.$error">
+			<div class="form-error" ng-message="required">This field is required.</div>
+		  </div>
+        </label>
+        <label class="padding-right item-input item-stacked-label">
+          <p class="profile">Message*</p>
+          <div class="item">
+            <textarea name="message" id="message" rows="10" ng-model="replyObj.message" required></textarea>
+          </div>
+        </label>
+        <div ng-show="submitted && replyToAd.message.$error.required" ng-messages="replyToAd.message.$error">
+          <div class="form-error" ng-message="required">This field is required.</div>
+        </div>
+        <div class="padding">
+          <button type='submit' class="icon-left ion-ios-email-outline button button-full login-button-color">Send
+            Message</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

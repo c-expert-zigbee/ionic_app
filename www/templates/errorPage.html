@@ -1,0 +1,35 @@
+<ion-view ng-controller="ErrorPageCtrl" view-title="Network Error">
+	<ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear header-item" on-touch="goToHome()">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
+	<ion-content class="padding ion-content-background">
+		<div ng-show="errorObj" class="alert-box notice">
+			<!-- <center ng-if="true">
+				<span ng-bind-html="errorObj.data.errorMessage"></span>
+			</center> -->
+			<div class="text-center">
+				<div class="padding-top"></div>
+				<div class="padding-top"></div>
+				<div class="padding-top"></div>
+				<div class="padding-top"></div>
+	            <img src="img/rest-icons/noun_919604_cc.png" height="100px">
+
+	            <div class="padding-top"></div>
+	            <div class="padding-top"></div>
+	            <div class="padding">
+	            	Unable to connect to expatriates.com<br/>
+	        		Please, check your internet connection.
+	            </div>
+	        </div>
+		</div>
+		<br/>
+		<div class="padding">
+		<div class="padding">
+		<div class="padding">
+		<button ng-click="goToHome()" class='button button-full login-button-color'>Home</button>
+		<button ng-click="goToPreviousPage()" class='btn btn_dark-blue button-full'>Try Again</button>
+
+	</ion-content>
+</ion-view>

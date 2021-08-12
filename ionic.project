@@ -1,0 +1,11 @@
+{
+  "name": "expatriateapp",
+  "app_id": "",
+   "proxies": [
+    {
+      "path": "/meapi",
+      "proxyUrl": "http://webtestserver2.expatriates.com"
+    }
+  ]
+}
+

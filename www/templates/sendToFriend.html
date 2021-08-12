@@ -1,0 +1,47 @@
+<ion-view ng-controller="SendToFriendCtrl" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')" view-title="Send to a friend">
+	<ion-nav-buttons side="left">
+		<button class="button back-button buttons button-clear header-item" on-touch="goBack()">
+			<i class="icon ion-android-arrow-back"></i> 
+		</button>
+	</ion-nav-buttons>
+	<ion-content>
+		<div ng-show="showErr" class="list">
+			<center class="alert-box notice alert-box-border">
+				<span ng-bind="('Please, correct the following error.')"></span>
+				<br/>
+				<span ng-bind="(errorCode)+(' - ')+(errorMessage)"></span>
+			</center>
+		</div>
+			
+		<form name="sendpage" id="sendpage" class="padding" novalidate ng-submit="sendToFriend(sendpage)">
+					
+			<div class="list">
+				<label class="item item-input item-floating-label" 
+				ng-class="{'has-form-error' : sendpage.email.$invalid}">
+					<span class="input-label">From Email Address</span>
+					<input type="email" placeholder="From Email Address"
+					name="FromEmail" id="FromEmail" ng-model="send.from" 
+					ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required/>
+				</label>
+				<div ng-show="submitted || sendpage.FromEmail.$touched" ng-messages="sendpage.FromEmail.$error">
+					<div class="form-error" ng-message="pattern">Email is not valid&nbsp;</div>
+					<div class="form-error" ng-message="required">This field is required&nbsp;</div>
+				</div>
+
+				<label class="item item-input item-floating-label" 
+				ng-class="{'has-form-error' : sendpage.email.$invalid}">
+					<span class="input-label">To Email Address</span>
+					<input type="email" placeholder="To Email Address"
+					name="ToEmail" id="ToEmail" ng-model="send.to" 
+					ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required/>
+				</label>
+				<div ng-show="submitted || sendpage.ToEmail.$touched" ng-messages="sendpage.ToEmail.$error">
+					<div class="form-error" ng-message="pattern">Email is not valid&nbsp;</div>
+					<div class="form-error" ng-message="required">This field is required&nbsp;</div>
+				</div>
+			</div>
+			<br>
+			<button class='button button-full button-positive' type='submit'>Send Email</button>
+		</form>
+	</ion-content>
+</ion-view>

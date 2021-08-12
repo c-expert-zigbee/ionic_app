@@ -1,0 +1,417 @@
+<ion-view view-title="Place a free Ad" ng-controller="PostDetailCtrl">
+  <ion-nav-buttons side="left">
+    <button type="button" class="button back-button buttons button-clear header-item" on-touch="backToLocation()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="ion-view-background-posting-ad posting-ad-content">
+    <div class="row" style="margin-top:2%">
+      <div class="col">
+        <div class="posting-ad-steps-selected-bar"></div>
+      </div>
+      <div class="col">
+        <div class="posting-ad-steps-selected-bar"></div>
+      </div>
+      <div class="col">
+        <div class="posting-ad-steps-selected-bar"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="profile col">
+        <div>
+          <span>3. Posting Category - </span>
+          <a ng-bind-html="postingCategory"></a>
+        </div>
+        <div style="margin-left:5%">
+          <span>Posting Region - </span>
+          <a ng-bind="regionSelected"></a>
+          <a ng-if="regionTyped">
+            (<span ng-bind="regionTyped"></span>)
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="head-item-divider">
+    </div>
+    <div>
+      <div ng-show="showErr" class="list">
+        <center class="alert-box notice alert-box-border">
+          <div ng-if="onlineStatus && errorCode != ''">
+            <span ng-bind="('Please, correct the following error.')"></span>
+            <br />
+            <b ng-bind="errorCode"></b> - <span ng-bind="errMessage"></span>
+          </div>
+          <div ng-if="!onlineStatus">
+            <span ng-bind="'Please, check your internet connection.'"></span>
+          </div>
+        </center>
+      </div>
+      <form name="postAnAd" id="postAnAd" ng-submit="postAd(postAnAd)" novalidate>
+        <label class="padding-right item-input item-stacked-label"
+          ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+          <div>Posting Title<span ng-if="category_id != '300'">*</span></div>
+          <small class="email-small" ng-if="category_id != '300'">(Please briefly describe the ad. Please do
+            not use
+            all capital letters.)</small>
+          <small class="email-small" ng-if="category_id == '300'">(Optionally, add more details to the title.
+            Please do
+            not use all capital letters.)</small>
+          <br />
+          <br />
+          <div class="item item-divider">
+            <input type="text" placeholder="" name="title" id="title" ng-model="postingObj.title"
+              ng-required="category_id != '300'" />
+          </div>
+          <div ng-if="submitted && postAnAd.title.$error.required" ng-messages="postAnAd.title.$error">
+            <div class="form-error" ng-message="required">
+              <small>This field is required.</small>
+            </div>
+          </div>
+        </label>
+        <div
+          ng-if="parent_category_id == '3018' || category_id == '3021' || category_id == '3022' || category_id == '3023' || category_id == '3024' || category_id == '3025' || parent_category_id == '3026' || category_id == '3027' || category_id == '3028' || category_id == '3029' || category_id == '3030'">
+          <div>
+            <div class="col col-50 pull-right">
+              <label class="padding-right item-input item-stacked-label">
+                <p>Currency</p>
+                <div class="item item-divider">
+                  <input class="" type="text" placeholder="" name="currency_field" id="currency_field"
+                    ng-model="postingObj.currency_field" />
+                </div>
+              </label>
+            </div>
+            <div class="col col-50">
+              <label class="padding-right item-input item-stacked-label">
+                <p>Commercial Price</p>
+                <div class="item item-divider">
+                  <input type="number" name="commercial_price" id="commercial_price"
+                    ng-model="postingObj.commercial_price">
+                </div>
+              </label>
+            </div>
+          </div>
+          <label class="padding-right item-input item-stacked-label">
+            <p>Area :</p>
+            <div class="item item-divider">
+              <input type="number" name="area" id="area" ng-model="postingObj.area">
+            </div>
+          </label>
+          <label class="padding-right item-input item-stacked-label">
+            <p>Area Type</p>
+            <div class="item item-select item-divider">
+              <select name='area_type' id='area_type' ng-model="postingObj.area_type">
+                <OPTION value=''>-Select-</OPTION>
+                <OPTION value='Sq. Feet'>Sq. Feet</OPTION>
+                <OPTION value='Sq. Yard'>Sq. Yard</OPTION>
+                <OPTION value='Sq. Meter'>Sq. Meter</OPTION>
+                <OPTION ng-if="parent_category_id == '3026'" value='Acre'>Acre</OPTION>
+              </select>
+            </div>
+          </label>
+        </div>
+
+        <div ng-if="category_id == '300'">
+          <div class="padding-top padding-right item-input item-stacked-label"
+            ng-class="{'has-form-error' : postAnAd.make_model.$invalid}">
+            <p>Make and Model*</p>
+            <div class="item item-divider" ng-click="openMakeModel()">
+              <span name="make_model" ng-bind="postingObj.make_model" ng-required="category_id == '300'"
+                class="post-input-label"></span>
+            </div>
+            <div ng-show="submitted && postAnAd.make_model.$error.required" ng-messages="postAnAd.make_model.$error">
+              <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+            </div>
+          </div>
+          <label class="padding-right item-input item-stacked-label">
+            <p>Year*</p>
+            <div class="item item-divider">
+              <input type="number" number-converter name="year" id="year" ng-model="postingObj.year" ng-minlength="4"
+                ng-required="category_id == '300'" ng-pattern="/^.{4,}$/">
+            </div>
+            <div ng-show="submitted && postAnAd.year.$error" ng-messages="postAnAd.year.$error">
+              <div class="form-error" ng-message="required">This field is required.</div>
+              <div class="form-error" ng-message="pattern">Provide year in format YYYY.</div>
+            </div>
+          </label>
+          <label class="padding-right item-input item-stacked-label">
+            <p>Transmission</p>
+            <div class="item item-select item-divider">
+              <select name='transmission' id='transmission' ng-model="postingObj.transmission">
+                <OPTION value=''>-Select-</OPTION>
+                <OPTION value='automatic'>Automatic</OPTION>
+                <OPTION value='manual'>Manual</OPTION>
+              </select>
+            </div>
+          </label>
+          <label class="padding-right item-input item-stacked-label"
+            ng-class="{'has-form-error' : modifyAd.title.$invalid}">
+            <p>Odometer (KM)*</p>
+            <div class="item item-divider">
+              <input type="number" name="odometer" id="odometer" ng-model="postingObj.odometer"
+                ng-required="category_id == '300'" />
+            </div>
+            <div ng-show="submitted && postAnAd.odometer.$error.required" ng-messages="postAnAd.odometer.$error">
+              <div class="form-error" ng-message="required">This field is required.</div>
+            </div>
+          </label>
+        </div>
+        <div ng-if="parent_category_id == '136' || parent_category_id == '153'">
+          <label class="padding-right item-input item-stacked-label">
+            <p>Poster's Age</>
+              <div class="item item-divider">
+                <input type="number" name="personals_age" id="personals_age" ng-model="postingObj.personals_age" />
+              </div>
+          </label>
+        </div>
+        <div class="">
+          <div class="col col-50 pull-right"
+            ng-if="parent_category_id == '1000' || parent_category_id == '1006' || parent_category_id == '8' || category_id == '9'">
+            <label class="padding-right item-input item-stacked-label">
+              <p>Currency</p>
+              <div class="item item-divider">
+                <input class="" type="text" placeholder="" name="currency_field" id="currency_field"
+                  ng-model="postingObj.currency_field" />
+              </div>
+            </label>
+          </div>
+          <div class="col col-50" ng-if="parent_category_id == '1000' || parent_category_id == '1006'">
+            <label class="padding-right item-input item-stacked-label">
+              <p>Housing Price</p>
+              <div class="item item-divider">
+                <input type="number" name="housing_price" id="housing_price" ng-maxlength="15"
+                  ng-model="postingObj.housing_price" ng-pattern="/^(([1-9]\d*(\.\d+)?)|0)$/" />
+              </div>
+              <div ng-show="submitted && postAnAd.housing_price.$error.pattern"
+                ng-messages="postAnAd.housing_price.$error">
+                <div class="form-error" ng-message="pattern">Decimal values less than one are not
+                  allowed.&nbsp;</div>
+              </div>
+            </label>
+          </div>
+          <div class="col col-50" ng-if="parent_category_id == '8' || category_id == '9'">
+            <label class="padding-right item-input item-stacked-label">
+              <p>Price</p>
+              <div class="item item-divider">
+                <input class="" type="number" placeholder="" name="item_price" id="item_price"
+                  ng-model="postingObj.item_price" ng-pattern="/^(([1-9]\d*(\.\d+)?)|0)$/" />
+              </div>
+              <div ng-show="submitted && postAnAd.item_price.$error.pattern" ng-messages="postAnAd.item_price.$error">
+                <div class="form-error" ng-message="pattern">Decimal values less than one are not
+                  allowed.&nbsp;</div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          ng-if="category_id == '7' || category_id == '3' || category_id == '5' || category_id == '2' || category_id == '4' || category_id == '143' || category_id == '144' || category_id == '3007' || category_id == '3008'"
+          class="col">
+          <label class="padding-right item-input item-stacked-label">
+            <p>Period</p>
+            <div class="item item-select item-divider">
+              <SELECT name='housing_available_period' id='housing_available_period'
+                ng-model="postingObj.housing_available_period" class='select-wrap'>
+                <OPTION value=''>Select periods</OPTION>
+                <OPTION value='month'>Month</OPTION>
+                <OPTION value='week'>Week</OPTION>
+                <OPTION value='day'>Day</OPTION>
+                <OPTION value='year'>Year</OPTION>
+              </SELECT>
+            </div>
+          </label>
+        </div>
+        <div
+          ng-if="category_id == '7' || category_id == '3' || category_id == '5' || category_id == '2' || category_id == '4' || category_id == '6' || category_id == '16'">
+          <label class="padding-right item-input item-stacked-label">
+            <p>Number Of Bedrooms</p>
+            <div class="item item-select item-divider">
+              <SELECT name='housing_available_bedrooms' id='housing_available_bedrooms'
+                ng-model="postingObj.housing_available_bedrooms">
+                <OPTION value=''>Studio Apt. / Bedsit</OPTION>
+                <OPTION value='1'>1</OPTION>
+                <OPTION value='2'>2</OPTION>
+                <OPTION value='3'>3</OPTION>
+                <OPTION value='4'>4</OPTION>
+                <OPTION value='5'>5</OPTION>
+                <OPTION value='6'>6 or more</OPTION>
+              </SELECT>
+            </div>
+            <span class="distinct_errormessage"></span>
+          </label>
+        </div>
+        <label class="padding-right item-input item-stacked-label"
+          ng-class="{'has-form-error' : postAnAd.contact_number.$invalid}">
+          <div class="">Contact Number : </div>
+          <small class="email-small">(Please provide a contact phone number to be displayed in your published
+            ad.)</small><br /><br />
+          <div class="item item-divider">
+            <input class="" type="tel" name="contact_number" maxlength="20" id="contact_number"
+              ng-model="postingObj.contact_number" ng-pattern="/^[0-9]+$/" placeholder="" />
+          </div>
+          <div ng-show="submitted && postAnAd.contact_number.$error.pattern"
+            ng-messages="postAnAd.contact_number.$error">
+            <div class="form-error" ng-message="pattern">Contact Number is not valid.&nbsp;</div>
+          </div>
+        </label>
+        <div class="padding-right item-input item-stacked-label"
+          ng-class="{'has-form-error' : postAnAd.description.$invalid}">
+          <div>Description* </div>
+          <small class="email-small">(Please provide a more detailed description of the ad here. Please do
+            not use all
+            capital letters.)</small><br /><br />
+          <div class="item">
+            <textarea type="text" name="description" id="description" rows="6" ng-model="postingObj.description"
+              required></textarea>
+          </div>
+          <div ng-show="submitted && postAnAd.description.$error.required" ng-messages="postAnAd.description.$error">
+            <div class="form-error" ng-message="required">This field is required&nbsp;</div>
+          </div>
+        </div>
+        <div ng-if="has_images">
+          <div class="padding">
+            <div>Upload Pictures (up to 8)</div>
+            <small class="image-small">(Please limit image files to a maximize size of 100K bytes each.)</small><br />
+          </div>
+          <div class="padding">
+            <div data-ng-repeat="i in imageList">
+              <div class="row">
+                <div class="col col-50" ng-if="isEmpty(image) && image[$index]">
+                  <div class="row">
+                    <div class="col">
+                      <img class="full-image" ng-src="{{image[$index]}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="col" ng-click="takePicture(i, $index)">
+                  <div class="row">
+                    <div class="col">
+                      <center><img src="img/camera1.png" />
+                        <br /><span class="fontsize2">Take Picture</span></center>
+                    </div>
+                  </div>
+                </div>
+                <div class="col" ng-click="getPicture(i, $index)">
+                  <div class="row">
+                    <div class="col">
+                      <center><img src="img/camera1.png" />
+                        <br /><span class="fontsize2">Open gallery</span></center>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" ng-if="isEmpty(image) && image[$index] ">
+                <button type="button" class="button  button-block button-small button-assertive"
+                  ng-click="removeImage($index)">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label class="padding-right item-input item-stacked-label"
+          ng-class="{'has-form-error' : postAnAd.Email.$invalid}">
+          <p>E-mail Address* </p>
+          <div class="item item-divider">
+            <input class="" type="email" name="email" id="email" ng-model="postingObj.email"
+              ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
+          </div>
+          <div ng-show="submitted && (postAnAd.email.$error.required || postAnAd.email.$error.pattern)"
+            ng-messages="postAnAd.email.$error">
+            <div class="form-error" ng-message="required">This field is required.</div>
+            <div class="form-error" ng-message="pattern">Email is not valid.</div>
+          </div>
+        </label>
+        <div class="padding">
+          <div>E-mail Privacy : </div>
+          <small class="email-small">(Please indicate whether the email specified above should be displayed
+            in your
+            published ad.)</small>
+        </div>
+        <ion-list>
+          <ion-checkbox id="2" name="hide_email" ng-model="postingObj.hide_email"
+            ng-checked="postingObj.hide_email == 2" ng-true-value="2" ng-click="currrentCheckboxSelection(2)">
+            <div>Use E-mail Contact Form.</div>
+            <small class="email-small">(Only your e-mail domain name is displayed.)</small>
+          </ion-checkbox>
+          <ion-checkbox id="0" name="hide_email" ng-model="postingObj.hide_email"
+            ng-checked="postingObj.hide_email == 1" ng-true-value="1" ng-click="currrentCheckboxSelection(1)">
+            <div>Do <u>NOT</u> display my E-mail address.</div>
+            <small class="email-small">(Be sure to provide a phone number or other </small><br />
+            <small class="email-small">contact information in the description.)</small>
+          </ion-checkbox>
+          <ion-checkbox id="1" name="hide_email" ng-model="postingObj.hide_email"
+            ng-checked="postingObj.hide_email == 0" ng-true-value="0" ng-click="currrentCheckboxSelection(0)">
+            <div>Display my e-mail address.</div>
+          </ion-checkbox>
+        </ion-list>
+        <div class="padding">
+          <button class='button button-full button-positive' type='submit'>Publish</button>
+        </div>
+      </form>
+  </ion-content>
+  <!-- Post an Ad Modal starts -->
+  <script type="text/ng-template" id="thank-you-posting-modal.html">
+    <div class="modal modify_ad_modal">
+        <ion-content>
+          <div class="modify_ad">
+            <div class="padding">
+              <h3 class="text-center">Thank you!</h3>
+              <div class="hr-line"></div>
+              <p class="profile padding-top"><font color=000099><b>WAIT!</b></font> You must first activate your ad by clicking on the Activate button on following screen or using the link in the confirmation email we have just sent you.</p>
+              <p class="profile">Once activated, your ad will appear here: <a href="" ng-click="openBrowser(postingId)">https://www.expatriates.com/cls/{{postingId}}.html</a> <i class="icon exp-icon-noun_428398_cc"></i> and will remain on expatriates.com for 60 days after which it will expire automatically.</p>
+              <p class="profile"><font color='red'><b>BEWARE OF WESTERN UNION SCAMS!</b></font> Please read our <b><a href="https://www.expatriates.com/html/scams.html">scam alert</a></b> <i class="icon exp-icon-noun_428398_cc"></i>  page.Finally, please <b>check your spam or junk folder</b> for replies to your ad especially if you chose to hide your email address.</p>
+              <p class="profile">
+                <font color=000099><b>PREMIUM ADS NOW AVAILABLE</b></font><br />
+                We can arrange for your ad to be automatically placed at the top of the list every day for as little as $1.00 per day. Please click on the Premium button on the following screen for more details.
+              </p>
+              <button class="button button-full button-positive" type="button" ng-click="sendToModifiedAdPage()">Ok</button>
+            </div>
+          </div>
+        </ion-content>
+      </div>
+    </script>
+
+  <!-- Activation Ad Modal starts -->
+  <script type="text/ng-template" id="thank-you-activation-modal.html">
+    <div class="modal remove_ad_modal">
+        <ion-content>
+          <div class="remove_ad_content">
+              <p class="remove_msg">{{thankyouMessage}}</p>
+              <div class="row">
+                <div class="col">
+                  <button class="button button-full button-positive" type="button" ng-click="closeThankyouActivationModal()">Ok</button>
+                </div>
+              </div>
+          </div>
+        </ion-content>
+      </div>
+    </script>
+
+  <script id="model-modal.html" type="text/ng-template">
+    <ion-modal-view class="ion-view-background">
+            <ion-header-bar class="bar-assertive">
+                <h1 class="title">Select Make and Model</h1>
+                <div class="buttons">
+                    <button class="white-title" ng-click="closeModal()">Done</button>
+                </div>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <div class="ads_search home_search">
+                    <div class="row">
+                        <div class="col">
+                            <label class="input-icon-right">
+                                <input ng-model="searchModal.searchText" id="modelSearch" class="form-control myAds-serch-box" type="text" placeholder="Search for ..."/>
+                            </label>
+                            <span class="icon-on-right">
+                                <i class="input_icon exp-icon-noun_860088_cc2 grey-color"></i>
+                            </span>						
+                        </div>					
+                    </div>
+                </div>
+                <div ng-if="searchModal.searchText" class="list region-list" no-padding>
+                    <div collection-repeat="model in makeAndModel | filter:searchModal.searchText | orderBy : 'model.label'" collection-item-height="48" collection-item-width="'100%'" class="collect-repeat">
+                        <ion-radio ng-model="make_model_id" id="{{model.id}}" ng-click="selectModel(model)" ng-value="model.id">{{ model.label }}</ion-radio>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+	</script>
+</ion-view>

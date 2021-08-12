@@ -1,0 +1,47 @@
+<ion-view ng-controller="SignUpCtrl">
+	<ion-content class="has-header ">
+		<div class="container">
+			<div class="page-title">
+				<h1>Create Account</h1>
+			</div>
+			<div class="main-content cgi-content">
+				<form name="registerpage" id="registerpage" class="steps-form" novalidate ng-submit="register(registerpage)" >
+					<p>
+						<strong>Your Email Address:</strong>
+						<span class='required'>(required)</span><br/>
+						<small>(Please provide your email address. Eq: abc@xyz.com)</small>
+						<input type="email" name="email" id="email" ng-model="registerData.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required/>
+						<div ng-show="submitted || registerpage.email.$touched" ng-messages="registerpage.email.$error">
+		                  <div class="required" ng-message="pattern">Email is not valid.</div>
+		                  <div class="required" ng-message="required">This field is required.</div>
+		                </div>
+					</p>
+					<p>
+						<strong>Password:</strong>
+						<span class='required'>(required)</span><br/>
+						<small>(Please provide a strong password of minimum length 8. Eq: user@12345!)</small>
+						<input name='password' id='password' type='password' ng-model="registerData.password" ng-minlength="8" ng-maxlength="15" required />
+						<div ng-show="submitted || registerpage.password.$touched" ng-messages="registerpage.password.$error">
+		                  <div class="required" ng-message="required">This field is required.</div>
+		                </div>
+					</p>
+					<p>
+						<strong>Confirm Password:</strong>
+						<span class='required'>(required)</span><br/>
+						<small>(Kindly confirm your password)</small>
+						<input name='cpassword' id='cpassword' type='password' ng-model="registerData.cpassword" ng-minlength="8" ng-maxlength="15" required />
+						<div ng-show="submitted || registerpage.cpassword.$touched" ng-messages="registerpage.cpassword.$error">
+		                  <div class="required" ng-message="required">This field is required.</div>
+		                  <div class="required" ng-message="minlength">Please enter password of minimum length 8</div>
+		                  <div class="required" ng-message="maxlength">Please enter password of maximum length 15</div>
+		                </div>
+					</p>
+					<p>
+						<button class='button button-full button-positive' type='submit'>Sign In</button>
+					</p>
+					<p>
+				</form>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

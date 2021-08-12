@@ -1,0 +1,35 @@
+<ion-view ng-controller="ActivateAdSMSCtrl">
+	<ion-content class="">
+		<!-- Start Page title -->
+		<div class="page-title">
+			<h1>ACTIVATE</h1>
+		</div>
+        <!-- End Page title -->
+	
+		<div class="modify-actions align-center"><a href="#/modifyAnAd/{{classifiedData.posting.posting_id}}">Modify</a></div>
+
+		<!-- Start Main-content -->
+        <div class="main-content cgi-content">
+			<form name="sendSMS" ng-submit="">
+				<p>
+				We require a <b>one-time SMS verification</b> step for EACH <b>phone number</b>.
+				</p>
+				<p>
+				To confirm your phone number and activate your ad, please click on the button below.
+				</p>
+				<p>	
+					We will send an activation code to telephone number <a href=''>{{profile.phone}}</a>.
+					</p>
+				<p>
+					Once you receive the code, please enter it on the next page.
+				</p>
+				<p>
+					<input type='SUBMIT' value='Send Activation Code'  class='btn big'>
+				</p>
+				<p>
+					If you need assistance, please send an email to <a href=''>contact@expatriates.com</a> and reference posting id {{classifiedData.posting.posting_id}}.
+				</p>
+			</form>
+		</div>
+	</ion-content>
+</ion-view>

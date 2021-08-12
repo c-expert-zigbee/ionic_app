@@ -1,0 +1,159 @@
+<ion-view class="ion-view-background" ng-controller="MyAdsCtrl" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')"
+    view-title="My Ads">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear" ng-click="showSearchAndFilter()">
+            <i class="icon ion-ios-search-strong" ng-class="{'exp-icon-close': widgetExpanded}"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="my_ads">
+            <div ng-show="showMsg" class="empty_message">
+                <center class="padding empty_message_icon">
+                    <i class="icon exp-icon-noun_89024"></i>
+                </center>
+                <center class="padding empty_message_text">
+                    <span>You have no Ads posted yet</span>
+                </center>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding">
+                    <button type="button" class="icon-left button button-full place-ad-button" ng-click="goToPostAnAd()">
+                        <i class="icon exp-icon-noun_802754_cc"></i> Post your first Ad
+                    </button>
+                </div>
+            </div>
+            <div class="ads_search" ng-slide-down="widgetExpanded" lazy-render duration="0.5">
+                <!-- Start of filter content -->
+                <div class="row">
+                    <div class="col">
+                        <div class="item item-select item-divider">
+                            <select name='sort' id='sort' ng-model="searchAndFilter.sort" class="form-control">
+                                <option value=''>Select Sort</option>
+                                <option value="c_asc">CREATION DATE ASC</option>
+                                <option value="c_desc">CREATION DATE DESC</option>
+                                <option value="p_asc">PUBLISHED DATE ASC</option>
+                                <option value="p_desc">PUBLISHED DATE DESC</option>
+                                <option value="e_asc">EXPIRATION DATE ASC</option>
+                                <option value="e_desc">EXPIRATION DATE DESC</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="item item-select item-divider">
+                            <select name="transmission" id="mileage" ng-model="searchAndFilter.filter">
+                                <option value="">Select Filter</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="expired">Expired</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of filter content -->
+                <!-- Start of search -->
+                <div class="row">
+                    <div class="col">
+                        <label class="input-icon-left">
+                            <span class="icon-on-left">
+                                <i class="input_icon exp-icon-noun_860088_cc2"></i>
+                            </span>
+                            <input class="form-control myAds-serch-box" type="text" placeholder="Search in your Ads"
+                                name="search" id="search" ng-model="searchAndFilter.q" />
+                        </label>
+                    </div>
+                </div>
+                <!-- End of search -->
+
+                <!-- Start of Reset button-->
+                <div class="row">
+                    <div class="col">
+                        <button class="btn reset_filters_btn" ng-disabled="false" ng-click="resetMyAdsFilters()">Reset
+                            Filters</button>
+                    </div>
+                </div>
+                <!-- End of Reset button-->
+
+
+                <!-- Start of search button-->
+
+                <div class="row row_last">
+                    <div class="col">
+                        <button class="btn blue_gradient search_btn" ng-click="searchMyAds(searchAndFilter)">Search</button>
+                    </div>
+                </div>
+
+                <!-- End of search button-->
+            </div>
+            <div class="ads_list">
+                <div ng-show="!showMsg" class="listing-content" style="background-color:#ffffff" ng-repeat="ads in myAds"
+                    ng-click="sendToModify(ads)">
+                    <a href="#/modifyAnAd/{{ads.posting_id}}">
+                        <div ng-if="checkImageExist(ads)">
+                            <img class="posting_image my-ads-image" ng-src="{{address+'/img/'+ads.posting_id+'.'+checkImageExist(ads)+'.jpg?w=90;h=75'}}"
+                                err-image="">
+                        </div>
+                        <h4 class="posting_title" ng-bind-html="ads.display_title">
+                        </h4>
+                        <div class="clearfix content_col">
+                            <div class="posting_details pull-left">
+                                Status : <span ng-class="{'red-text' : ads.ad_status == 'Inactive'}" class="my-ads-item"
+                                    ng-bind="ads.ad_status">
+                                </span>
+                            </div>
+
+                            <div class="posting_details pull-right">
+                                <i class="icon exp-icon-noun_927405_cc"></i>
+                                <span class="posting_time" am-time-ago="ads.published_date_epoch | amFromUnix"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <center>
+                    <ion-infinite-scroll ng-if="loadMore" on-infinite="addItems(onlineStatus)">
+                    </ion-infinite-scroll>
+                </center>
+                <!-- End Ad listing block -->
+
+            </div>
+
+            <center class="" ng-if="messageFlag">
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <center class="padding report-flag-icon">
+                    <i class="icon ion-android-search"></i>
+                </center>
+                <center class="padding-top">
+                    <div class="profile">Sorry, we couldn't find any results.
+                        <br />
+                    </div>
+                    <!-- <span style="font-size:120%;" ng-bind-html="searchAndFilter.q || searchAndFilter.sort || searchAndFilter.filter"></span> -->
+                </center>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding-top"></div>
+                <div class="padding">
+                    <div ng-click="showKeyBoard()" class="button button-full">
+                        Try a new Search
+                    </div>
+                </div>
+            </center>
+        </div>
+    </ion-content>
+    <div class="padding">
+        <button id="fab-profile" class="button button-fab button-fab-bottom-right fab-button-background" ng-click="goToPostAnAd()">
+            <i class="icon ion-plus"></i>
+        </button>
+    </div>
+</ion-view>

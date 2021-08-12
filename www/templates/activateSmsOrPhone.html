@@ -1,0 +1,171 @@
+<ion-view ng-controller="ActivateSmsOrPhone" view-title="Activate">
+	
+	<!-- Start - Back navigation button-->
+
+	<ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear" on-touch="goBack()">
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <!-- End -->
+    
+
+	<ion-content class="ion-view-background-posting-ad padding">
+
+		<!-- Start error message -->
+		<div ng-show="showErr" class="list">
+			<center class="alert-box notice alert-box-border">
+				<span ng-bind-html="errMessage"></span>
+			</center>
+		</div>
+		<!-- End error message -->
+
+
+		<!-- Start - Posting Title  with hr line--> 
+
+		<div class="padding-left padding-bottom">Activate: 
+			<span class="profile" ng-bind-html="classifiedData.posting.title"></span>
+		</div>
+
+		<div class="hr-line"></div>
+		
+
+		<!-- End -->
+		
+		
+
+		<!-- Start - Action buttons My-Ads, My-profile --> 
+
+		<!-- <div class="">
+			<div class="pull-right  col col-50">
+				<button type="button" class="icon-left ion-navicon button button-full login-button-color  button-text-font" ng-click="goToMyAds()">My Ads
+				</button>
+			</div>
+			<div class="col col-50">
+				<button type="button" class="icon-left ion-ios-person-outline button button-full create-button-color  button-text-font" ng-click="goToProfile()"> My Profile
+				</button>
+			</div>
+		</div> -->
+
+		<!-- End -->
+
+
+		<!-- Start - Action buttons Remove, Modify, Premium -->
+
+		<!-- <div class="row padding-top">
+			<button class="col modify-action-button" ng-show = "isForRemove()" ng-click="removeAd()">
+				Remove
+			</button>
+			<button class="col modify-action-button" ng-click="goToEdit()">
+				Modify
+			</button>
+			<button class="col modify-action-button" ng-show = "isForPremium()"  ng-click="premium()">
+				Premium
+			</button>
+		</div> -->
+
+		<!-- End -->
+
+		<!-- Start Main-content -->
+		<div class="padding" ng-show="activateSms">
+			<p class="profile">
+				We require a <b>one-time SMS verification</b> step for EACH <b>phone number</b>.
+			</p>
+
+			<p class="padding-top profile">
+				To confirm your phone number and activate your ad, please click on the button below.
+			</p>
+
+			<button type="button" class="icon-left ion-ios-email-outline button button-full login-button-color" ng-click="sendActivationCode()">
+				Send Activation Code
+			</button>
+
+			<p class="padding-top profile">
+				We will send an activation code to telephone number 
+				<a href='' ng-click="goToModify()">{{classifiedData.posting.sms_telephone_number}}.</a>
+			</p>
+			
+			<p class="padding-top profile">
+				Once you receive the code, please enter it on the next page.
+			</p>
+			
+			<p class="padding-top">
+				<span class="profile">
+					If you need assistance, please send an email to <a href=''>contact@expatriates.com</a> and reference posting
+				</span>
+				<span> 
+					ID {{classifiedData.posting.posting_id}}.
+				</span>
+    		</p>
+    		<div class="padding-top"></div>
+		</div>
+
+		<div class="padding" ng-show="activatePhone">
+
+			<p class="profile">
+				To activate your ad, please enter a telephone number where we can send an activation code.
+			</p>
+
+			<form name="loginpage" id="loginpage" class="" novalidate>
+			 
+				<div class="padding">
+					<p></p>
+				    <div class="item item-divider">
+			        	<input type="number"  placeholder="Enter Mobile Number" name="mobilenumber" id="email" ng-model="mobileNumber"  required/>
+			        </div>
+			        <button class='icon-right ion-checkmark button button-full login-button-color' type='submit' ng-click="activatePhoneNumber(mobileNumber)"><b>save</b></button>
+			    </div>
+
+			 </form>
+
+			<p class="profile">*The telephone number entered here does not appear in your ad.</p>
+			
+			<p  class="padding-top">
+				<span class="profile">
+					If you need assistance, please send an email to <a href=''>contact@expatriates.com</a> and reference posting
+				</span>
+				<span> 
+					ID {{classifiedData.posting.posting_id}}.
+				</span>
+    		</p>
+    		<div class="padding-top"></div>
+    		<div class="padding-top"></div>
+    		<div class="padding-top"></div>
+    	</div>
+
+		<div class="padding" ng-show="processcode">
+			<p class="profile">
+				We sent an activation code to telephone number {{classifiedData.posting.sms_telephone_number}}.
+			</p>
+	    		
+			<div class="padding">
+			    <div class="item item-divider">
+		        	<input type="number" placeholder="Enter Activation Code." name="activationcode" ng-model="activationCode" required />
+		        </div>
+		        <button class='icon-right ion-checkmark button button-full login-button-color' type='button' ng-click="processTheCode(activationCode)"><b>Submit</b>
+		        </button>
+		    </div>
+
+		    <p  class="padding-top">
+				<span class="profile">
+					If you need assistance, please send an email to <a href=''>contact@expatriates.com</a> and reference posting
+				</span>
+				<span> 
+					ID {{classifiedData.posting.posting_id}}.
+				</span>
+    		</p>
+
+	    </div>
+
+		<div ng-show="activated" class="remove_ad_content">
+			<div class="text-center checked-icon">
+				 <span class="rounded_checkmark"><i class="icon exp-icon-noun_221757_cc"></i></span>
+			</div>
+			<div class="text-center padding-top">
+				<h4 class="profile">Your ad has been activated.<br/>Thank you!</h4> 
+			</div>
+		</div>
+		
+	</ion-content>
+</ion-view>

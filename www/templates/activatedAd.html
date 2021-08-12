@@ -1,0 +1,30 @@
+<ion-view ng-controller="activatedAdCtrl" on-swipe-right="onSwipeRight('right')" on-swipe-left="onSwipeLeft('left')">
+	<style>
+		.imageView .close-btn{font-weight:900;border:1px solid;position:absolute;right:5px;border-radius:5px;margin-right: 41%}
+		.imageView .headerView{background-image:none;background-color:transparent;margin-top: 146.5%}
+	</style>
+	<ion-content class="">
+		<div class="container" ng-if="onlineStatus">
+			<div class="page-title">
+				<h1>PREVIEW: {{classifiedData.posting.currency}} {{classifiedData.posting.item_price || "0"}} / <span ng-bind-html="classifiedData.posting.display_title"></span></h1>
+				<ul class="breadcrumbs">
+					<li>{{classifiedData.posting.category_title}}</li>
+					<li>{{classifiedData.posting.region_name}}</li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<div class="post-body">
+					<div class="bottom-margin">
+						<div ng-bind-html="classifiedData.posting.display_description"></div>
+					</div>
+					<div class="posting-images">
+						<ion-gallery ion-gallery-items="items" ng-if="hasPictures"></ion-gallery>
+					</div>
+				</div>
+				<div class="btn-mobile center-column post-info">
+					<a class="btn secondary big" href="" ng-click="goBackToModify()">Back</a>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

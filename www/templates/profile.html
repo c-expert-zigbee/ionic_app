@@ -1,0 +1,112 @@
+<ion-view
+  class="ion-view-background"
+  ng-controller="ProfileCtrl"
+  view-title="My Profile"
+>
+  <ion-content class="ion-view-background-posting-ad">
+    <div class="hero" style="background-color:#006699;">
+      <div class="content">
+        <div class="profile_hero_top">
+          <div class="edit-profile-button" on-touch="editProfile()">
+            Edit Profile
+          </div>
+        </div>
+        <div class="profile_avatar">
+          <img class="avatar" src="{{ profile_picture_current }}" />
+        </div>
+        <h4>
+          <span>{{ profile.first_name }}&nbsp;{{ profile.last_name }}</span>
+        </h4>
+      </div>
+    </div>
+    <div class="list profile_details">
+      <ul>
+        <li>
+          <span class="item item-icon-left">
+            <span class="profile-icon-left">Email</span>
+            <i class="profile-icon-left icon exp-icon-noun_28529_cc"></i>
+          </span>
+          <div class="profile-text" ng-bind="profile.email"></div>
+        </li>
+        <li>
+          <span class="item item-icon-left">
+            <span class="profile-icon-left">Contact Number</span>
+            <i class="profile-icon-left icon exp-icon-noun_150441_cc"></i>
+          </span>
+          <div class="profile-text" ng-bind="profile.phone"></div>
+        </li>
+        <li>
+          <span class="item item-icon-left">
+            <span class="profile-icon-left">City</span>
+            <i class="profile-icon-left icon exp-icon-noun_962895_cc"></i>
+          </span>
+          <div class="profile-text" ng-bind="profile.region_name"></div>
+        </li>
+        <li>
+          <span class="item item-icon-left">
+            <span class="profile-icon-left">Company Name</span>
+            <i class="profile-icon-left icon exp-icon-noun_836566_cc"></i>
+          </span>
+          <div class="profile-text" ng-bind="profile.company_name"></div>
+        </li>
+        <li>
+          <span class="item item-icon-left">
+            <span class="profile-icon-left">Preffered Language</span>
+            <i class="profile-icon-left icon exp-icon-noun_927355_cc"></i>
+          </span>
+          <div class="profile-text" ng-bind="profile.language"></div>
+        </li>
+        <li>
+          <span class="item item-icon-left">
+            <span class="profile-icon-left">Profile Type</span>
+            <i class="profile-icon-left icon exp-icon-noun_887800_cc"></i>
+          </span>
+          <div class="profile-text" ng-bind="profile.type"></div>
+        </li>
+      </ul>
+    </div>
+    <div class="padding-top"></div>
+    <div class="padding-top"></div>
+    <div class="padding-top"></div>
+  </ion-content>
+  <script id="profile-modal.html" type="text/ng-template">
+    <ion-modal-view class="ion-view-background modal image-modal transparent">
+        <div class="card" style="margin-top:50%">
+            <a class="pull-right image-close-icon button-icon ion-close" ng-click="closeProfileModal()"></a>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <img src="img/camera.png" ng-click="takePicture()">
+                    <center>
+                        <h4>Camera</h4></center>
+                </div>
+                <div class="col">
+                    <img src="img/gallery.png" ng-click="getPicture()">
+                    <center>
+                        <h4>Gallery</h4></center>
+                </div>
+            </div>
+        </div>
+    </ion-modal-view>
+  </script>
+  <script id="my-modal.html" type="text/ng-template">
+        <ion-modal-view class="ion-view-background">
+            <ion-header-bar class="bar-assertive">
+                <h1 class="title">Select Region</h1>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <div class="list" ng-repeat="country in countryListArray | orderBy : 'name'">
+                    <span class="bread-crumb item item-icon-left item-icon-right" ng-click="closeModal(country,country.currency)">
+    <b ng-bind="country.name"></b>
+    <i class="icon region-icon-right ion-android-pin"></i>
+    <i class="icon region-icon-right ion-chevron-right"></i>
+    </span>
+                    <div class="bread-crumb item item-icon-left" ng-click="closeModal(city,country.currency)" ng-repeat="city in country.cities | orderBy : 'name'">
+                        <span class="padding-left" ng-bind="city.name"></span>
+                        <i class="padding-left icon region-icon-right ion-arrow-right-c"></i>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+  </script>
+</ion-view>

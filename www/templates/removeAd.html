@@ -1,0 +1,98 @@
+<ion-view ng-controller="RemoveAd" view-title="Remove">
+	
+
+	<ion-content class="ion-view-background-posting-ad padding">
+		
+		<!-- Start - Posting Title  with hr line--> 
+
+		<div class="padding-bottom">Remove: 
+			<span class="profile" ng-bind-html="classifiedData.posting.title"></span>
+		</div>
+
+		<div class="hr-line"></div>
+		
+
+		<!-- End -->
+
+
+		<!-- Start - Action buttons My-Ads, My-profile --> 
+
+		<div class="">
+			<div class="pull-right  col col-50">
+				<button type="button" class="icon-left ion-navicon button button-full login-button-color  button-text-font" ng-click="goToMyAds()">My Ads
+				</button>
+			</div>
+			<div class="col col-50">
+				<button type="button" class="icon-left ion-ios-person-outline button button-full create-button-color  button-text-font" ng-click="goToProfile()"> My Profile
+				</button>
+			</div>
+		</div>
+
+		<!-- End -->
+
+
+
+		<!-- Start - Action buttons Remove, Modify, Premium -->
+
+		<div class="row">
+			<button class="col modify-action-button" ng-show= "isForActivate()" ng-click="activateAd()">
+				Activate
+			</button>
+			<button class="col modify-action-button" ng-show = "isForRepost()" ng-click="goToRepost()">
+				Repost
+			</button>
+			<button class="col modify-action-button" ng-click="goToModify()">
+				Modify
+			</button>
+			<button class="col modify-action-button" ng-show = "isForPremium()"  ng-click="premium()">
+				Premium
+			</button>
+		</div>
+
+		<!-- End -->
+
+		<div class="list">
+			<div class="item item-icon-left" ng-if="!(classifiedData.posting.hide_email == 1 || classifiedData.posting.hide_email == '1')">
+				<span>From: </span> 
+				<span ng-bind-html="classifiedData.posting.email"></span>
+				<i class="icon region-icon-right ion-email"></i> 
+			</div>
+
+			<div class="hr-line"></div>
+
+			<div class="item item-icon-left">
+				<span>Date: </span> 
+				<span ng-bind-html="convertDate(classifiedData.posting.creation_date)"></span>
+				<i class="icon region-icon-right ion-ios-calendar-outline"></i> 
+			</div>
+
+			<div class="hr-line"></div>
+
+			<div class="item item-icon-left">
+				<span>Category: </span> 
+				<span ng-bind-html="classifiedData.posting.category_title"></span>
+				<i class="icon region-icon-right ion-navicon"></i> 
+			</div>
+
+			<div class="hr-line"></div>
+
+			<div class="item item-icon-left">
+				<span>Region: </span> 
+				<span ng-bind-html="classifiedData.posting.region_name"></span>
+				<i class="icon region-icon-right ion-ios-location-outline"></i> 
+			</div>
+
+			<div class="hr-line"></div>
+
+			<div class="item item-icon-left">
+				<span>Description: </span> 
+				<span ng-bind-html="classifiedData.posting.description"></span>
+				<i class="icon region-icon-right ion-edit"></i> 
+			</div>
+
+			<div class="hr-line"></div>
+		</div>
+
+		<button class='button button-full button-positive'  ng-click="removeAd()" >Remove Ad</button>
+	</ion-content>
+</ion-view>

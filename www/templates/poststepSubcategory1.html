@@ -1,0 +1,46 @@
+<ion-view view-title="Place a free Ad" ng-controller="PostStepSubcategory1Ctrl">
+	
+	<ion-nav-buttons side="left">
+		<button class="button back-button buttons button-clear header-item" on-touch="backToCategory()">
+			<i class="icon ion-android-arrow-back"></i> 
+		</button>
+	</ion-nav-buttons>
+
+	<ion-content class="ion-view-background-posting-ad">
+		<div class="row" style="margin-top:2%">
+            <div class="col">
+            	<div class="posting-ad-steps-selected-bar"></div>
+             </div>
+            <div class="col"> 
+            	<div class="posting-ad-steps-bar"></div>
+            </div>
+            <div class="col"> 
+            	<div class="posting-ad-steps-bar"></div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="profile col"> 
+				1. Please select one of the following sub-categories:
+			</div>
+        </div>
+
+        <div class="list">
+        	<div class="head-item-divider">
+		    	<div class="padding-left" ng-bind="currentSelectedCategory.title"></div>
+		  	</div>
+			<div ng-repeat="subcat in currentSelectedCategory.subcategories">
+			  	<a class="item item-icon-right" ng-click="selectSubCategories(subcat.category_id,subcat.title, subcat)">
+			    	<span ng-bind-html="subcat.title"></span>
+			    	<i class="region-icon-right icon ion-chevron-right"></i>
+			  	</a>
+			  	<div class="list-hr-line"></div>
+			</div>
+		</div>
+	
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+		<div class="padding-top"></div>
+	</ion-content>
+</ion-view>
+	

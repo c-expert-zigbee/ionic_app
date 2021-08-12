@@ -1,0 +1,79 @@
+<ion-view ng-controller="Activated" view-title="Activate">
+	
+	<!-- Start - Back navigation button-->
+
+	<ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear" on-touch="goBack()">
+                <i class="icon ion-android-arrow-back"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <!-- End -->
+
+	<ion-content class="ion-view-background-posting-ad padding">
+		
+		<!-- Start - Posting Title  with hr line--> 
+
+		<div class="padding-bottom profile">Activate: 
+			<span ng-bind-html="classifiedData.posting.title"></span>
+		</div>
+
+		<div class="hr-line"></div>
+		
+
+		<!-- End -->
+		
+		
+
+		<!-- Start - Action buttons My-Ads, My-profile --> 
+
+		<div class="">
+			<div class="pull-right  col col-50">
+				<button type="button" class="icon-left ion-navicon button button-full login-button-color  button-text-font" ng-click="goToMyAds()">My Ads
+				</button>
+			</div>
+			<div class="col col-50">
+				<button type="button" class="icon-left ion-ios-person-outline button button-full create-button-color  button-text-font" ng-click="goToProfile()"> My Profile
+				</button>
+			</div>
+		</div>
+
+		<!-- End -->
+
+
+
+		<!-- Start - Action buttons Remove, Modify, Premium -->
+
+		<div class="row">
+			<button class="col modify-action-button" ng-show = "isForRemove()" ng-click="removeAd()">
+				Remove
+			</button>
+			<button class="col modify-action-button" ng-click="goToModify()">
+				Modify
+			</button>
+			<button class="col modify-action-button" ng-show = "isForPremium()"  ng-click="premium()">
+				Premium
+			</button>
+		</div>
+
+		<!-- End -->
+
+
+		<!-- Start - Checked icons -->
+
+			<center class="padding checked-icon">
+				<i class="icon ion-checkmark"></i>
+			</center>
+
+		<!-- End -->
+		
+
+		<div class="">
+			<center class="padding-top">
+				<h4 class="profile">Your ad has been activated.<br/>Thank you!</h4> 
+			</center>
+		</div>
+
+
+	</ion-content>
+</ion-view>

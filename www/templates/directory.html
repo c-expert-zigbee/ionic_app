@@ -1,0 +1,332 @@
+<ion-view class="ion-view-background" ng-controller="DirectoryCtrl" view-title="{{directoryName}}">
+
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" on-touch="goBack()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button back-button buttons button-clear header-item" ng-click="toggleSearch()">
+      <i class="icon ion-ios-search-strong" ng-class="{'exp-icon-close': searchPlaceExpanded}"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content ng-class="{'header-padding-top': searchObj.hideIonNav,'has-footer' : !onlineStatus}">
+    <!--  <ion-refresher ng-if="onlineStatus" on-pulling="doRefresh()"></ion-refresher> -->
+    <div ng-if="serverError" class="padding">
+      <div class="padding-top"></div>
+      <div class="padding-top"></div>
+      <div class="padding-top"></div>
+      <center class="padding report-flag-icon">
+        <i class="icon ion-speakerphone"></i>
+      </center>
+      <center class="padding-top">
+        <span style="font-size:120%;" ng-bind="serverErrorMessage"></span>
+      </center>
+    </div>
+    <ion-list>
+      <!-- Start of search and filter-->
+      <div ng-slide-down="searchPlaceExpanded" lazy-render duration="0.5">
+        <div class="ads_search">
+          <form name="searchForm" ng-submit="getSearchlist(searchObj)">
+            <div class="row">
+              <div class="col">
+                <label class="input-icon-left">
+                  <span class="icon-on-left">
+                    <i class="input_icon exp-icon-noun_860088_cc2"></i>
+                  </span>
+                  <input class="form-control myAds-serch-box" type="text" placeholder="Search for..." name="search"
+                    id="search" ng-model="searchObj.q" />
+                </label>
+              </div>
+            </div>
+            <button type="submit" ng-show="false"></button>
+          </form>
+          <div>
+            <div class="row">
+              <div class="col">
+                <div class="item item-select item-divider">
+                  <select name='sort' id='sort' ng-model="searchObj.sort" class="form-control">
+                    <OPTION value=''>Select Sort</OPTION>
+                    <OPTION
+                      ng-if="categoryId == '2' || categoryId == '3' || categoryId == '4' || categoryId == '5' || categoryId == '6' || categoryId == '7' || categoryId == '16'  || categoryId == '1000'"
+                      value='hab_asc'>Bedrooms Asc
+                    </OPTION>
+                    <OPTION
+                      ng-if="categoryId == '2' || categoryId == '3' || categoryId == '4' || categoryId == '5' || categoryId == '6' || categoryId == '7' || categoryId == '16'  || categoryId == '1000'"
+                      value='hab_desc'>Bedrooms Desc
+                    </OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='mm_asc'>Make & Model Asc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='mm_desc'>Make & Model Desc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='o_asc'>Odometer Asc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='o_desc'>Odometer Desc</OPTION>
+                    <OPTION ng-if="parentCategoryId == '1000' || parentCategoryId == '1006'" value='hap_asc'>Price
+                      Asc</OPTION>
+                    <OPTION ng-if="parentCategoryId == '1000' || parentCategoryId == '1006'" value='hap_desc'>Price
+                      Desc</OPTION>
+                    <OPTION ng-if="categoryId == '9' || parentCategoryId == '8'" value='ip_asc'>Price
+                      Asc</OPTION>
+                    <OPTION ng-if="categoryId == '9' || parentCategoryId == '8'" value='ip_desc'>Price
+                      Desc</OPTION>
+                    <OPTION value='pd_asc'>Published Date Asc</OPTION>
+                    <OPTION value='pd_desc'>Published Date Desc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='t_asc'>Transmission Asc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='t_desc'>Transmission Desc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='year_desc'>Year Asc</OPTION>
+                    <OPTION ng-if="categoryId == '300'" value='year_desc'>Year Desc</OPTION>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row"
+              ng-if="categoryId == '2' || categoryId == '3' || categoryId == '4' || categoryId == '5' || categoryId == '6' || categoryId == '7' || categoryId == '16' || categoryId == '1000'">
+              <div class="col">
+                <div class="item item-select item-divider">
+                  <select name='bedrooms' id='bedrooms' ng-model="searchObj.bedrooms">
+                    <OPTION value=''>Select Bedrooms</OPTION>
+                    <OPTION value='0'>0+ BR</OPTION>
+                    <OPTION value='1'>1+ BR</OPTION>
+                    <OPTION value='2'>2+ BR</OPTION>
+                    <OPTION value='3'>3+ BR</OPTION>
+                    <OPTION value='4'>4+ BR</OPTION>
+                    <OPTION value='5'>5+ BR</OPTION>
+                    <OPTION value='6'>6+ BR</OPTION>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="parentCategoryId == '153'">
+              <div class="col">
+                <input class="form-control" type="number" name='agemin' id="agemin" placeholder="Min age"
+                  ng-model="searchObj.agemin" />
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" name='agemax' id="agemax" placeholder="Max age"
+                  ng-model="searchObj.agemax" />
+              </div>
+            </div>
+            <div class="row"
+              ng-if="parentCategoryId == '3018' || categoryId == '3021' || categoryId == '3022' || categoryId == '3023' || categoryId == '3024' || categoryId == '3025' || parentCategoryId == '3026' || categoryId == '3027' || categoryId == '3028' || categoryId == '3029' || categoryId == '3030'">
+              <div class="col">
+                <input class="form-control" type="number" name='commercialpricemin' id="commercialpricemin"
+                  placeholder="Min commercial price" ng-model="searchObj.commercialpricemin" />
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" name='commercialpricemax' id="commercialpricemax"
+                  placeholder="Max commercial price" ng-model="searchObj.commercialpricemax" />
+              </div>
+            </div>
+            <div class="row"
+              ng-if="parentCategoryId == '3018' || categoryId == '3021' || categoryId == '3022' || categoryId == '3023' || categoryId == '3024' || categoryId == '3025' || parentCategoryId == '3026' || categoryId == '3027' || categoryId == '3028' || categoryId == '3029' || categoryId == '3030'">
+              <div class="col">
+                <input class="form-control" type="number" name='areamin' id="areamin" placeholder="Min area"
+                  ng-model="searchObj.areamin" />
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" name='areamax' id="areamax" placeholder="Max area"
+                  ng-model="searchObj.areamax" />
+              </div>
+            </div>
+            <div ng-if="categoryId == '300'">
+              <div class="row">
+                <div class="col">
+                  <div class="form-control" name="make_model" id="make_model"
+                    ng-bind="searchObj.make_model ? searchObj.make_model : 'Make & Model'" ng-click="openMakeModel()"
+                    ng-required="categoryId == '300'">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <input class="form-control" type="number" name='year_from' id="year_from" placeholder="Min Year"
+                    ng-model="searchObj.year_from" />
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" name='year_to' id="year_to" placeholder="Max Year"
+                    ng-model="searchObj.year_to" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="item item-select">
+                    <select name='transmission' id='transmission' ng-model="searchObj.transmission">
+                      <OPTION value=''>Select Transmission</OPTION>
+                      <OPTION value='automatic'>Automatic</OPTION>
+                      <OPTION value='manual'>Manual</OPTION>
+                    </select>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="item item-select">
+                    <select name='mileage' id='mileage' ng-model="searchObj.mileage">
+                      <OPTION value=''>Select Mileage</OPTION>
+                      <OPTION value='5000'>Less than 5,000</OPTION>
+                      <OPTION value='10000'>Less than 10,000</OPTION>
+                      <OPTION value='15000'>Less than 15,000</OPTION>
+                      <OPTION value='20000'>Less than 20,000</OPTION>
+                      <OPTION value='30000'>Less than 30,000</OPTION>
+                      <OPTION value='40000'>Less than 40,000</OPTION>
+                      <OPTION value='50000'>Less than 50,000</OPTION>
+                      <OPTION value='60000'>Less than 60,000</OPTION>
+                      <OPTION value='80000'>Less than 80,000</OPTION>
+                      <OPTION value='100000'>Less than 100,000</OPTION>
+                      <OPTION value='150000'>Less than 150,000</OPTION>
+                      <OPTION value='200000'>Less than 200,000</OPTION>
+                      <OPTION value='200001'>Greater than 200,001</OPTION>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="parentCategoryId == '1000' || parentCategoryId == '1006'">
+              <div class="col">
+                <input class="form-control" type="number" placeholder="Min price" name="housingpricemin"
+                  id="housingpricemin" ng-model="searchObj.housingpricemin" />
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" placeholder="Max price" name="housingpricemax"
+                  id="housingpricemax" ng-model="searchObj.housingpricemax" />
+              </div>
+            </div>
+            <div ng-if="categoryId == '9' || parentCategoryId == '8'">
+              <div class="row">
+                <div class="col">
+                  <input class="form-control" type="number" placeholder="Min price" name="itempricemin"
+                    id="itempricemin" ng-model="searchObj.itempricemin" />
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" placeholder="Max price" name="itempricemax"
+                    id="itempricemax" ng-model="searchObj.itempricemax" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <ion-checkbox id="hasImage" name="hasImage" ng-model="searchObj.has_pic" ng-checked="searchObj.has_pic">
+                Has
+                Pic
+              </ion-checkbox>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button class="btn blue_gradient search_btn" type="submit"
+                ng-click="validateSearchObject(searchObj)">Search</button>
+            </div>
+          </div>
+          <div class="row row_last">
+            <div class="col">
+              <button class="btn reset_filters_btn" ng-disabled="false" ng-click="resetFilters()">Reset
+                Filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of search and filter-->
+      <center ng-show="searchAd.spinner">
+        <ion-spinner icon="android"></ion-spinner>
+      </center>
+
+      <div ng-if="messageErrorFlag" class="padding">
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <center class="padding report-flag-icon">
+          <i class="icon ion-speakerphone"></i>
+        </center>
+        <center class="padding-top">
+          <span style="font-size:120%;" ng-bind="message"></span>
+        </center>
+      </div>
+
+      <center ng-if="messageFlag">
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <center class="padding report-flag-icon">
+          <i class="icon ion-android-search"></i>
+        </center>
+        <center class="padding-top">
+          <div class="profile">Sorry, we couldn't find any results for
+            <br />
+          </div>
+          <span style="font-size:120%;" ng-bind-html="searchObj.q"></span>
+        </center>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <div class="padding-top"></div>
+        <div class="padding">
+          <div ng-click="showKeyBoard()" class="button button-full">
+            Try a new Search
+          </div>
+        </div>
+      </center>
+      <!-- Start of Ad list content-->
+      <div class="ads_list">
+        <div class="card listing-content" ng-repeat="d in directoryData"
+          ng-click="setRegions(d.breadcrumb,d.posting_id,$index)">
+          <a
+            href="#/cls?pId={{d.posting_id}}&region={{regionCode}}&regionName={{regionName}}&directoryName={{directoryName}}&directory={{directory}}">
+            <img ng-if="d.first_pic_index && d.has_pic != '0'" class="posting_img"
+              ng-src="{{address+'/img/'+d.posting_id+'.'+d.first_pic_index+'.jpg?w=90;h=75'}}" err-image="">
+            <img ng-if="!d.first_pic_index && d.has_pic != '0'" class="posting_img"
+              ng-src="{{address+'/img/'+d.posting_id+'.'+checkImageExist(d)+'.jpg?w=90;h=75'}}" err-image="">
+            <h4 class="posting_title" ng-bind-html="d.display_title | limitTo: 80"></h4>
+            <span class="posting_description" ng-bind-html="d.preview_desc"></span>
+            <div class="clearfix content_col" ng-class="{'no_image' : d.has_pic == '0'}">
+              <div class="posting_region">
+                <i class="icon exp-icon-noun_962895_cc"></i>
+                {{d.region_name}}
+                <span
+                  ng-if="d.new_region && d.new_region != '' && d.new_region != null && d.new_region != 'null'">({{d.new_region}})
+                </span>
+              </div>
+              <div class="posting_details pull-left" style="float: left;">
+                <i class="icon ion-android-folder-open"></i>
+                {{d.category_name}}
+              </div>
+              <div class="posting_details pull-right">
+                <i class="icon exp-icon-noun_927405_cc"></i>
+                <span ng-if="d.commercial == '0'" class="posting_time"
+                  am-time-ago="d.published_date_epoch | amFromUnix"></span>
+                <span ng-if="d.commercial == '1'" class="posting_time" ng-bind="'seconds ago'"></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <center>
+        <ion-infinite-scroll ng-if="loadMore" on-infinite="addItems(onlineStatus)"></ion-infinite-scroll>
+      </center>
+      <!-- End of Ad list content -->
+    </ion-list>
+  </ion-content>
+  <script id="model-modal.html" type="text/ng-template">
+    <ion-modal-view class="ion-view-background">
+            <ion-header-bar class="bar-assertive">
+                <h1 class="title">Select Make and Model</h1>
+                <div class="buttons">
+                    <button class="white-title" ng-click="closeModal()">Done</button>
+                </div>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <div class="ads_search home_search">
+                    <div class="row">
+                        <div class="col">
+                            <label class="input-icon-right">
+                              <input ng-model="searchModal.searchText" id="modelSearch" class="form-control myAds-serch-box" type="text" placeholder="Search for ..."/>
+                            </label>
+                            <span class="icon-on-right">
+                                <i class="input_icon exp-icon-noun_860088_cc2 grey-color"></i>
+                            </span>						
+                        </div>					
+                    </div>
+                </div>
+                <div ng-if="searchModal.searchText" class="list region-list" no-padding>
+                    <div collection-repeat="model in makeAndModel | filter:searchModal.searchText | orderBy : 'model.label'" collection-item-height="48" collection-item-width="'100%'" class="collect-repeat">
+                        <ion-radio ng-model="make_model_id" id="{{model.id}}" ng-click="selectModel(model)" ng-value="model.id">{{ model.label }}</ion-radio>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+	</script>
+</ion-view>

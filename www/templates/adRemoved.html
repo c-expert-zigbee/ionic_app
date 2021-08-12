@@ -1,0 +1,40 @@
+<ion-view ng-controller="AdRemoved" view-title="Remove">
+	<ion-content class="ion-view-background-posting-ad padding">
+		
+		<div class="padding-bottom">Remove: 
+			<span class="profile" ng-bind-html="classifiedData.posting.title"></span>
+		</div>
+		<div class="hr-line"></div>
+
+		<div class="">
+			<div class="pull-right  col col-50">
+				<button type="button" class="icon-left ion-navicon button button-full login-button-color  button-text-font" ng-click="goToMyAds()">My Ads
+				</button>
+			</div>
+			<div class="col col-50">
+				<button type="button" class="icon-left ion-ios-person-outline button button-full create-button-color  button-text-font" ng-click="goToProfile()"> My Profile
+				</button>
+			</div>
+		</div>	
+
+		<p class="padding profile">
+			Your ad has been scheduled to be deleted and will be removed from the site shortly. 
+			Thank you for using expatriates.com. 
+		</p>
+
+
+		<!-- Start - Action buttons Remove, Modify, Premium -->
+
+		<div class="row">
+			<button class="col modify-action-button" ng-show = "isForActivate()" ng-click="activateAd()">
+				Activate
+			</button>
+			<button class="col modify-action-button" ng-click="goToModify()">
+				Modify
+			</button>
+		</div>
+
+		<!-- End -->
+
+	</ion-content>
+</ion-view>
