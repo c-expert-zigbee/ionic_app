@@ -18,7 +18,8 @@ export class ModalCompleteAdsComponent implements OnInit {
 
   sendToModifiedAdPage() {
     this.onDismiss();
-    this.router.navigate(['/my-ads/myads-edit', this.subjectId]);
+    // this.router.navigate(['/my-ads/myads-edit', this.subjectId]);
+    this.router.navigate(['/my-ads']);
   }
 
   async onDismiss() {

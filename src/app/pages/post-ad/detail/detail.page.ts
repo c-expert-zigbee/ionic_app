@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { PopoverController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 // Components
 import { ModalCompleteAdsComponent } from 'src/app/modals/modal-complete-ads/modal-complete-ads.component';
@@ -39,7 +40,8 @@ export class DetailPage implements OnInit {
     private storage: Storage,
     private myAds: MyAdsService,
     private appService: AppService,
-    private validate: ValidateService
+    private validate: ValidateService,
+    private router: Router
   ) {
     this.formDetail = this.fb.group({
       email: ['', [Validators.email]],

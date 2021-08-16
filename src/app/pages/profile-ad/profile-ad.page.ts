@@ -32,7 +32,7 @@ export class ProfileAdPage implements OnInit {
     this.subjectId = this.route.snapshot.params.id;
     await this.getItem();
 
-    if (this.subject.data.posting.picture1) {
+    if (this.subject.data.posting.picture1 > 0) {
       this.images.push(1);
     }
     if (this.subject.data.posting.picture2) {
