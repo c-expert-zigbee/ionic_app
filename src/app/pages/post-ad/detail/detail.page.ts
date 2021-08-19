@@ -45,7 +45,7 @@ export class DetailPage implements OnInit {
   ) {
     this.formDetail = this.fb.group({
       email: ['', [Validators.email]],
-      hide_email: [''],
+      hide_email: ['0'],
       currency_field: [''],
       title: ['', Validators.required],
       item_price: [''],
