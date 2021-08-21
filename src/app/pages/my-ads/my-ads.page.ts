@@ -45,11 +45,10 @@ export class MyAdsPage implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.pageTitle);
-  }
-
-  ionViewDidEnter() {
     this.getMyAds();
   }
+
+  ionViewDidEnter() {}
 
   private getMyAds() {
     // this.appService.showLoader();
